@@ -1,12 +1,21 @@
 import React from 'react';
 import { styled } from 'styled-components';
 import Header from '@/common/Header';
+import BackBoardDecoInMainPage from '@/assets/BackBoardDecoInMainPage.png';
 
 const Main = () => {
   return (
     <Mains>
       <Header />
-      <BackBoard />
+      <BackBoard>
+        <div className='itemInBackBoard'>
+          <span>핑고빙고</span>
+        </div>
+        <div className='itemInBackBoard'>
+          <Buttons>방 만들기</Buttons>
+          <Buttons>입장하기</Buttons>
+        </div>
+      </BackBoard>
     </Mains>
   )
 };
@@ -26,11 +35,37 @@ const Mains = styled.div`
 
 
 const BackBoard = styled.div`
-  box-sizing: border-box;
+  background-image: url(${BackBoardDecoInMainPage});
+  background-size: cover;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
   width: 70vw;
   height: 65vh;
-  background: #1C3B3E;
+  background-color: #1C3B3E;
   border: 15px solid #8E5501;
   box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
-  border-radius: 20px;
+  border-radius: 2rem;
+  color: white;
+  font-size: 32rem;
+  .itemInBackBoard {
+    display: flex;
+  }
+`
+
+const Buttons = styled.button`
+  width: 16rem;
+  height: 5rem;
+  font-family: "Uhbee mysen";
+  font-size: 3.5rem;
+  color: white;
+  background-color: #1C3B3E;
+  border: 0.2rem solid #FFFFFF;
+  filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
+  border-radius: 3rem;
+  margin: 3rem 5rem;
+  &:hover {
+    background-color:#455E61;
+  }
 `
