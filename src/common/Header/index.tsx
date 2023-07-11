@@ -7,8 +7,8 @@ const Header = () => {
         <PageHeader>
             <div>
                 <ClassMotto>
-                    <span style={{ display: 'block', fontSize: '4.5rem' }}>급훈</span>
-                    <span style={{ fontSize: '3.5rem' }}>어차피 1등은 D팀</span>
+                    <span>급훈</span>
+                    <span>어차피 1등은 D팀</span>
                 </ClassMotto>
             </div>
             <div>
@@ -41,7 +41,15 @@ const ClassMotto = styled.div`
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    :first-child {
+        display: block;
+        font-size: 4.5rem;
+    };
+    :last-child {
+        font-size: 3.5rem;
+    };
 `
+
 
 const WallClockImg = styled.img`
     height: 7rem;   
