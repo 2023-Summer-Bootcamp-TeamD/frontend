@@ -1,11 +1,11 @@
 import React from 'react';
 import { styled } from 'styled-components';
-import NavBar from '@/common/NavBar';
+import Header from '@/common/Header';
 
 const Main = () => {
   return (
     <Mains>
-      <NavBar />
+      <Header />
       <BackBoard />
     </Mains>
   )
@@ -27,7 +27,6 @@ const Mains = styled.div`
 
 const BackBoard = styled.div`
   box-sizing: border-box;
-
   width: 70vw;
   height: 65vh;
   background: #1C3B3E;
