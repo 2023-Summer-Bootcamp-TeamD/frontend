@@ -1,7 +1,7 @@
 import React from 'react';
 import { styled } from 'styled-components';
 import Header from '@/common/Header';
-import BlackBoardDecoInMainPage from '@/assets/BlackBoardDecoInMainPage.png';
+import BlackboardDecoInMainPage from '@/assets/BlackboardDecoInMainPage.png';
 import FireExtinguisher from '@/assets/FireExtinguisher.png';
 import { useNavigate } from 'react-router-dom';
 
@@ -14,7 +14,7 @@ const Main = () => {
   return (
     <Mains>
       <Header />
-      <BlackBoard>
+      <Blackboard>
         <div className='itemInBlackBoard'>
           <span>핑고빙고</span>
         </div>
@@ -22,7 +22,7 @@ const Main = () => {
           <Buttons onClick={createRoomButtonClick}>방 만들기</Buttons>
           <Buttons onClick={entryRoomButtonClick}>입장하기</Buttons>
         </div>
-      </BlackBoard>
+      </Blackboard>
       <img className='FireExtinguisherImg' src={FireExtinguisher} />
     </Mains>
   );
@@ -42,13 +42,13 @@ const Mains = styled.div`
   
   .FireExtinguisherImg {
     margin-left: 65vw;
-    width: 35rem;
+    width: 32rem;
     height: 13rem;
   }
 `;
 
-const BlackBoard = styled.div`
-  background-image: url(${BlackBoardDecoInMainPage});
+const Blackboard = styled.div`
+  background-image: url(${BlackboardDecoInMainPage});
   background-size: 70vw 65vh;
   display: flex;
   flex-direction: column;
