@@ -1,28 +1,28 @@
 import React from 'react';
 import { styled } from 'styled-components';
 import Header from '@/common/Header';
-import BackBoardDecoInMainPage from '@/assets/BackBoardDecoInMainPage.png';
+import BlackBoardDecoInMainPage from '@/assets/BlackBoardDecoInMainPage.png';
 import FireExtinguisher from '@/assets/FireExtinguisher.png';
 import { useNavigate } from 'react-router-dom';
 
 const Main = () => {
 
   const navigate = useNavigate();
-  const entryRoomButtonClick = () => navigate('/entryroom');
+  const entryRoomButtonClick = () => navigate('/entryRoom');
   const createRoomButtonClick = () => navigate('/creatingspecificrooms');
 
   return (
     <Mains>
       <Header />
-      <BackBoard>
-        <div className='itemInBackBoard'>
+      <BlackBoard>
+        <div className='itemInBlackBoard'>
           <span>핑고빙고</span>
         </div>
-        <div className='itemInBackBoard'>
+        <div className='itemInBlackBoard'>
           <Buttons onClick={createRoomButtonClick}>방 만들기</Buttons>
           <Buttons onClick={entryRoomButtonClick}>입장하기</Buttons>
         </div>
-      </BackBoard>
+      </BlackBoard>
       <img className='FireExtinguisherImg' src={FireExtinguisher} />
     </Mains>
   );
@@ -47,8 +47,8 @@ const Mains = styled.div`
   }
 `;
 
-const BackBoard = styled.div`
-  background-image: url(${BackBoardDecoInMainPage});
+const BlackBoard = styled.div`
+  background-image: url(${BlackBoardDecoInMainPage});
   background-size: 70vw 65vh;
   display: flex;
   flex-direction: column;
@@ -62,7 +62,7 @@ const BackBoard = styled.div`
   border-radius: 2rem;
   color: white;
   font-size: 32rem;
-  .itemInBackBoard {
+  .itemInBlackBoard {
     display: flex;
   }
 `
