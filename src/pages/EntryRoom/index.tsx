@@ -7,9 +7,12 @@ import FireExtinguisherImg from '@/assets/FireExtinguisher.png';
 import TeachingImg from '@/assets/Teaching.png';
 import Label from '@/components/Label';
 import Button from '@/components/Button';
+import Header from '@/common/Header';
 const EntryRoom = () => {
   return (
     <Wrap>
+      {' '}
+      <Header />
       <FireExtinguisher />
       <Teaching />
       <ChalkBoard>
@@ -45,9 +48,10 @@ export default EntryRoom;
 const Wrap = styled.div`
   width: 100%;
   height: 100vh;
+  align-items: center;
+  flex-direction: column;
   position: relative;
   display: flex;
-  justify-content: center;
   background-image: linear-gradient(to bottom, #faf1e5 70vh, #c9cb81 40vh);
 `;
 
@@ -64,7 +68,8 @@ const Teaching = styled.img.attrs({
 })`
   position: absolute;
   bottom: 0;
-  width: 50rem;
+  width: 45rem;
+  z-index: 1;
 `;
 
 const ChalkBoard = styled.div`
