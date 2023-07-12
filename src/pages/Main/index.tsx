@@ -2,7 +2,7 @@ import React from 'react';
 import { styled } from 'styled-components';
 import Header from '@/common/Header';
 import BackBoardDecoInMainPage from '@/assets/BackBoardDecoInMainPage.png';
-import Chalk from '@/assets/Chalk.png';
+import FireExtinguisher from '@/assets/FireExtinguisher.png';
 
 const Main = () => {
   return (
@@ -17,6 +17,7 @@ const Main = () => {
           <Buttons>입장하기</Buttons>
         </div>
       </BackBoard>
+      <img className='FireExtinguisherImg' src={FireExtinguisher} />
     </Mains>
   )
 };
@@ -32,6 +33,12 @@ const Mains = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
+  
+  .FireExtinguisherImg {
+    margin-left: 65vw;
+    width: 35rem;
+    height: 13rem;
+  }
 `;
 
 
@@ -50,7 +57,6 @@ const BackBoard = styled.div`
   border-radius: 2rem;
   color: white;
   font-size: 32rem;
-  cursor: url(${Chalk}) 2 2, auto;
   .itemInBackBoard {
     display: flex;
   }
