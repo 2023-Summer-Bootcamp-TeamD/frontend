@@ -6,6 +6,7 @@ import FunctionMathImg from '@/assets/DoodleFunctionMath.png';
 import FireExtinguisherImg from '@/assets/FireExtinguisher.png';
 import TeachingImg from '@/assets/Teaching.png';
 import Label from '@/components/Label';
+import Button from '@/components/Button';
 const EntryRoom = () => {
   return (
     <Wrap>
@@ -27,6 +28,13 @@ const EntryRoom = () => {
             <CodeInput />
             <CodeInput />
           </CodeWrap>
+          <Label name="닉네임" />
+          <NickNameInput
+            placeholder="닉네임을 입력해주세요"
+            required
+            maxLength={5}
+          />
+          <Button title="입장하기" />
         </EntryForm>
       </ChalkBoard>
     </Wrap>
@@ -132,5 +140,23 @@ const CodeInput = styled.input.attrs({ required: true, maxLength: 1 })`
   &:focus {
     outline: none;
     box-shadow: 0px 0px 6px 2px #fff;
+  }
+`;
+
+const NickNameInput = styled.input`
+  text-align: center;
+  border: 0.05rem solid #fff;
+  background-color: rgba(255, 255, 255, 0.18);
+  border-radius: 20rem;
+  width: 23rem;
+  height: 4rem;
+  font-size: 2.5rem;
+  color: #fff;
+  &:focus {
+    outline: none;
+    box-shadow: 0px 0px 1px 1px #fff;
+  }
+  &::placeholder {
+    color: rgba(255, 255, 255, 0.8);
   }
 `;
