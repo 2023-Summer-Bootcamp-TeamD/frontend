@@ -1,9 +1,9 @@
 import React from 'react';
 import { styled } from 'styled-components';
 
-interface MyComponentProps {
+type MyComponentProps = {
   name: string;
-}
+};
 
 const Label = ({ name }: MyComponentProps) => {
   return <LabelName>{name}</LabelName>;

@@ -1,9 +1,9 @@
 import React from 'react';
 import { styled } from 'styled-components';
 
-interface MyComponentProps {
+type MyComponentProps = {
   title: string;
-}
+};
 
 const Button = ({ title }: MyComponentProps) => {
   return <EntryButton>{title}</EntryButton>;

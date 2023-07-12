@@ -11,25 +11,21 @@ import Header from '@/common/Header';
 const EntryRoom = () => {
   return (
     <Wrap>
-      {' '}
       <Header />
       <FireExtinguisher />
       <Teaching />
-      <ChalkBoard>
-        {' '}
+      <Blackboard>
         <DoodleCompass />
         <DoodleMath />
         <DoodleChatting />
         <EntryForm>
-          {' '}
           <Label name="입장코드" />
           <CodeWrap>
-            {' '}
-            <CodeInput />
-            <CodeInput />
-            <CodeInput />
-            <CodeInput />
-            <CodeInput />
+            <CodeInput required maxLength={1} />
+            <CodeInput required maxLength={1} />
+            <CodeInput required maxLength={1} />
+            <CodeInput required maxLength={1} />
+            <CodeInput required maxLength={1} />
           </CodeWrap>
           <Label name="닉네임" />
           <NickNameInput
@@ -39,7 +35,7 @@ const EntryRoom = () => {
           />
           <Button title="입장하기" />
         </EntryForm>
-      </ChalkBoard>
+      </Blackboard>
     </Wrap>
   );
 };
@@ -72,7 +68,7 @@ const Teaching = styled.img.attrs({
   z-index: 1;
 `;
 
-const ChalkBoard = styled.div`
+const Blackboard = styled.div`
   box-sizing: border-box;
   width: 70vw;
   height: 65vh;
@@ -92,7 +88,7 @@ const DoodleCompass = styled.img.attrs({
   position: absolute;
   left: 12rem;
   top: 2rem;
-  width: 5%;
+  width: 6rem;
 `;
 
 const DoodleMath = styled.img.attrs({
@@ -101,7 +97,7 @@ const DoodleMath = styled.img.attrs({
   position: absolute;
   left: 1rem;
   top: 0.7rem;
-  width: 10%;
+  width: 10rem;
 `;
 
 const DoodleChatting = styled.img.attrs({
@@ -110,7 +106,7 @@ const DoodleChatting = styled.img.attrs({
   position: absolute;
   right: 2rem;
   bottom: 3rem;
-  width: 10%;
+  width: 10rem;
 `;
 
 const EntryForm = styled.form`
@@ -126,7 +122,7 @@ const CodeWrap = styled.div`
   justify-content: space-evenly;
   margin-right: 2.5rem;
 `;
-const CodeInput = styled.input.attrs({ required: true, maxLength: 1 })`
+const CodeInput = styled.input`
   margin-left: 2.5rem;
   width: 7rem;
   border: 0 solid;
