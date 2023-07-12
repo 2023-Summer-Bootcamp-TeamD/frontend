@@ -48,13 +48,7 @@ const Wrap = styled.div`
   position: relative;
   display: flex;
   justify-content: center;
-  background-image: linear-gradient(
-    to bottom,
-    #faf1e5 0%,
-    #faf1e5 70%,
-    #c9cb81 70%,
-    #c9cb81 100%
-  );
+  background-image: linear-gradient(to bottom, #faf1e5 70vh, #c9cb81 40vh);
 `;
 
 const FireExtinguisher = styled.img.attrs({

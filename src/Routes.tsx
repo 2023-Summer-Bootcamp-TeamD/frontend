@@ -1,7 +1,5 @@
-/* eslint-disable react-refresh/only-export-components */
-import { lazy } from 'react';
+import React, { lazy } from 'react';
 import GlobalLayout from '@/pages/_layout';
-
 const MainPage = lazy(() => import('@/pages/Main'));
 const EntryRoomPage = lazy(() => import('@/pages/EntryRoom'));
 export const routes = [

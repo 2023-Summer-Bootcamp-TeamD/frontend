@@ -12,12 +12,18 @@
     "format": "prettier --cache --write .",
     "lint-staged": "lint-staged"
   },
+  "lint-staged": {
+    "**/*.{tsx,ts,jsx,js}": [
+      "prettier --write ."
+    ]
+  },
   "dependencies": {
     "@tanstack/react-query": "^4.29.19",
     "@tanstack/react-query-devtools": "^4.29.19",
     "@types/node": "^20.4.1",
     "axios": "^1.4.0",
     "husky": "^8.0.3",
+    "lint-staged": "13.2.3",
     "msw": "^1.2.2",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
