@@ -34,17 +34,13 @@ const ChatInputView = ({ setChat, chat, setChatList }: Props) => {
   };
 
   const sendSumit = () => {
-    if (chat === '') {
-      return;
-    } else {
-      const data = {
-        nickname: '승환',
-        message: chat,
-        date: dayjs().format('HH:mm'),
-      };
-      setChatList((pre) => [...pre, data]);
-      setChat('');
-    }
+    const data = {
+      nickname: '승환',
+      message: chat,
+      date: dayjs().format('HH:mm'),
+    };
+    setChatList((pre) => [...pre, data]);
+    setChat('');
   };
 
   return (

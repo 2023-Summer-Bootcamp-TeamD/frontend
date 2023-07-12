@@ -1,3 +1,4 @@
+import { copyAndPaste } from '@/apis/game';
 import React from 'react';
 import { styled } from 'styled-components';
 
@@ -5,7 +6,7 @@ const Title = () => {
   return (
     <TitleBox>
       <div>참여 인원 6/6</div>
-      <div>
+      <div onClick={() => copyAndPaste('X59C6')}>
         <div>입장코드</div>
         <div>X59C6</div>
       </div>
@@ -30,5 +31,8 @@ const TitleBox = styled.div`
   & > div:nth-child(2) {
     font-size: 3.8rem;
     cursor: pointer;
+    &:hover {
+      scale: 1.05;
+    }
   }
 `;
