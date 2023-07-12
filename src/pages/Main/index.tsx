@@ -2,6 +2,7 @@ import React from 'react';
 import { styled } from 'styled-components';
 import Header from '@/common/Header';
 import BackBoardDecoInMainPage from '@/assets/BackBoardDecoInMainPage.png';
+import Chalk from '@/assets/Chalk.png';
 
 const Main = () => {
   return (
@@ -36,7 +37,7 @@ const Mains = styled.div`
 
 const BackBoard = styled.div`
   background-image: url(${BackBoardDecoInMainPage});
-  background-size: cover;
+  background-size: 70vw 65vh;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -49,6 +50,7 @@ const BackBoard = styled.div`
   border-radius: 2rem;
   color: white;
   font-size: 32rem;
+  cursor: url(${Chalk}) 2 2, auto;
   .itemInBackBoard {
     display: flex;
   }
