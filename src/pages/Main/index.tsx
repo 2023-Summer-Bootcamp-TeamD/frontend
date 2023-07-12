@@ -3,8 +3,14 @@ import { styled } from 'styled-components';
 import Header from '@/common/Header';
 import BackBoardDecoInMainPage from '@/assets/BackBoardDecoInMainPage.png';
 import FireExtinguisher from '@/assets/FireExtinguisher.png';
+import { useNavigate } from 'react-router-dom';
 
 const Main = () => {
+
+  const navigate = useNavigate();
+  const entryRoomButtonClick = () => navigate('/entryroom');
+  const createRoomButtonClick = () => navigate('/creatingspecificrooms');
+
   return (
     <Mains>
       <Header />
@@ -13,8 +19,8 @@ const Main = () => {
           <span>핑고빙고</span>
         </div>
         <div className='itemInBackBoard'>
-          <Buttons>방 만들기</Buttons>
-          <Buttons>입장하기</Buttons>
+          <Buttons onClick={createRoomButtonClick}>방 만들기</Buttons>
+          <Buttons onClick={entryRoomButtonClick}>입장하기</Buttons>
         </div>
       </BackBoard>
       <img className='FireExtinguisherImg' src={FireExtinguisher} />
