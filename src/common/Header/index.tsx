@@ -1,6 +1,6 @@
 import { styled } from 'styled-components';
 import KoreanFlag from '@/assets/KoreanFlag.png';
-import WallClock from '@/assets/WallClock.png';
+import Clock from '@/assets/Clock.png';
 
 const Header = () => {
   return (
@@ -12,7 +12,7 @@ const Header = () => {
         </ClassMotto>
       </div>
       <div>
-        <WallClockImg src={WallClock} />
+        <WallClockImg src={Clock} />
       </div>
       <div>
         <KoreanFlagImg src={KoreanFlag} />
