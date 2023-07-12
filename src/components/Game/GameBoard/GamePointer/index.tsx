@@ -8,23 +8,94 @@ type Props = {
   clearCanvas: () => void;
   setIsErasing: React.Dispatch<React.SetStateAction<boolean>>;
   setLineColor: React.Dispatch<React.SetStateAction<string>>;
+  setCurrentFoucs: React.Dispatch<React.SetStateAction<string>>;
+  handleImageClick: () => void;
 };
 //빨 주 노 초 파 남 보 검 흰
-const GamePointer = ({ clearCanvas, setIsErasing, setLineColor }: Props) => {
+const GamePointer = ({
+  clearCanvas,
+  setIsErasing,
+  setLineColor,
+  handleImageClick,
+  setCurrentFoucs,
+}: Props) => {
   return (
     <PointerBox>
       <img src={Trash} onClick={clearCanvas} />
-      <img src={eraser} onClick={() => setIsErasing(true)} />
-      <img src={pencil} onClick={() => setIsErasing(false)} />
+      <img
+        src={eraser}
+        onClick={() => {
+          setIsErasing(true);
+          handleImageClick();
+          setCurrentFoucs(eraser);
+        }}
+      />
+      <img
+        src={pencil}
+        onClick={() => {
+          setIsErasing(false);
+          handleImageClick();
+          setCurrentFoucs(pencil);
+        }}
+      />
       <img src={chatter} />
       <Colors>
-        <div onClick={() => setLineColor('#ff0000')}></div>
-        <div onClick={() => setLineColor('#ff8c00')}></div>
-        <div onClick={() => setLineColor('#ffff00')}></div>
-        <div onClick={() => setLineColor('#008000')}></div>
-        <div onClick={() => setLineColor('#0000ff')}></div>
-        <div onClick={() => setLineColor('#4b0082')}></div>
-        <div onClick={() => setLineColor('#800080')}></div>
+        <div
+          onClick={() => {
+            setLineColor('#ff0000');
+            setIsErasing(false);
+            handleImageClick();
+            setCurrentFoucs(pencil);
+          }}
+        ></div>
+        <div
+          onClick={() => {
+            setLineColor('#ff8c00');
+            setIsErasing(false);
+            handleImageClick();
+            setCurrentFoucs(pencil);
+          }}
+        ></div>
+        <div
+          onClick={() => {
+            setLineColor('#ffff00');
+            setIsErasing(false);
+            handleImageClick();
+            setCurrentFoucs(pencil);
+          }}
+        ></div>
+        <div
+          onClick={() => {
+            setLineColor('#008000');
+            setIsErasing(false);
+            handleImageClick();
+            setCurrentFoucs(pencil);
+          }}
+        ></div>
+        <div
+          onClick={() => {
+            setLineColor('#0000ff');
+            setIsErasing(false);
+            handleImageClick();
+            setCurrentFoucs(pencil);
+          }}
+        ></div>
+        <div
+          onClick={() => {
+            setLineColor('#4b0082');
+            setIsErasing(false);
+            handleImageClick();
+            setCurrentFoucs(pencil);
+          }}
+        ></div>
+        <div
+          onClick={() => {
+            setLineColor('#800080');
+            setIsErasing(false);
+            handleImageClick();
+            setCurrentFoucs(pencil);
+          }}
+        ></div>
       </Colors>
     </PointerBox>
   );

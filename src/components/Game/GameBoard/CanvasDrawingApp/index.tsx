@@ -1,6 +1,6 @@
 import React, { useRef, useEffect, useState } from 'react';
 import GamePointer from '../GamePointer';
-
+import pencil from '@/assets/pencil.png';
 const CanvasDrawingApp = () => {
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
   const [context, setContext] = useState<CanvasRenderingContext2D | null>(null);
@@ -10,6 +10,7 @@ const CanvasDrawingApp = () => {
   const [isErasing, setIsErasing] = useState<boolean>(false);
   const [lineColor, setLineColor] = useState<string>('#ffffff');
   const [lineWidth, setLineWidth] = useState<number>(4);
+  const [currentFocus, setCurrentFoucs] = useState(pencil);
 
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -50,22 +51,16 @@ const CanvasDrawingApp = () => {
     setIsDrawing(false);
   };
 
-  const toggleEraser = () => {
-    setIsErasing(!isErasing);
-  };
-
-  const changeColor = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setLineColor(event.target.value);
-  };
-
-  const changeLineWidth = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setLineWidth(Number(event.target.value));
-  };
-
   const clearCanvas = () => {
     if (context) {
       context.clearRect(0, 0, context.canvas.width, context.canvas.height);
     }
+  };
+
+  const [isImageClicked, setIsImageClicked] = useState<boolean>(false);
+
+  const handleImageClick = () => {
+    setIsImageClicked(true);
   };
 
   return (
@@ -79,28 +74,9 @@ const CanvasDrawingApp = () => {
         onMouseUp={stopDrawing}
         onMouseOut={stopDrawing}
       />
-      <div>
-        <label>
-          선의 색상:
-          <input type="color" value={lineColor} onChange={changeColor} />
-        </label>
-        <label>
-          선의 굵기:
-          <input
-            type="number"
-            value={lineWidth}
-            min="1"
-            max="10"
-            step="1"
-            onChange={changeLineWidth}
-          />
-        </label>
-        <button onClick={toggleEraser}>
-          {isErasing ? '그리기 모드' : '지우기 모드'}
-        </button>
-        <button onClick={clearCanvas}>모두 지우기</button>
-      </div>
       <GamePointer
+        setCurrentFoucs={setCurrentFoucs}
+        handleImageClick={handleImageClick}
         setLineColor={setLineColor}
         clearCanvas={clearCanvas}
         setIsErasing={setIsErasing}
