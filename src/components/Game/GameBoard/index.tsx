@@ -8,7 +8,7 @@ const GameBoard = () => {
   return (
     <Board>
       {!start && <StartButton setStart={setStart} />}
-      {start && <GameContent setStart={setStart}></GameContent>}
+      {start && <GameContent></GameContent>}
     </Board>
   );
 };

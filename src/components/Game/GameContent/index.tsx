@@ -2,21 +2,12 @@ import { opacityVariants } from '@/constants/variants';
 import { motion } from 'framer-motion';
 import React from 'react';
 import { styled } from 'styled-components';
-import GamePointer from '../GameBoard/GamePointer';
+import CanvasDrawingApp from '../GameBoard/CanvasDrawingApp';
 
-type Props = {
-  setStart: React.Dispatch<React.SetStateAction<boolean>>;
-};
-
-const GameContent = ({ setStart }: Props) => {
+const GameContent = () => {
   return (
-    <Content
-      onClick={() => setStart(false)}
-      variants={opacityVariants}
-      initial="initial"
-      animate="mount"
-    >
-      <GamePointer />
+    <Content variants={opacityVariants} initial="initial" animate="mount">
+      <CanvasDrawingApp />
     </Content>
   );
 };

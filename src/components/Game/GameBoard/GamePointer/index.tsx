@@ -4,13 +4,27 @@ import Trash from '@/assets/trashcan.png';
 import eraser from '@/assets/eraser.png';
 import pencil from '@/assets/pencil.png';
 import chatter from '@/assets/chatter.png';
-const GamePointer = () => {
+type Props = {
+  clearCanvas: () => void;
+  setIsErasing: React.Dispatch<React.SetStateAction<boolean>>;
+};
+//빨 주 노 초 파 남 보 검 흰
+const GamePointer = ({ clearCanvas, setIsErasing }: Props) => {
   return (
     <PointerBox>
-      <img src={Trash} />
-      <img src={eraser} />
-      <img src={pencil} />
+      <img src={Trash} onClick={clearCanvas} />
+      <img src={eraser} onClick={() => setIsErasing(true)} />
+      <img src={pencil} onClick={() => setIsErasing(false)} />
       <img src={chatter} />
+      <Colors>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+      </Colors>
     </PointerBox>
   );
 };
@@ -55,5 +69,22 @@ const PointerBox = styled.div`
     height: 5.5rem;
     bottom: 75px;
     right: 25px;
+  }
+`;
+
+const Colors = styled.div`
+  position: absolute;
+  bottom: 10px;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  display: flex;
+  & > div {
+    width: 30px;
+    height: 30px;
+    margin-right: 5px;
+    border-radius: 50%;
+    cursor: pointer;
+  }
+  & > div {
   }
 `;
