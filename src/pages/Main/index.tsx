@@ -25,7 +25,7 @@ const Main = () => {
       </BackBoard>
       <img className='FireExtinguisherImg' src={FireExtinguisher} />
     </Mains>
-  )
+  );
 };
 
 export default Main;
@@ -34,7 +34,7 @@ const Mains = styled.div`
   font-size: 3rem;
   height: 100vh;
   width: 100vw;
-  background-image: linear-gradient(to bottom, #FAF1E5 70vh, #C9CB81 40vh);
+  background-image: linear-gradient(to bottom, #faf1e5 70vh, #c9cb81 40vh);
   background-repeat: no-repeat;
   display: flex;
   flex-direction: column;
@@ -46,7 +46,6 @@ const Mains = styled.div`
     height: 13rem;
   }
 `;
-
 
 const BackBoard = styled.div`
   background-image: url(${BackBoardDecoInMainPage});
