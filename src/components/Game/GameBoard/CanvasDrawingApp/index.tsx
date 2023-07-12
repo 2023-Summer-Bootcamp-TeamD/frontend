@@ -100,7 +100,11 @@ const CanvasDrawingApp = () => {
         </button>
         <button onClick={clearCanvas}>모두 지우기</button>
       </div>
-      <GamePointer clearCanvas={clearCanvas} setIsErasing={setIsErasing} />
+      <GamePointer
+        setLineColor={setLineColor}
+        clearCanvas={clearCanvas}
+        setIsErasing={setIsErasing}
+      />
     </div>
   );
 };

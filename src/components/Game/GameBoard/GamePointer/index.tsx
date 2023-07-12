@@ -7,9 +7,10 @@ import chatter from '@/assets/chatter.png';
 type Props = {
   clearCanvas: () => void;
   setIsErasing: React.Dispatch<React.SetStateAction<boolean>>;
+  setLineColor: React.Dispatch<React.SetStateAction<string>>;
 };
 //빨 주 노 초 파 남 보 검 흰
-const GamePointer = ({ clearCanvas, setIsErasing }: Props) => {
+const GamePointer = ({ clearCanvas, setIsErasing, setLineColor }: Props) => {
   return (
     <PointerBox>
       <img src={Trash} onClick={clearCanvas} />
@@ -17,13 +18,13 @@ const GamePointer = ({ clearCanvas, setIsErasing }: Props) => {
       <img src={pencil} onClick={() => setIsErasing(false)} />
       <img src={chatter} />
       <Colors>
-        <div></div>
-        <div></div>
-        <div></div>
-        <div></div>
-        <div></div>
-        <div></div>
-        <div></div>
+        <div onClick={() => setLineColor('#ff0000')}></div>
+        <div onClick={() => setLineColor('#ff8c00')}></div>
+        <div onClick={() => setLineColor('#ffff00')}></div>
+        <div onClick={() => setLineColor('#008000')}></div>
+        <div onClick={() => setLineColor('#0000ff')}></div>
+        <div onClick={() => setLineColor('#4b0082')}></div>
+        <div onClick={() => setLineColor('#800080')}></div>
       </Colors>
     </PointerBox>
   );
@@ -85,6 +86,25 @@ const Colors = styled.div`
     border-radius: 50%;
     cursor: pointer;
   }
-  & > div {
+  & > div:nth-child(1) {
+    background-color: #ff0000;
+  }
+  & > div:nth-child(2) {
+    background-color: #ff8c00;
+  }
+  & > div:nth-child(3) {
+    background-color: #ffff00;
+  }
+  & > div:nth-child(4) {
+    background-color: #008000;
+  }
+  & > div:nth-child(5) {
+    background-color: #0000ff;
+  }
+  & > div:nth-child(6) {
+    background-color: #4b0082;
+  }
+  & > div:nth-child(7) {
+    background-color: #800080;
   }
 `;
