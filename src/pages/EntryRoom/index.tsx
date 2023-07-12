@@ -5,6 +5,7 @@ import CompassImg from '@/assets/DoodleCompass.png';
 import FunctionMathImg from '@/assets/DoodleFunctionMath.png';
 import FireExtinguisherImg from '@/assets/FireExtinguisher.png';
 import TeachingImg from '@/assets/Teaching.png';
+import Label from '@/components/Label';
 const EntryRoom = () => {
   return (
     <Wrap>
@@ -15,13 +16,24 @@ const EntryRoom = () => {
         <DoodleCompass />
         <DoodleMath />
         <DoodleChatting />
+        <EntryForm>
+          {' '}
+          <Label name="입장코드" />
+          <CodeWrap>
+            {' '}
+            <CodeInput />
+            <CodeInput />
+            <CodeInput />
+            <CodeInput />
+            <CodeInput />
+          </CodeWrap>
+        </EntryForm>
       </ChalkBoard>
     </Wrap>
   );
 };
 
 export default EntryRoom;
-
 const Wrap = styled.div`
   width: 100%;
   height: 100vh;
@@ -92,4 +104,33 @@ const DoodleChatting = styled.img.attrs({
   right: 2rem;
   bottom: 3rem;
   width: 10%;
+`;
+
+const EntryForm = styled.form`
+  flex-direction: column;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+`;
+
+const CodeWrap = styled.div`
+  height: 7rem;
+  display: flex;
+  justify-content: space-evenly;
+  margin-right: 2.5rem;
+`;
+const CodeInput = styled.input.attrs({ required: true, maxLength: 1 })`
+  margin-left: 2.5rem;
+  width: 7rem;
+  border: 0 solid;
+  border-radius: 50%;
+  text-align: center;
+  font-size: 5rem;
+  font-weight: bold;
+  color: #1c3b3e;
+
+  &:focus {
+    outline: none;
+    box-shadow: 0px 0px 6px 2px #fff;
+  }
 `;
