@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { styled } from 'styled-components';
 import Teaching from '@/assets/Teaching.png';
 import FireExtinguisher from '@/assets/FireExtinguisher.png';
@@ -10,7 +10,25 @@ import Random from '@/assets/Random.png';
 import Animal from '@/assets/Animal.png';
 import Person from '@/assets/Person.png';
 import Header from '../Header';
-const index = () => {
+const CreatingRooms = () => {
+  const [personnel, setPersonel] = useState(2);
+  const [seconds, setSeconds] = useState(10);
+  const [username, setUsername] = useState('');
+  const increaseAdmission = () => {
+    setPersonel(personnel + 1);
+  };
+  const decreaseAdmission = () => {
+    setPersonel(personnel - 1);
+  };
+  const increaseSeconds = () => {
+    setSeconds(seconds + 10);
+  };
+  const decreaseSeconds = () => {
+    setSeconds(seconds - 10);
+  };
+  const handleUserName = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setUsername(e.target.value);
+  };
   return (
     <Admissions>
       <Header />
@@ -19,24 +37,44 @@ const index = () => {
         <DoodleCompassImg src={DoodleCompass} alt="컴퍼스낙서" />
       </DoodleContainer>
       <ButtonContainer>
-        <Buttons src={Food} />
-        <Buttons src={Animal} />
-        <Buttons src={Random} />
-        <Buttons src={Person} />
+        <ButtonContainerRow>
+          <Buttons src={Food} />
+          <ButtonName>음식</ButtonName>
+        </ButtonContainerRow>
+        <ButtonContainerRow>
+          <Buttons src={Animal} />
+          <ButtonName>동물</ButtonName>
+        </ButtonContainerRow>
+        <ButtonContainerRow>
+          <Buttons src={Person} />
+          <ButtonName>인물</ButtonName>
+        </ButtonContainerRow>
+        <ButtonContainerRow>
+          <Buttons src={Random} />
+          <ButtonName>랜덤</ButtonName>
+        </ButtonContainerRow>
       </ButtonContainer>
       <Blackboard />
       <UIContainerRow>
         <UIContainerColumn>
           <NumberOfAdmissions>입장 인원</NumberOfAdmissions>
-          <Arrow>&lt;2&gt;</Arrow>
+          <NumberOfAdmissionsRow>
+            <UpButton onClick={increaseAdmission}>&lt;</UpButton>
+            <Personnels>{personnel}</Personnels>
+            <DownButton onClick={decreaseAdmission}>&gt;</DownButton>
+          </NumberOfAdmissionsRow>
         </UIContainerColumn>
         <UIContainerColumn>
           <NickName>닉네임</NickName>
-          <InputNickName type="text" placeholder="닉네임을 입력하세요!" />
+          <InputNickName type="text" onChange={handleUserName} />
         </UIContainerColumn>
         <UIContainerColumn>
           <TimeLimitPerRound>라운드 당 제한시간</TimeLimitPerRound>
-          <Arrow>&lt;20s&gt;</Arrow>
+          <NumberOfAdmissionsRow>
+            <UpButton onClick={increaseSeconds}>&lt;</UpButton>
+            <Seconds>{seconds}s</Seconds>
+            <DownButton onClick={decreaseSeconds}>&gt;</DownButton>
+          </NumberOfAdmissionsRow>
         </UIContainerColumn>
       </UIContainerRow>
       <ChatterImg src={Chatter} alt="떠든사람" />
@@ -46,10 +84,13 @@ const index = () => {
   );
 };
 
-export default index;
+export default CreatingRooms;
 
 const Admissions = styled.div`
   font-size: 4rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   background-color: #faf1e5;
   background-image: linear-gradient(to bottom, #faf1e5 70vh, #c9cb81 40vh);
   background-repeat: no-repeat;
@@ -65,34 +106,31 @@ const Blackboard = styled.div`
   border: 15px solid #8E5501;
   box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
   border-radius: 20px;
-  position: absolute;
-  top: 20%;
-  right: 50%;
-  transform: translateX(50%);
   zIndex: 2;
 `;
 const TeachingImg = styled.img`
   position: absolute;
   bottom: 0;
-  right: 31%;
 `;
 const ChatterImg = styled.img`
   position: absolute;
-  top: 66%;
-  right: 17%;
+  top: 21em;
+  right: 10em;
   z-index: 1;
 `;
 const DoodleFunctionMathImg = styled.img`
   position: absolute;
   left: 17%;
+  top: 13em;
 `;
 const DoodleCompassImg = styled.img`
   position: absolute;
   left: 28%;
+  top: 13em;
 `;
 const DoodleContainer = styled.div`
-  position: relative;
-  z-index: 1;
+  z-index: 2;
+  top: 10em;
 `;
 const FireExtinguisherImg = styled.img`
   width: 20%;
@@ -114,37 +152,73 @@ const Buttons = styled.img`
     background-color: rgba(255, 255, 255, 0.2);
   }
 `;
+const ButtonName = styled.div`
+  font-size: 1.5em;
+  font-weight: bold;
+  color: #ffffff;
+  position: relative;
+  bottom: 2.2em;
+  left: 2.4em;
+`;
 const ButtonContainer = styled.div`
   display: flex;
-  text-align: center;
-  position: relative;
-  top: 9%;
-  right: 1%;
+  justify-content: center;
+  position: absolute;
+  top: 9.8em;
+`;
+const ButtonContainerRow = styled.div`
+  display: flex;
+  flex-direction: column;
   justify-content: center;
 `;
 const UIContainerRow = styled.div`
+  position: absolute;
+  top: 15.5em;
+  left: 18em;
   display: flex;
   flex-direction: row;
-  position: relative;
-  top: 10%;
-  left: 2%;
-  justify-content: center;
+  justify-content: flex-end;
   align-items: center;
 `;
 const UIContainerColumn = styled.div`
   display: flex;
   flex-direction: column;
-  z-index: 1;
   text-align: center;
+  margin-right: 3em;
+  z-index: 1;
 `;
 const NumberOfAdmissions = styled.div`
+  text-align: center;
   font-family: Uhbee mysen;
   color: white;
   font-size: 3em;
 `;
-const Arrow = styled.span`
+const NumberOfAdmissionsRow = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+`;
+const UpButton = styled.button`
   font-size: 3em;
+  hight: 50%;
+  color: white;
+  background-color: transparent;
+  border-radius: 50%;
+  border: none;
+`;
+const DownButton = styled.button`
+  font-size: 3em;
+  hight: 0.5em;
+  color: white;
+  background-color: transparent;
+  border-radius: 50%;
+  border: none;
+`;
+const Personnels = styled.span`
+  font-size: 5em;
   display: inline-block;
+  position: relative;
+  bottom: 0.7rem;
   color: white;
   text-align: center;
 `;
@@ -154,8 +228,6 @@ const NickName = styled.span`
   margin-bottom: 2rem;
 `;
 const InputNickName = styled.input`
-  margin-left: 7rem;
-  margin-right: 7rem;
   border-radius: 2em;
   background-color: rgba(255, 255, 255, 0.3);
   font-size: 1.5em;
@@ -167,6 +239,15 @@ const InputNickName = styled.input`
   }
 `;
 const TimeLimitPerRound = styled.span`
+  text-align: center;
   font-size: 3em;
   color: white;
+`;
+const Seconds = styled.span`
+  font-size: 5em;
+  display: inline-block;
+  position: relative;
+  bottom: 0.7rem;
+  color: white;
+  text-align: center;
 `;
