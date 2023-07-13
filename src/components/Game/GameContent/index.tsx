@@ -4,10 +4,13 @@ import React from 'react';
 import { styled } from 'styled-components';
 import CanvasDrawingApp from '../GameBoard/CanvasDrawingApp';
 
-const GameContent = () => {
+type Props = {
+  setCurrentFoucs: React.Dispatch<React.SetStateAction<string>>;
+};
+const GameContent = ({ setCurrentFoucs }: Props) => {
   return (
     <Content variants={opacityVariants} initial="initial" animate="mount">
-      <CanvasDrawingApp />
+      <CanvasDrawingApp setCurrentFoucs={setCurrentFoucs} />
     </Content>
   );
 };

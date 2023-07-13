@@ -4,6 +4,7 @@ import Trash from '@/assets/trashcan.png';
 import eraser from '@/assets/eraser.png';
 import pencil from '@/assets/pencil.png';
 import chatter from '@/assets/chatter.png';
+import { COLOR } from '@/constants/color';
 type Props = {
   clearCanvas: () => void;
   setIsErasing: React.Dispatch<React.SetStateAction<boolean>>;
@@ -11,7 +12,7 @@ type Props = {
   setCurrentFoucs: React.Dispatch<React.SetStateAction<string>>;
   handleImageClick: () => void;
 };
-//빨 주 노 초 파 남 보 검 흰
+
 const GamePointer = ({
   clearCanvas,
   setIsErasing,
@@ -40,62 +41,19 @@ const GamePointer = ({
       />
       <img src={chatter} />
       <Colors>
-        <div
-          onClick={() => {
-            setLineColor('#ff0000');
-            setIsErasing(false);
-            handleImageClick();
-            setCurrentFoucs(pencil);
-          }}
-        ></div>
-        <div
-          onClick={() => {
-            setLineColor('#ff8c00');
-            setIsErasing(false);
-            handleImageClick();
-            setCurrentFoucs(pencil);
-          }}
-        ></div>
-        <div
-          onClick={() => {
-            setLineColor('#ffff00');
-            setIsErasing(false);
-            handleImageClick();
-            setCurrentFoucs(pencil);
-          }}
-        ></div>
-        <div
-          onClick={() => {
-            setLineColor('#008000');
-            setIsErasing(false);
-            handleImageClick();
-            setCurrentFoucs(pencil);
-          }}
-        ></div>
-        <div
-          onClick={() => {
-            setLineColor('#0000ff');
-            setIsErasing(false);
-            handleImageClick();
-            setCurrentFoucs(pencil);
-          }}
-        ></div>
-        <div
-          onClick={() => {
-            setLineColor('#4b0082');
-            setIsErasing(false);
-            handleImageClick();
-            setCurrentFoucs(pencil);
-          }}
-        ></div>
-        <div
-          onClick={() => {
-            setLineColor('#800080');
-            setIsErasing(false);
-            handleImageClick();
-            setCurrentFoucs(pencil);
-          }}
-        ></div>
+        {COLOR.map((col, index) => {
+          return (
+            <div
+              key={index}
+              onClick={() => {
+                setLineColor(col);
+                setIsErasing(false);
+                handleImageClick();
+                setCurrentFoucs(pencil);
+              }}
+            ></div>
+          );
+        })}
       </Colors>
     </PointerBox>
   );

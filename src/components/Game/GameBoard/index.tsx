@@ -2,13 +2,17 @@ import React, { useState } from 'react';
 import { styled } from 'styled-components';
 import GameContent from '../GameContent';
 import StartButton from '../StartButton';
-const GameBoard = () => {
+
+type Props = {
+  setCurrentFoucs: React.Dispatch<React.SetStateAction<string>>;
+};
+const GameBoard = ({ setCurrentFoucs }: Props) => {
   const [start, setStart] = useState(false);
 
   return (
     <Board>
       {!start && <StartButton setStart={setStart} />}
-      {start && <GameContent></GameContent>}
+      {start && <GameContent setCurrentFoucs={setCurrentFoucs}></GameContent>}
     </Board>
   );
 };

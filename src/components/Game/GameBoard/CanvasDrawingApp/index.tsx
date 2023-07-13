@@ -1,7 +1,12 @@
 import React, { useRef, useEffect, useState } from 'react';
 import GamePointer from '../GamePointer';
 import pencil from '@/assets/pencil.png';
-const CanvasDrawingApp = () => {
+
+type Props = {
+  setCurrentFoucs: React.Dispatch<React.SetStateAction<string>>;
+};
+
+const CanvasDrawingApp = ({ setCurrentFoucs }: Props) => {
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
   const [context, setContext] = useState<CanvasRenderingContext2D | null>(null);
   const [isDrawing, setIsDrawing] = useState<boolean>(false);
@@ -10,7 +15,6 @@ const CanvasDrawingApp = () => {
   const [isErasing, setIsErasing] = useState<boolean>(false);
   const [lineColor, setLineColor] = useState<string>('#ffffff');
   const [lineWidth, setLineWidth] = useState<number>(4);
-  const [currentFocus, setCurrentFoucs] = useState(pencil);
 
   useEffect(() => {
     const canvas = canvasRef.current;

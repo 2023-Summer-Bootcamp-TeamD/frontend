@@ -3,14 +3,14 @@ import GameBoard from '@/components/Game/GameBoard';
 import GameNav from '@/components/Game/GameNav';
 import UsersChat from '@/components/Game/UsersChat';
 import { styled } from 'styled-components';
+import pencil from '@/assets/pencil.png';
 const Game = () => {
   const [xy, setXY] = useState({ x: 0, y: 0 });
-
-  const xyHandler = (e: any) => {
+  const [currentFocus, setCurrentFoucs] = useState(pencil);
+  const xyHandler = (e: React.MouseEvent<HTMLDivElement>) => {
     const mouseX = e.clientX;
     const mouseY = e.clientY;
     setXY({ x: mouseX, y: mouseY });
-    console.log(xy);
   };
   return (
     <GamePage onMouseMove={xyHandler}>
@@ -19,15 +19,16 @@ const Game = () => {
       </Nav>
       <Section>
         <div>
-          <GameBoard />
+          <GameBoard setCurrentFoucs={setCurrentFoucs} />
           <UsersChat />
         </div>
       </Section>
       <Cursor
-        className="pointer"
         style={{
           transform: `translate(${xy.x}px, ${xy.y}px)`,
         }}
+        src={currentFocus}
+        xy={xy}
       />
     </GamePage>
   );
@@ -63,10 +64,8 @@ const Section = styled.section`
   }
 `;
 
-const Cursor = styled.div`
+const Cursor = styled.img<{ xy: { x: number; y: number } }>`
   position: absolute;
-  background-color: rgb(108, 12, 31);
-  border-radius: 50%;
   width: 30px;
   height: 30px;
   left: -15px;
