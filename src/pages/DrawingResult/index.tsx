@@ -2,12 +2,19 @@ import React from 'react';
 import { styled } from 'styled-components';
 import FireExtinguisherImg from '@/assets/FireExtinguisher.png';
 import DrawingHeader from '@/common/DrawingHeader ';
+import chattingImg from '@/assets/Chatter.png';
+import CompassImg from '@/assets/DoodleCompass.png';
+import FunctionMathImg from '@/assets/DoodleFunctionMath.png';
 const DrawingREsult = () => {
   return (
     <Wrap>
       <DrawingHeader />
       <FireExtinguisher />
-      <Blackboard></Blackboard>
+      <Blackboard>
+        <DoodleCompass />
+        <DoodleMath />
+        <DoodleChatting />
+      </Blackboard>
     </Wrap>
   );
 };
@@ -37,6 +44,32 @@ const Blackboard = styled.div`
   position: relative;
 `;
 
+const DoodleCompass = styled.img.attrs({
+  src: `${CompassImg}`,
+})`
+  position: absolute;
+  left: 12rem;
+  top: 2rem;
+  width: 6rem;
+`;
+
+const DoodleMath = styled.img.attrs({
+  src: `${FunctionMathImg}`,
+})`
+  position: absolute;
+  left: 1rem;
+  top: 0.7rem;
+  width: 10rem;
+`;
+
+const DoodleChatting = styled.img.attrs({
+  src: `${chattingImg}`,
+})`
+  position: absolute;
+  right: 2rem;
+  bottom: 3rem;
+  width: 10rem;
+`;
 const FireExtinguisher = styled.img.attrs({
   src: `${FireExtinguisherImg}`,
 })`
