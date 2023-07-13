@@ -10,7 +10,7 @@ export const routes = [
     element: <GlobalLayout />,
     children: [
       { path: '/', element: <MainPage /> },
-      { path: '/entryroom', element: <EntryRoomPage /> },
+      { path: '/entryRoom', element: <EntryRoomPage /> },
       { path: '/drawingroom', element: <DrawingResult /> },
     ],
   },

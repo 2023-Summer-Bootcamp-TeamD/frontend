@@ -37,6 +37,7 @@ const DrawingREsult = () => {
 };
 
 export default DrawingREsult;
+
 const Wrap = styled.div`
   width: 100%;
   height: 100vh;
@@ -113,12 +114,10 @@ const Category = styled.button`
 const CategoryImg = styled.img`
   height: 15rem;
   width: 15rem;
-  //background-color: #0088ff;
 `;
 const CategoryTitle = styled.label`
   font-size: 4rem;
   color: #fff;
-  // background-color: aliceblue;
   position: absolute;
   bottom: 2rem;
 `;
