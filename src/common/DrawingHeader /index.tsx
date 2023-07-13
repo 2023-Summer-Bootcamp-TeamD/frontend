@@ -12,8 +12,8 @@ const DrawingHeader = () => {
           <Text>돌아가기</Text>
         </ExitBtn>{' '}
       </WrapBtn>
-      {CircleText.map((text, index) => (
-        <CircleWrap key={index}>{text}</CircleWrap>
+      {CircleText.map((text) => (
+        <CircleWrap key={text}>{text}</CircleWrap>
       ))}
     </PageHeader>
   );
@@ -23,21 +23,11 @@ export default DrawingHeader;
 
 const WrapBtn = styled.div`
   position: absolute;
-  left: 3rem;
-  top: 3rem;
+  left: 5rem;
+  top: 4rem;
 `;
-const PageHeader = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 180px;
-  width: 100%;
-`;
-
 const ExitBtn = styled.button`
   position: relative;
-  padding: 0;
-  border: none;
   cursor: pointer;
   background-color: transparent;
 `;
@@ -55,7 +45,13 @@ const Text = styled.span`
   font-weight: bold;
   color: #000000;
 `;
-
+const PageHeader = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 180px;
+  width: 100%;
+`;
 const CircleWrap = styled.div`
   width: 8rem;
   height: 8rem;
