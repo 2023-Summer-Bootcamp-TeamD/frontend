@@ -1,4 +1,3 @@
-import React from 'react';
 import { styled } from 'styled-components';
 import FireExtinguisherImg from '@/assets/FireExtinguisher.png';
 import DrawingHeader from '@/common/DrawingHeader ';
@@ -8,6 +7,20 @@ import FunctionMathImg from '@/assets/DoodleFunctionMath.png';
 import FoodImg from '@/assets/Food.png';
 import PersonImg from '@/assets/Person.png';
 import AnimalImg from '@/assets/Animal.png';
+
+type Category = { img: string; title: string };
+const CategoryItem = [
+  { img: FoodImg, title: '음식' },
+  { img: AnimalImg, title: '동물' },
+  { img: PersonImg, title: '인물' },
+];
+const CategoryItemList = ({ img, title }: Category) => (
+  <Category>
+    <CategoryImg src={img} />
+    <CategoryTitle>{title}</CategoryTitle>
+  </Category>
+);
+
 const DrawingREsult = () => {
   return (
     <Wrap>
@@ -18,18 +31,13 @@ const DrawingREsult = () => {
         <DoodleMath />
         <DoodleChatting />
         <CategoryWrap>
-          <Category>
-            <CategoryImg src={FoodImg} />
-            <CategoryTitle>음식</CategoryTitle>
-          </Category>
-          <Category>
-            <CategoryImg src={AnimalImg} />
-            <CategoryTitle>동물</CategoryTitle>
-          </Category>
-          <Category>
-            <CategoryImg src={PersonImg} />
-            <CategoryTitle>인물</CategoryTitle>
-          </Category>
+          {CategoryItem.map((item) => (
+            <CategoryItemList
+              key={item.title}
+              img={item.img}
+              title={item.title}
+            />
+          ))}
         </CategoryWrap>
       </Blackboard>
     </Wrap>
