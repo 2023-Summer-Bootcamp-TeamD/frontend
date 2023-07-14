@@ -5,18 +5,9 @@ import FireExtinguisher from '@/assets/FireExtinguisher.png';
 import DoodleFunctionMath from '@/assets/DoodleFunctionMath.png';
 import DoodleCompass from '@/assets/DoodleCompass.png';
 import Chatter from '@/assets/Chatter.png';
-import Food from '@/assets/Food.png';
-import Random from '@/assets/Random.png';
-import Animal from '@/assets/Animal.png';
-import Person from '@/assets/Person.png';
+import { roomElement } from '@/constant/roomElement';
 import Header from '../Header';
 const CreatingRooms = () => {
-  const roomElement = [
-    { image: Food, id: '음식' },
-    { image: Animal, id: '동물' },
-    { image: Person, id: '인물' },
-    { image: Random, id: '랜덤' },
-  ];
   const [personnel, setPersonnel] = useState(2);
   const [seconds, setSeconds] = useState(10);
   const increasePersonnel = () => {
@@ -63,11 +54,11 @@ const CreatingRooms = () => {
         <div>
           <div className="NumberOfAdmissions">입장 인원</div>
           <div className="NumberOfAdmissionsRow">
-            <button className="IncreasButton" onClick={increasePersonnel}>
+            <button className="IncreaseButton" onClick={decreasePersonnel}>
               &lt;
             </button>
             <div className="Personnels">{personnel}명</div>
-            <button className="DecreasButton" onClick={decreasePersonnel}>
+            <button className="DecreaseButton" onClick={increasePersonnel}>
               &gt;
             </button>
           </div>
@@ -86,11 +77,11 @@ const CreatingRooms = () => {
         <div>
           <div className="TimeLimitPerRound">라운드 당 제한시간</div>
           <div className="TimeLimitPerRoundRow">
-            <button className="IncreaseSeconds" onClick={increaseSeconds}>
+            <button className="IncreaseSeconds" onClick={decreaseSeconds}>
               &lt;
             </button>
             <div className="Seconds">{seconds}s</div>
-            <button className="DecreaseSeconds" onClick={decreaseSeconds}>
+            <button className="DecreaseSeconds" onClick={increaseSeconds}>
               &gt;
             </button>
           </div>
@@ -173,7 +164,7 @@ const ButtonContainer = styled.div`
 const UIContainer = styled.div`
   position: absolute;
   top: 14.5em;
-  left: 17.6em;
+  left: 16.8em;
   display: flex;
   flex-direction: row;
   justify-content: flex-end;
@@ -183,22 +174,27 @@ const UIContainer = styled.div`
     display: flex;
     flex-direction: column;
     text-align: center;
-    margin-right: 3em;
     z-index: 1;
     align-items: center;
+    positions: relative;
     .NumberOfAdmissions {
       text-align: center;
       color: white;
       font-size: 2em;
       position: relative;
+      top: -0.4em
     }
+  }
+  > div:nth-child(1) {
+    position: relative;
+    right: 7em;
   }
   .NumberOfAdmissionsRow {
     display: flex;
     flex-direction: row;
-    justify-content: center;
-    > .IncreasButton,
-    .DecreasButton {
+    justify-content: center;    
+    > .IncreaseButton,
+    .DecreaseButton {
       display: flex;
       align-items: center;
       font-size: 2em;
@@ -210,14 +206,15 @@ const UIContainer = styled.div`
       background-color: transparent;
       border-radius: 50%;
       padding: 0.3em;
-      margin-right: 1rem;
-      margin-left: 1rem;
+      margin-right: 2rem;
+      margin-left: 2rem;
     }
     > .Personnels {
+      width: 4vw;
       font-size: 6em;
       display: inline-block;
       position: relative;
-      bottom: 0.7rem;
+      bottom: 0.1em;
       color: white;
       text-align: center;
     }
@@ -225,6 +222,7 @@ const UIContainer = styled.div`
   > div:nth-child(2) > .NickName {
     font-size: 2em;
     color: white;
+    margin-top: 3rem;
     margin-bottom: 2rem;
   }
   > div:nth-child(2) > .InputNickName {
@@ -253,20 +251,24 @@ const UIContainer = styled.div`
     text-align: center;
     color: white;
     border: 0.2rem solid white;
-    margin-top: 1rem;
+    margin-top: 1.5rem;
     margin-bottom: auto;
     &:hover {
       background-color: rgba(255, 255, 255, 0.3);
     }
   }
-  > div:nth-child(3) > .TimeLimitPerRound {
-    text-align: center;
-    font-family: Uhbee mysen;
-    color: white;
-    font-size: 2em;
+  > div:nth-child(3) {
     position: relative;
-  }
-  > div:nth-child(3) > .TimeLimitPerRoundRow {
+    left: 7em;
+    > .TimeLimitPerRound {
+      text-align: center;
+      font-family: Uhbee mysen;
+      color: white;
+      font-size: 2em;
+      position: relative;
+      top: -0.4em
+    }
+    .TimeLimitPerRoundRow {
     display: flex;
     flex-direction: row;
     justify-content: center;
@@ -287,6 +289,7 @@ const UIContainer = styled.div`
       margin-left: 1rem;
     }
     .Seconds {
+      width: 4vw;
       font-size: 6em;
       display: inline-block;
       position: relative;
@@ -295,6 +298,7 @@ const UIContainer = styled.div`
       text-align: center;
     }
   }
+  > div:nth-child(3) > 
 `;
 
 const Blackboard = styled.div`
