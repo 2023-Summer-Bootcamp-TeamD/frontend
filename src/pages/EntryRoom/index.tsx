@@ -8,6 +8,7 @@ import TeachingImg from '@/assets/Teaching.png';
 import Label from '@/components/Label';
 import Button from '@/components/Button';
 import Header from '@/common/Header';
+
 const EntryRoom = () => {
   return (
     <Wrap>
