@@ -13,29 +13,28 @@ import Header from '../Header';
 const CreatingRooms = () => {
   const rommElement = [
     { image: Food, id: '음식' },
-    { image: Random, id: '랜덤' },
     { image: Animal, id: '동물' },
     { image: Person, id: '인물' },
+    { image: Random, id: '랜덤' },
   ];
-  const [personnel, setPersonel] = useState(2);
+  const [personnel, setPersonnel] = useState(2);
   const [seconds, setSeconds] = useState(10);
-  const [username, setUsername] = useState(' ');
   const increaseAdmission = () => {
     if (personnel < 2) {
-      setPersonel(2);
+      setPersonnel(2);
     } else if (personnel >= 2 && personnel < 8) {
-      setPersonel(personnel + 1);
+      setPersonnel(personnel + 1);
     } else if (personnel > 8) {
-      setPersonel(8);
+      setPersonnel(8);
     }
   };
   const decreaseAdmission = () => {
     if (personnel <= 2) {
-      setPersonel(2);
+      setPersonnel(2);
     } else if (personnel > 2 && personnel <= 8) {
-      setPersonel(personnel - 1);
+      setPersonnel(personnel - 1);
     } else if (personnel > 8) {
-      setPersonel(8);
+      setPersonnel(8);
     }
   };
   const increaseSeconds = () => {
@@ -54,12 +53,6 @@ const CreatingRooms = () => {
       setSeconds(seconds - 10);
     } else if (seconds > 60) {
       setSeconds(60);
-    }
-  };
-  const handleUserName = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setUsername(e.target.value);
-    if (username.length > 5) {
-      alert('닉네임을 5자리까지만 생성 가능합니다!');
     }
   };
   return (
@@ -95,10 +88,10 @@ const CreatingRooms = () => {
           <NickName>닉네임</NickName>
           <InputNickName
             type="text"
-            onChange={handleUserName}
             placeholder="닉네임을 입력해주세요"
+            required
+            maxLength={5}
           />
-          {username}
           <CreatingRoomButton>방 만들기</CreatingRoomButton>
         </UIContainerColumn>
         <UIContainerColumn>
@@ -162,11 +155,11 @@ const DoodleContainer = styled.div`
   }
   > .FunctionMathImg {
     left: 17%;
-    top: 13em;
+    top: 12em;
   }
   > .CompassImg {
     left: 28%;
-    top: 13em;
+    top: 12em;
   }
 `;
 const FireExtinguisherImg = styled.img`
@@ -191,7 +184,7 @@ const ButtonContainer = styled.div`
     width: 6vw;
     height: 12vh;
     border: 0.3rem solid #ffffff;
-    border-radius: 1rem;
+    border-radius: 2rem;
     margin: 2rem;
     background-color: rgba(255, 255, 255, 0);
     display: flex;
@@ -215,7 +208,7 @@ const ButtonContainer = styled.div`
 const UIContainerRow = styled.div`
   position: absolute;
   top: 14.5em;
-  left: 18em;
+  left: 18.8em;
   display: flex;
   flex-direction: row;
   justify-content: flex-end;
@@ -264,7 +257,7 @@ const UpButton = styled.button`
   height: 1.5em;
   color: white;
   position: relative;
-  top: 0.5rem;
+  top: 1.5rem;
   background-color: transparent;
   border-radius: 50%;
   padding: 0.3em;
@@ -278,14 +271,14 @@ const DownButton = styled.button`
   height: 1.5em;
   color: white;
   position: relative;
-  top: 0.5rem;
+  top: 1.5rem;
   background-color: transparent;
   border-radius: 50%;
   padding: 0.3em;
   margin-left: 1rem;
 `;
 const Personnels = styled.span`
-  font-size: 5em;
+  font-size: 6em;
   display: inline-block;
   position: relative;
   bottom: 0.7rem;
@@ -293,32 +286,34 @@ const Personnels = styled.span`
   text-align: center;
 `;
 const NickName = styled.span`
-  font-size: 3em;
+  font-size: 2em;
   color: white;
   margin-bottom: 2rem;
 `;
 const InputNickName = styled.input`
+  font-family: 'Uhbee mysen';
   border-radius: 2em;
   background-color: rgba(255, 255, 255, 0.3);
-  font-size: 1.5em;
+  font-size: 2em;
   text-align: center;
   color: white;
-  outline: 0.1rem solid white;
+  border: 0.2rem solid white;
   &::placeholder {
     color: white;
-    font-size: 0.8em;
+    font-size: 1em;
   }
   &:focus {
     background-color: rgba(255, 255, 255, 0);
   }
 `;
 const CreatingRoomButton = styled.button`
+  font-family: 'Uhbee mysen';
   border-radius: 2em;
   background-color: rgba(255, 255, 255, 0);
-  font-size: 1.5em;
+  font-size: 2em;
   text-align: center;
   color: white;
-  outline: 0.1rem solid white;
+  border: 0.2rem solid white;
   margin-top: 2rem;
   &:hover {
     background-color: rgba(255, 255, 255, 0.3);
@@ -330,7 +325,7 @@ const TimeLimitPerRound = styled.span`
   color: white;
 `;
 const Seconds = styled.span`
-  font-size: 5em;
+  font-size: 6em;
   display: inline-block;
   position: relative;
   bottom: 0.7rem;
