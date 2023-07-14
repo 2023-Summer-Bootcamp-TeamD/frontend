@@ -5,7 +5,7 @@ import FireExtinguisher from '@/assets/FireExtinguisher.png';
 import DoodleFunctionMath from '@/assets/DoodleFunctionMath.png';
 import DoodleCompass from '@/assets/DoodleCompass.png';
 import Chatter from '@/assets/Chatter.png';
-import { roomElement } from '@/constant/roomElement';
+import { roomElement } from '@/constant/RoomElement';
 import Header from '../Header';
 const CreatingRooms = () => {
   const [personnel, setPersonnel] = useState(2);
