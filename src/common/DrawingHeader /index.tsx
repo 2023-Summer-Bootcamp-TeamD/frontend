@@ -10,7 +10,7 @@ const DrawingHeader = () => {
         <ExitBtn>
           <ExitImg src={Exit} alt="돌아가기" />
           <Text>돌아가기</Text>
-        </ExitBtn>{' '}
+        </ExitBtn>
       </WrapBtn>
       {CircleText.map((text) => (
         <CircleWrap key={text}>{text}</CircleWrap>
