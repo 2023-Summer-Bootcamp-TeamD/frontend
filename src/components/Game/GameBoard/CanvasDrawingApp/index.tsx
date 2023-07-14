@@ -1,6 +1,5 @@
 import React, { useRef, useEffect, useState } from 'react';
 import GamePointer from '../GamePointer';
-import pencil from '@/assets/pencil.png';
 
 type Props = {
   setCurrentFoucs: React.Dispatch<React.SetStateAction<string>>;
@@ -71,8 +70,8 @@ const CanvasDrawingApp = ({ setCurrentFoucs }: Props) => {
     <div>
       <canvas
         ref={canvasRef}
-        width={800}
-        height={600}
+        width={575}
+        height={450}
         onMouseDown={startDrawing}
         onMouseMove={draw}
         onMouseUp={stopDrawing}
