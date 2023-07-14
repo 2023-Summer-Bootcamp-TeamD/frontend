@@ -5,8 +5,8 @@ import CompassImg from '@/assets/DoodleCompass.png';
 import FunctionMathImg from '@/assets/DoodleFunctionMath.png';
 import FireExtinguisherImg from '@/assets/FireExtinguisher.png';
 import TeachingImg from '@/assets/Teaching.png';
-import Label from '@/components/Label';
-import Button from '@/components/Button';
+import Label from '@/components/EntranceLabel';
+import Button from '@/components/ EntranceButton';
 import Header from '@/common/Header';
 
 const EntryRoom = () => {
