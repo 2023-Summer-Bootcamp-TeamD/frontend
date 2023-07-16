@@ -1,13 +1,14 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { styled } from 'styled-components';
 import chattingImg from '@/assets/Chatter.png';
 import CompassImg from '@/assets/DoodleCompass.png';
 import FunctionMathImg from '@/assets/DoodleFunctionMath.png';
 import FireExtinguisherImg from '@/assets/FireExtinguisher.png';
 import TeachingImg from '@/assets/Teaching.png';
-import Label from '@/components/Label';
-import Button from '@/components/Button';
+import Label from '@/components/EnteranceLabel';
+import Button from '@/components/EnteranceButton';
 import Header from '@/common/Header';
+
 const EntryRoom = () => {
   return (
     <Wrap>

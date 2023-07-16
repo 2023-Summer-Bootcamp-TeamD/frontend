@@ -20,12 +20,12 @@ const EntryButton = styled.button`
   background-color: transparent;
   color: #fff;
   font-size: 3rem;
+  cursor: pointer;
   &::placeholder {
     color: #fff;
   }
 
   &:hover {
     background-color: rgba(255, 255, 255, 0.18);
-    cursor: pointer;
   }
 `;
