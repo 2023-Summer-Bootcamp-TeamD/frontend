@@ -1,7 +1,6 @@
 import { styled } from 'styled-components';
 import Exit from '@/assets/Exit.png';
-
-const CircleText = ['우', '리', '의', '작', '품'];
+import { CircleText } from '@/constants/CircleText';
 
 const DrawingHeader = () => {
   return (

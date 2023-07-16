@@ -4,17 +4,9 @@ import DrawingHeader from '@/common/DrawingHeader ';
 import chattingImg from '@/assets/Chatter.png';
 import CompassImg from '@/assets/DoodleCompass.png';
 import FunctionMathImg from '@/assets/DoodleFunctionMath.png';
-import FoodImg from '@/assets/Food.png';
-import PersonImg from '@/assets/Person.png';
-import AnimalImg from '@/assets/Animal.png';
+import { ResultCategory, ResultCategoryType } from '@/constants/ResultCategory';
 
-type Category = { img: string; title: string };
-const CategoryItem = [
-  { img: FoodImg, title: '음식' },
-  { img: AnimalImg, title: '동물' },
-  { img: PersonImg, title: '인물' },
-];
-const CategoryItemList = ({ img, title }: Category) => (
+const CategoryItemList = ({ img, title }: ResultCategoryType) => (
   <Category>
     <img src={img} />
     <label>{title}</label>
@@ -31,7 +23,7 @@ const DrawingREsult = () => {
         <DoodleMath />
         <DoodleChatting />
         <CategoryWrap>
-          {CategoryItem.map((item) => (
+          {ResultCategory.map((item) => (
             <CategoryItemList
               key={item.title}
               img={item.img}
