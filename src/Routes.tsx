@@ -6,7 +6,9 @@ export const routes = [
   {
     path: '/',
     element: <GlobalLayout />,
-    children: [{ path: '/', element: <MainPage /> }],
+    children: [
+      { path: '/', element: <MainPage /> },
+    ],
   },
 ];
 
