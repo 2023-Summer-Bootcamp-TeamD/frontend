@@ -16,8 +16,8 @@ const CategoryItem = [
 ];
 const CategoryItemList = ({ img, title }: Category) => (
   <Category>
-    <CategoryImg src={img} />
-    <CategoryTitle>{title}</CategoryTitle>
+    <img src={img} />
+    <label>{title}</label>
   </Category>
 );
 
@@ -99,7 +99,6 @@ const DoodleChatting = styled.img.attrs({
 const CategoryWrap = styled.div`
   width: 100%;
   height: 17rem;
-  //background: #41d319;
   display: flex;
   justify-content: space-evenly;
 `;
@@ -114,20 +113,20 @@ const Category = styled.button`
   position: relative;
   align-items: center;
   justify-content: center;
+  cursor: pointer;
   &:hover {
     background-color: rgba(255, 255, 255, 0.18);
-    cursor: pointer;
   }
-`;
-const CategoryImg = styled.img`
-  height: 15rem;
-  width: 15rem;
-`;
-const CategoryTitle = styled.label`
-  font-size: 4rem;
-  color: #fff;
-  position: absolute;
-  bottom: 2rem;
+  & > img {
+    height: 15rem;
+    width: 15rem;
+  }
+  & > label {
+    font-size: 4rem;
+    color: #fff;
+    position: absolute;
+    bottom: 2rem;
+  }
 `;
 
 const FireExtinguisher = styled.img.attrs({
