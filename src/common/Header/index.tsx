@@ -1,6 +1,6 @@
 import { styled } from 'styled-components';
 import KoreanFlag from '@/assets/KoreanFlag.png';
-import Clock from '@/assets/Clock.png';
+import Clock from '@/assets/WallClock.png';
 
 const Header = () => {
   return (

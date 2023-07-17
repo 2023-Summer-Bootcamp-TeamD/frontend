@@ -7,8 +7,8 @@ import { useNavigate } from 'react-router-dom';
 
 const Main = () => {
   const navigate = useNavigate();
-  const entryRoomButtonClick = () => navigate('/entryRoom');
-  const createRoomButtonClick = () => navigate('/creatingspecificrooms');
+  const goToEntryRoom = () => navigate('/entryRoom');
+  const goToCreatRoom = () => navigate('/creatingSpecificRooms');
 
   return (
     <Mains>
@@ -18,8 +18,8 @@ const Main = () => {
           <span>핑고빙고</span>
         </div>
         <div className="itemInBlackBoard">
-          <Buttons onClick={createRoomButtonClick}>방 만들기</Buttons>
-          <Buttons onClick={entryRoomButtonClick}>입장하기</Buttons>
+          <Buttons onClick={goToCreatRoom}>방 만들기</Buttons>
+          <Buttons onClick={goToEntryRoom}>입장하기</Buttons>
         </div>
       </Blackboard>
       <img className="FireExtinguisherImg" src={FireExtinguisher} />
