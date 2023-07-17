@@ -18,6 +18,9 @@
     ]
   },
   "dependencies": {
+    "@sentry/browser": "^7.58.1",
+    "@sentry/react": "^7.58.1",
+    "@sentry/tracing": "^7.58.1",
     "@tanstack/react-query": "^4.29.19",
     "@tanstack/react-query-devtools": "^4.29.19",
     "@types/node": "^20.4.1",
