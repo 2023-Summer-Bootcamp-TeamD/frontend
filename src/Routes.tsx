@@ -3,7 +3,6 @@ import GlobalLayout from '@/pages/_layout';
 const MainPage = lazy(() => import('@/pages/Main'));
 const EntryRoomPage = lazy(() => import('@/pages/EntryRoom'));
 const DrawingResult = lazy(() => import('@/pages/DrawingResult'));
-
 const GamePage = lazy(() => import('@/pages/Game'));
 export const routes = [
   {
