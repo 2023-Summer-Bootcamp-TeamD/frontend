@@ -21,7 +21,6 @@ const GameResult = () => {
         <span className="center-items">The Best Player of Game</span>
         <span className="right-items">성명 {bestPlayerName}</span>
         <span className="center-items">
-          {' '}
           위 사람은 Team-D에서 만든 핑고빙고 게임에서 우수한 성적을 거두었기에
           이 상장을 수여함.
         </span>
