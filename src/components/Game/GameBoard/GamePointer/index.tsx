@@ -9,7 +9,7 @@ type Props = {
   clearCanvas: () => void;
   setIsErasing: React.Dispatch<React.SetStateAction<boolean>>;
   setLineColor: React.Dispatch<React.SetStateAction<string>>;
-  setCurrentFoucs: React.Dispatch<React.SetStateAction<string>>;
+  setCurrentFocus: React.Dispatch<React.SetStateAction<string>>;
   handleImageClick: () => void;
 };
 
@@ -18,7 +18,7 @@ const GamePointer = ({
   setIsErasing,
   setLineColor,
   handleImageClick,
-  setCurrentFoucs,
+  setCurrentFocus,
 }: Props) => {
   return (
     <PointerBox>
@@ -28,7 +28,7 @@ const GamePointer = ({
         onClick={() => {
           setIsErasing(true);
           handleImageClick();
-          setCurrentFoucs(eraser);
+          setCurrentFocus(eraser);
         }}
       />
       <img
@@ -36,7 +36,7 @@ const GamePointer = ({
         onClick={() => {
           setIsErasing(false);
           handleImageClick();
-          setCurrentFoucs(pencil);
+          setCurrentFocus(pencil);
         }}
       />
       <img src={chatter} />
@@ -49,7 +49,7 @@ const GamePointer = ({
                 setLineColor(col);
                 setIsErasing(false);
                 handleImageClick();
-                setCurrentFoucs(pencil);
+                setCurrentFocus(pencil);
               }}
             ></div>
           );

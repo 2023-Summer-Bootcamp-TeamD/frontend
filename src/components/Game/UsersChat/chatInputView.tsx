@@ -14,7 +14,7 @@ const ChatInputView = ({ setChat, chat, setChatList }: Props) => {
     setChat(e.target.value);
   };
 
-  //텍스트창에서 엔터를 눌렀을떄 실행되는 함수
+  //텍스트창에서 엔터를 눌렀을때 실행되는 함수
   const sendMessageToEnter = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
     if (
       e.currentTarget.value.length !== 0 &&
@@ -27,7 +27,7 @@ const ChatInputView = ({ setChat, chat, setChatList }: Props) => {
     }
   };
 
-  //전송 버튼을 클릭했을떄 실행되는 함수
+  //전송 버튼을 클릭했을때 실행되는 함수
   const sendMessage = () => {
     sendSumit();
     setChat('');

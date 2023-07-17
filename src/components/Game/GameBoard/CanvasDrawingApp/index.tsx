@@ -2,10 +2,10 @@ import React, { useRef, useEffect, useState } from 'react';
 import GamePointer from '../GamePointer';
 
 type Props = {
-  setCurrentFoucs: React.Dispatch<React.SetStateAction<string>>;
+  setCurrentFocus: React.Dispatch<React.SetStateAction<string>>;
 };
 
-const CanvasDrawingApp = ({ setCurrentFoucs }: Props) => {
+const CanvasDrawingApp = ({ setCurrentFocus }: Props) => {
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
   const [context, setContext] = useState<CanvasRenderingContext2D | null>(null);
   const [isDrawing, setIsDrawing] = useState<boolean>(false);
@@ -78,7 +78,7 @@ const CanvasDrawingApp = ({ setCurrentFoucs }: Props) => {
         onMouseOut={stopDrawing}
       />
       <GamePointer
-        setCurrentFoucs={setCurrentFoucs}
+        setCurrentFocus={setCurrentFocus}
         handleImageClick={handleImageClick}
         setLineColor={setLineColor}
         clearCanvas={clearCanvas}

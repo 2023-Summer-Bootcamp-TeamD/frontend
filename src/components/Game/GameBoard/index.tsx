@@ -4,15 +4,15 @@ import GameContent from '../GameContent';
 import StartButton from '../StartButton';
 
 type Props = {
-  setCurrentFoucs: React.Dispatch<React.SetStateAction<string>>;
+  setCurrentFocus: React.Dispatch<React.SetStateAction<string>>;
 };
-const GameBoard = ({ setCurrentFoucs }: Props) => {
+const GameBoard = ({ setCurrentFocus }: Props) => {
   const [start, setStart] = useState(false);
 
   return (
     <Board>
       {!start && <StartButton setStart={setStart} />}
-      {start && <GameContent setCurrentFoucs={setCurrentFoucs}></GameContent>}
+      {start && <GameContent setCurrentFocus={setCurrentFocus}></GameContent>}
     </Board>
   );
 };

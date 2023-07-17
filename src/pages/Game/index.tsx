@@ -6,7 +6,7 @@ import { styled } from 'styled-components';
 import pencil from '@/assets/pencil.png';
 const Game = () => {
   const [xy, setXY] = useState({ x: 0, y: 0 });
-  const [currentFocus, setCurrentFoucs] = useState(pencil);
+  const [currentFocus, setCurrentFocus] = useState(pencil);
   const xyHandler = (e: React.MouseEvent<HTMLDivElement>) => {
     const mouseX = e.clientX;
     const mouseY = e.clientY;
@@ -19,7 +19,7 @@ const Game = () => {
       </Nav>
       <Section>
         <div>
-          <GameBoard setCurrentFoucs={setCurrentFoucs} />
+          <GameBoard setCurrentFocus={setCurrentFocus} />
           <UsersChat />
         </div>
       </Section>

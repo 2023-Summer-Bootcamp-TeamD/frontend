@@ -5,12 +5,12 @@ import { styled } from 'styled-components';
 import CanvasDrawingApp from '../GameBoard/CanvasDrawingApp';
 
 type Props = {
-  setCurrentFoucs: React.Dispatch<React.SetStateAction<string>>;
+  setCurrentFocus: React.Dispatch<React.SetStateAction<string>>;
 };
-const GameContent = ({ setCurrentFoucs }: Props) => {
+const GameContent = ({ setCurrentFocus }: Props) => {
   return (
     <Content variants={opacityVariants} initial="initial" animate="mount">
-      <CanvasDrawingApp setCurrentFoucs={setCurrentFoucs} />
+      <CanvasDrawingApp setCurrentFocus={setCurrentFocus} />
     </Content>
   );
 };
