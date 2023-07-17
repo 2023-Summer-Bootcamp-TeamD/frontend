@@ -309,7 +309,6 @@ const Blackboard = styled.div`
   border: 15px solid #8e5501;
   box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
   border-radius: 20px;
-  z-index: 2;
   position: relative;
   bottom: 2rem;
 `;
