@@ -8,6 +8,7 @@ import GlobalStyle from './GlobalStyle';
 export default function App() {
   const queryClient = getClient();
   const elem = useRoutes(routes);
+
   return (
     <QueryClientProvider client={queryClient}>
       <GlobalStyle />
