@@ -8,7 +8,7 @@ import * as Sentry from '@sentry/browser';
 const Root = () => {
   useEffect(() => {
     Sentry.init({
-      dsn: 'https://940159203adb4281af17b916e0218c49@o4505540123754496.ingest.sentry.io/4505540124934144',
+      dsn: process.env.REACT_APP_SENTRY_DSN,
       integrations: [
         new Sentry.BrowserTracing({
           // Set 'tracePropagationTargets' to control for which URLs distributed tracing should be enabled
