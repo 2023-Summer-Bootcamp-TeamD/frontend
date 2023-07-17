@@ -5,10 +5,9 @@ import CompassImg from '@/assets/DoodleCompass.png';
 import FunctionMathImg from '@/assets/DoodleFunctionMath.png';
 import FireExtinguisherImg from '@/assets/FireExtinguisher.png';
 import TeachingImg from '@/assets/Teaching.png';
-import Label from '@/components/EnteranceLabel';
-import Button from '@/components/EnteranceButton';
+import Label from '@/components/Entrance/EntranceLabel';
+import Button from '@/components/Entrance/ EntranceButton';
 import Header from '@/common/Header';
-
 const EntryRoom = () => {
   return (
     <Wrap>
