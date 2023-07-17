@@ -84,13 +84,11 @@ const TheFirstAward = styled.div`
     font-size: 1.4rem;
   }
   span:nth-child(2) {
-    //style={{fontSize: '8em', marginTop: '4rem', marginBottom: '0', height: '1vh'}};
     font-size: 3rem;
     margin-top: 4rem;
     margin-bottom: 0;
   }
   span:nth-child(3) {
-    // style={{fontSize: '4em', color: '#B8B2B2', height: '1vh'}}
     font-size: 2rem;
     margin-top: 1rem;
     color: #b8b2b2;
@@ -101,7 +99,6 @@ const TheFirstAward = styled.div`
     margin-bottom: 2rem;
   }
   span:nth-child(5) {
-    //style={{fontSize: '6em', marginLeft: '4rem', marginRight: '3rem'}}
     font-size: 3rem;
     margin-left: 4rem;
     margin-right: 3rem;
@@ -109,13 +106,11 @@ const TheFirstAward = styled.div`
     text-align: center;
   }
   span:nth-child(6) {
-    //style={{fontSize: '4em', marginTop: '15rem', marginBottom: '0'}}
     font-size: 1.5rem;
     margin-top: 10rem;
     margin-bottom: 0;
   }
   span:nth-child(7) {
-    //style={{fontSize: '4em', marginTop: '1rem', marginBottom: '0'}}
     font-size: 1%.5;
     margin-top: 1rem;
     margin-bottom: 0;
