@@ -5,8 +5,8 @@ import FireExtinguisher from '@/assets/FireExtinguisher.png';
 import DoodleFunctionMath from '@/assets/DoodleFunctionMath.png';
 import DoodleCompass from '@/assets/DoodleCompass.png';
 import Chatter from '@/assets/Chatter.png';
-import { roomElement } from '@/constant/RoomElement';
-import Header from '../Header';
+import { roomElement } from '@/constants/roomElement';
+import Header from '@/common/Header';
 const CreatingRooms = () => {
   const [personnel, setPersonnel] = useState(2);
   const [seconds, setSeconds] = useState(10);
@@ -93,9 +93,7 @@ const CreatingRooms = () => {
     </Admissions>
   );
 };
-
 export default CreatingRooms;
-
 const Admissions = styled.div`
   font-size: 4rem;
   display: flex;
@@ -108,7 +106,6 @@ const Admissions = styled.div`
   width: 100vw;
   position: relative;
 `;
-
 const DoodleContainer = styled.div`
   z-index: 2;
   top: 10em;
@@ -129,13 +126,11 @@ const ButtonContainer = styled.div`
   justify-content: center;
   position: absolute;
   top: 9.8em;
-
   > div {
     display: flex;
     flex-direction: column;
     justify-content: center;
   }
-
   > div > img {
     width: 6vw;
     height: 12vh;
@@ -146,7 +141,6 @@ const ButtonContainer = styled.div`
     display: flex;
     z-index: 1;
   }
-
   > div > div {
     font-size: 1.5em;
     font-weight: bold;
@@ -156,7 +150,6 @@ const ButtonContainer = styled.div`
     left: 2.4em;
     z-index: 1;
   }
-
   > div > img:hover {
     background-color: rgba(255, 255, 255, 0.2);
   }
@@ -169,20 +162,19 @@ const UIContainer = styled.div`
   flex-direction: row;
   justify-content: flex-end;
   align-items: center;
-
   > div {
     display: flex;
     flex-direction: column;
     text-align: center;
     z-index: 1;
     align-items: center;
-    positions: relative;
+    position: relative;
     .NumberOfAdmissions {
       text-align: center;
       color: white;
       font-size: 2em;
       position: relative;
-      top: -0.4em
+      top: -0.4em;
     }
   }
   > div:nth-child(1) {
@@ -192,7 +184,7 @@ const UIContainer = styled.div`
   .NumberOfAdmissionsRow {
     display: flex;
     flex-direction: row;
-    justify-content: center;    
+    justify-content: center;
     > .IncreaseButton,
     .DecreaseButton {
       display: flex;
@@ -266,54 +258,51 @@ const UIContainer = styled.div`
       color: white;
       font-size: 2em;
       position: relative;
-      top: -0.4em
+      top: -0.4em;
     }
     .TimeLimitPerRoundRow {
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    > .IncreaseSeconds,
-    .DecreaseSeconds {
       display: flex;
-      align-items: center;
-      font-size: 2em;
-      border: 2px solid white;
-      height: 1.5em;
-      color: white;
-      position: relative;
-      top: 1.5rem;
-      background-color: transparent;
-      border-radius: 50%;
-      padding: 0.3em;
-      margin-right: 1rem;
-      margin-left: 1rem;
-    }
-    .Seconds {
-      width: 4vw;
-      font-size: 6em;
-      display: inline-block;
-      position: relative;
-      bottom: 0.7rem;
-      color: white;
-      text-align: center;
+      flex-direction: row;
+      justify-content: center;
+      > .IncreaseSeconds,
+      .DecreaseSeconds {
+        display: flex;
+        align-items: center;
+        font-size: 2em;
+        border: 2px solid white;
+        height: 1.5em;
+        color: white;
+        position: relative;
+        top: 1.5rem;
+        background-color: transparent;
+        border-radius: 50%;
+        padding: 0.3em;
+        margin-right: 1rem;
+        margin-left: 1rem;
+      }
+      .Seconds {
+        width: 4vw;
+        font-size: 6em;
+        display: inline-block;
+        position: relative;
+        bottom: 0.7rem;
+        color: white;
+        text-align: center;
+      }
     }
   }
-  > div:nth-child(3) > 
 `;
-
 const Blackboard = styled.div`
-  border-box;
+  box-sizing: border-box;
   width: 70vw;
   height: 65vh;
-  background: #1C3B3E;
-  border: 15px solid #8E5501;
+  background: #1c3b3e;
+  border: 15px solid #8e5501;
   box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
   border-radius: 20px;
-  zIndex: 2;
   position: relative;
   bottom: 2rem;
 `;
-
 const ChatterImg = styled.img`
   position: absolute;
   top: 21em;
