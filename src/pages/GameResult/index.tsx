@@ -81,25 +81,28 @@ const TheFirstAward = styled.div`
     margin: 3rem 1rem;
   }
   span {
-    font-size: 3rem;
+    font-size: 1.4rem;
   }
   span:nth-child(2) {
     //style={{fontSize: '8em', marginTop: '4rem', marginBottom: '0', height: '1vh'}};
-    font-size: 8rem;
+    font-size: 3rem;
     margin-top: 4rem;
     margin-bottom: 0;
   }
   span:nth-child(3) {
     // style={{fontSize: '4em', color: '#B8B2B2', height: '1vh'}}
-    font-size: 4rem;
+    font-size: 2rem;
+    margin-top: 1rem;
     color: #b8b2b2;
   }
   span:nth-child(4) {
-    font-size: 4rem;
+    font-size: 2.5rem;
+    margin-top: 2rem;
+    margin-bottom: 2rem;
   }
   span:nth-child(5) {
     //style={{fontSize: '6em', marginLeft: '4rem', marginRight: '3rem'}}
-    font-size: 6rem;
+    font-size: 3rem;
     margin-left: 4rem;
     margin-right: 3rem;
     white-space: pre-line;
@@ -107,13 +110,13 @@ const TheFirstAward = styled.div`
   }
   span:nth-child(6) {
     //style={{fontSize: '4em', marginTop: '15rem', marginBottom: '0'}}
-    font-size: 4rem;
-    margin-top: 15rem;
+    font-size: 1.5rem;
+    margin-top: 10rem;
     margin-bottom: 0;
   }
   span:nth-child(7) {
     //style={{fontSize: '4em', marginTop: '1rem', marginBottom: '0'}}
-    font-size: 4rem;
+    font-size: 1%.5;
     margin-top: 1rem;
     margin-bottom: 0;
   }
