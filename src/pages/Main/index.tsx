@@ -6,7 +6,6 @@ import FireExtinguisher from '@/assets/FireExtinguisher.png';
 import { useNavigate } from 'react-router-dom';
 
 const Main = () => {
-
   const navigate = useNavigate();
   const entryRoomButtonClick = () => navigate('/entryRoom');
   const createRoomButtonClick = () => navigate('/creatingspecificrooms');
@@ -15,15 +14,15 @@ const Main = () => {
     <Mains>
       <Header />
       <Blackboard>
-        <div className='itemInBlackBoard'>
+        <div className="itemInBlackBoard">
           <span>핑고빙고</span>
         </div>
-        <div className='itemInBlackBoard'>
+        <div className="itemInBlackBoard">
           <Buttons onClick={createRoomButtonClick}>방 만들기</Buttons>
           <Buttons onClick={entryRoomButtonClick}>입장하기</Buttons>
         </div>
       </Blackboard>
-      <img className='FireExtinguisherImg' src={FireExtinguisher} />
+      <img className="FireExtinguisherImg" src={FireExtinguisher} />
     </Mains>
   );
 };
@@ -39,7 +38,7 @@ const Mains = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  
+
   .FireExtinguisherImg {
     margin-left: 65vw;
     width: 32rem;
@@ -56,8 +55,8 @@ const Blackboard = styled.div`
   align-items: center;
   width: 70vw;
   height: 65vh;
-  background-color: #1C3B3E;
-  border: 15px solid #8E5501;
+  background-color: #1c3b3e;
+  border: 15px solid #8e5501;
   box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
   border-radius: 2rem;
   color: white;
@@ -65,20 +64,20 @@ const Blackboard = styled.div`
   .itemInBlackBoard {
     display: flex;
   }
-`
+`;
 
 const Buttons = styled.button`
   width: 16rem;
   height: 5rem;
-  font-family: "Uhbee mysen";
+  font-family: 'Uhbee mysen';
   font-size: 3.5rem;
   color: white;
-  background-color: #1C3B3E;
-  border: 0.2rem solid #FFFFFF;
+  background-color: #1c3b3e;
+  border: 0.2rem solid #ffffff;
   filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
   border-radius: 3rem;
   margin: 3rem 5rem;
   &:hover {
-    background-color:#455E61;
+    background-color: #455e61;
   }
-`
+`;
