@@ -3,15 +3,13 @@ import Award from '@/assets/Award.png';
 import RankingMemo from '@/assets/RankingMemo.png';
 import DrawingRoom from '@/assets/DrawingRoomIcon.png';
 import { useNavigate } from 'react-router-dom';
-
+import wrong from '@/assets/wrong.png';
+import { DAY, USERRANK, bestPlayerName, crapeTalk } from '@/constants/rank';
 const GameResult = () => {
   const naviagte = useNavigate();
 
-  const xButtonClick = () => naviagte('/');
-  const drawingRoomButtonClick = () => naviagte('/drawingroom');
-
-  const bestPlayerName = '서 근 재';
-  const nowDate = new Date();
+  const goToMain = () => naviagte('/');
+  const goToDrwaingRoom = () => naviagte('/drawingroom');
 
   return (
     <GameResultContainer>
@@ -20,29 +18,18 @@ const GameResult = () => {
         <span className="center-items">상장</span>
         <span className="center-items">The Best Player of Game</span>
         <span className="right-items">성명 {bestPlayerName}</span>
-        <span className="center-items">
-          위 사람은 Team-D에서 만든 핑고빙고 게임에서 우수한 성적을 거두었기에
-          이 상장을 수여함.
-        </span>
-        <span className="center-items">
-          {nowDate.getFullYear()}년 {nowDate.getMonth() + 1}월{' '}
-          {nowDate.getDate()}일
-        </span>
+        <span className="center-items">{crapeTalk}</span>
+        <span className="center-items">{DAY}</span>
         <span className="center-items">Team D 대표 최현정</span>
       </TheFirstAward>
       <div className="right-items">
-        <Buttons onClick={xButtonClick}>X</Buttons>
+        <Buttons onClick={goToMain}></Buttons>
         <Ranking>
-          <span>1등급 </span>
-          <span>2등급</span>
-          <span>3등급</span>
-          <span>4등급</span>
-          <span>5등급</span>
-          <span>6등급</span>
-          <span>7등급</span>
-          <span>8등급</span>
+          {USERRANK.map((user, index) => {
+            return <span key={index}>{user}</span>;
+          })}
         </Ranking>
-        <Buttons onClick={drawingRoomButtonClick}>
+        <Buttons onClick={goToDrwaingRoom}>
           <img src={DrawingRoom} className="drawingRoom-icon" />
         </Buttons>
       </div>
@@ -99,7 +86,7 @@ const TheFirstAward = styled.div`
     margin-bottom: 2rem;
   }
   span:nth-child(5) {
-    font-size: 3rem;
+    font-size: 2.5rem;
     margin-left: 4rem;
     margin-right: 3rem;
     white-space: pre-line;
@@ -124,25 +111,24 @@ const TheFirstAward = styled.div`
   }
 `;
 
-const Buttons = styled.button`
+const Buttons = styled.div`
   margin-left: auto;
-  border: 0;
   width: 4rem;
   height: 4rem;
   background-color: white;
-  border-radius: 3rem;
+  border-radius: 50%;
   margin-bottom: 3rem;
-  font-size: 2rem;
+  font-size: 2.5rem;
   &:hover {
-    transform: translateY(-5px);
+    cursor: pointer;
+    opacity: 0.8;
   }
   &:last-child {
     background-color: transparent;
     margin-right: 5rem;
   }
-  & > img {
-    width: 8rem;
-  }
+  background-image: url(${wrong});
+  background-size: contain;
 `;
 
 const Ranking = styled.div`
@@ -159,6 +145,22 @@ const Ranking = styled.div`
     height: 53vh;
   }
   & > span {
-    font-size: 4.5rem;
+    font-size: 4.2rem;
+    font-weight: 700;
+  }
+
+  & > span:nth-child(1) {
+    color: #e94600;
+    opacity: 0.9;
+    font-weight: 700;
+  }
+  & > span:nth-child(2) {
+    color: #5282ff;
+    font-weight: 700;
+  }
+  & > span:nth-child(3) {
+    color: #bc00fe;
+    opacity: 0.7;
+    font-weight: 700;
   }
 `;
