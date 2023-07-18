@@ -58,11 +58,17 @@ const CreatingRooms = () => {
           <div>
             <Label name="입장 인원" />
             <div className="NumberOfAdmissionsRow">
-              <button className="IncreaseButton" onClick={decreasePersonnel}>
+              <button
+                className="IncreaseAndDecreaseButtons"
+                onClick={decreasePersonnel}
+              >
                 &lt;
               </button>
               <div className="Personnels">{personnel}명</div>
-              <button className="DecreaseButton" onClick={increasePersonnel}>
+              <button
+                className="IncreaseAndDecreaseButtons"
+                onClick={increasePersonnel}
+              >
                 &gt;
               </button>
             </div>
@@ -78,11 +84,17 @@ const CreatingRooms = () => {
           <div>
             <Label name="라운드 당 제한 시간" />
             <div className="TimeLimitPerRoundRow">
-              <button className="IncreaseSeconds" onClick={decreaseSeconds}>
+              <button
+                className="IncreaseAndDecreaseButtons"
+                onClick={decreaseSeconds}
+              >
                 &lt;
               </button>
               <div className="Seconds">{seconds}s</div>
-              <button className="DecreaseSeconds" onClick={increaseSeconds}>
+              <button
+                className="IncreaseAndDecreaseButtons"
+                onClick={increaseSeconds}
+              >
                 &gt;
               </button>
             </div>
@@ -190,22 +202,7 @@ const UIContainer = styled.div`
     display: flex;
     flex-direction: row;
     justify-content: center;
-    > .IncreaseButton,
-    .DecreaseButton {
-      display: flex;
-      align-items: center;
-      font-size: 2rem;
-      border: 2px solid white;
-      height: 1.5em;
-      color: white;
-      position: relative;
-      top: 1.5rem;
-      background-color: transparent;
-      border-radius: 50%;
-      padding: 0.3em;
-      margin-right: 2rem;
-      margin-left: 2rem;
-    }
+
     > .Personnels {
       width: 4vw;
       font-size: 5rem;
@@ -222,23 +219,7 @@ const UIContainer = styled.div`
     margin-top: 3rem;
     margin-bottom: 2rem;
   }
-  > div:nth-child(2) > .InputNickName {
-    width: 20vw;
-    font-family: 'Uhbee mysen';
-    border-radius: 2em;
-    background-color: rgba(255, 255, 255, 0.3);
-    font-size: 2em;
-    text-align: center;
-    color: white;
-    border: 0.2rem solid white;
-    &::placeholder {
-      color: white;
-      font-size: 0.9em;
-    }
-    &:focus {
-      background-color: rgba(255, 255, 255, 0);
-    }
-  }
+
   > div:nth-child(3) {
     position: relative;
     left: 7em;
@@ -254,22 +235,7 @@ const UIContainer = styled.div`
       display: flex;
       flex-direction: row;
       justify-content: center;
-      > .IncreaseSeconds,
-      .DecreaseSeconds {
-        display: flex;
-        align-items: center;
-        font-size: 2rem;
-        border: 2px solid white;
-        height: 1.5em;
-        color: white;
-        position: relative;
-        top: 1.5rem;
-        background-color: transparent;
-        border-radius: 50%;
-        padding: 0.3em;
-        margin-right: 1rem;
-        margin-left: 1rem;
-      }
+
       .Seconds {
         width: 4vw;
         font-size: 5rem;
@@ -280,6 +246,25 @@ const UIContainer = styled.div`
         text-align: center;
       }
     }
+  }
+  .IncreaseAndDecreaseButtons {
+    display: flex;
+    align-items: center;
+    font-size: 2rem;
+    border: 2px solid white;
+    height: 1.5em;
+    color: white;
+    position: relative;
+    top: 1.5rem;
+    background-color: transparent;
+    border-radius: 50%;
+    padding: 0.3em;
+    margin-right: 1rem;
+    margin-left: 1rem;
+  }
+  .IncreaseAndDecreaseButtons :hover {
+    cursor: pointer;
+    background-color: rgba(255, 255, 255, 0.3);
   }
 `;
 const Blackboard = styled.div`
