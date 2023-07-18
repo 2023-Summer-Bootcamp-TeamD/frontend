@@ -13,7 +13,7 @@ const CategoryItemList = ({ img, title }: ResultCategoryType) => (
   </Category>
 );
 
-const DrawingREsult = () => {
+const DrawingResult = () => {
   return (
     <Wrap>
       <DrawingHeader />
@@ -36,7 +36,7 @@ const DrawingREsult = () => {
   );
 };
 
-export default DrawingREsult;
+export default DrawingResult;
 
 const Wrap = styled.div`
   width: 100%;

@@ -8,7 +8,7 @@ import Chatter from '@/assets/Chatter.png';
 import { roomElement } from '@/constants/roomElement';
 import Header from '@/common/Header';
 import Label from '@/components/Entrance/EntranceLabel';
-import { motion } from 'framer-motion';
+
 const CreatingRooms = () => {
   const [personnel, setPersonnel] = useState(2);
   const [seconds, setSeconds] = useState(10);
@@ -35,24 +35,37 @@ const CreatingRooms = () => {
   return (
     <Admissions>
       <Header />
-      <DoodleContainer>
-        <img
-          className="FunctionMathImg"
-          src={DoodleFunctionMath}
-          alt="함수낙서"
-        />
-        <img className="CompassImg" src={DoodleCompass} alt="컴퍼스낙서" />
-      </DoodleContainer>
-      <ButtonContainer>
-        {roomElement.map((item, index) => (
-          <div key={index}>
-            <motion.img
-              whileHover={{ scale: 1.1 }}
-              whileTap={{ scale: 0.9 }}
-              src={item.image}
-              alt={item.id}
-            />
-            <div>{item.id}</div>
+      <TeachingImg src={Teaching} alt="교탁" />
+      <FireExtinguisherImg src={FireExtinguisher} alt="소화기" />
+      <Blackboard>
+        <DoodleContainer>
+          <img
+            className="FunctionMathImg"
+            src={DoodleFunctionMath}
+            alt="함수낙서"
+          />
+          <img className="CompassImg" src={DoodleCompass} alt="컴퍼스낙서" />
+        </DoodleContainer>
+        <CategoryContainer>
+          {roomElement.map((item, index) => (
+            <div key={index}>
+              <img src={item.image} alt={item.id} />
+              <label>{item.id}</label>
+            </div>
+          ))}
+        </CategoryContainer>
+        <UIContainer>
+          <div>
+            <Label name="입장 인원" />
+            <div className="NumberOfAdmissionsRow">
+              <button className="IncreaseButton" onClick={decreasePersonnel}>
+                &lt;
+              </button>
+              <div className="Personnels">{personnel}명</div>
+              <button className="DecreaseButton" onClick={increasePersonnel}>
+                &gt;
+              </button>
+            </div>
           </div>
           <div>
             <Label name="닉네임" />
@@ -62,33 +75,17 @@ const CreatingRooms = () => {
               maxLength={5}
             />
           </div>
-        </div>
-        <div>
-          <div className="NickName">닉네임</div>
-          <input
-            className="InputNickName"
-            type="text"
-            placeholder="닉네임을 입력해주세요"
-            required
-            maxLength={5}
-          />
-          <motion.button
-            whileTap={{ scale: 0.9 }}
-            className="CreatingRoomButton"
-          >
-            방 만들기
-          </motion.button>
-        </div>
-        <div>
-          <div className="TimeLimitPerRound">라운드 당 제한시간</div>
-          <div className="TimeLimitPerRoundRow">
-            <button className="IncreaseSeconds" onClick={decreaseSeconds}>
-              &lt;
-            </button>
-            <div className="Seconds">{seconds}s</div>
-            <button className="DecreaseSeconds" onClick={increaseSeconds}>
-              &gt;
-            </button>
+          <div>
+            <Label name="라운드 당 제한 시간" />
+            <div className="TimeLimitPerRoundRow">
+              <button className="IncreaseSeconds" onClick={decreaseSeconds}>
+                &lt;
+              </button>
+              <div className="Seconds">{seconds}s</div>
+              <button className="DecreaseSeconds" onClick={increaseSeconds}>
+                &gt;
+              </button>
+            </div>
           </div>
         </UIContainer>
         <button className="CreatingRoomButton">방 만들기</button>
@@ -164,6 +161,9 @@ const CategoryContainer = styled.div`
   }
 `;
 const UIContainer = styled.div`
+  ///position: absolute;
+  //top: 14.5em;
+  //left: 16.8em;
   display: flex;
   justify-content: space-evenly;
   align-items: center;
@@ -193,7 +193,22 @@ const UIContainer = styled.div`
     display: flex;
     flex-direction: row;
     justify-content: center;
-
+    > .IncreaseButton,
+    .DecreaseButton {
+      display: flex;
+      align-items: center;
+      font-size: 2rem;
+      border: 2px solid white;
+      height: 1.5em;
+      color: white;
+      position: relative;
+      top: 1.5rem;
+      background-color: transparent;
+      border-radius: 50%;
+      padding: 0.3em;
+      margin-right: 2rem;
+      margin-left: 2rem;
+    }
     > .Personnels {
       width: 4vw;
       font-size: 5rem;
@@ -210,7 +225,23 @@ const UIContainer = styled.div`
     margin-top: 3rem;
     margin-bottom: 2rem;
   }
-
+  > div:nth-child(2) > .InputNickName {
+    width: 20vw;
+    font-family: 'Uhbee mysen';
+    border-radius: 2em;
+    background-color: rgba(255, 255, 255, 0.3);
+    font-size: 2em;
+    text-align: center;
+    color: white;
+    border: 0.2rem solid white;
+    &::placeholder {
+      color: white;
+      font-size: 0.9em;
+    }
+    &:focus {
+      background-color: rgba(255, 255, 255, 0);
+    }
+  }
   > div:nth-child(3) {
     position: relative;
     left: 7em;
@@ -226,7 +257,22 @@ const UIContainer = styled.div`
       display: flex;
       flex-direction: row;
       justify-content: center;
-
+      > .IncreaseSeconds,
+      .DecreaseSeconds {
+        display: flex;
+        align-items: center;
+        font-size: 2rem;
+        border: 2px solid white;
+        height: 1.5em;
+        color: white;
+        position: relative;
+        top: 1.5rem;
+        background-color: transparent;
+        border-radius: 50%;
+        padding: 0.3em;
+        margin-right: 1rem;
+        margin-left: 1rem;
+      }
       .Seconds {
         width: 4vw;
         font-size: 5rem;
@@ -237,30 +283,6 @@ const UIContainer = styled.div`
         text-align: center;
       }
     }
-  }
-  .IncreaseAndDecreaseButtons {
-    display: flex;
-    align-items: center;
-    font-size: 2.5rem;
-    border: 2px solid white;
-    height: 1.5em;
-    color: white;
-    position: relative;
-    top: 1rem;
-    background-color: transparent;
-    border-radius: 50%;
-    padding: 0.1rem 1rem;
-    margin-right: 1rem;
-    margin-left: 1rem;
-    cursor: pointer;
-    &:hover {
-      scale: 1.1;
-      opacity: 0.8;
-    }
-  }
-  .IncreaseAndDecreaseButtons :hover {
-    cursor: pointer;
-    background-color: rgba(255, 255, 255, 0.3);
   }
 `;
 const Blackboard = styled.div`
@@ -281,6 +303,7 @@ const Blackboard = styled.div`
     width: 13rem;
     height: 5rem;
     margin-top: 5rem;
+    //margin-bottom: 5rem;
     border-radius: 20rem;
     border: 0.05rem solid #fff;
     background-color: transparent;
@@ -293,7 +316,6 @@ const Blackboard = styled.div`
     &:hover {
       background-color: rgba(255, 255, 255, 0.18);
       cursor: pointer;
-      transform: scale(1.1);
     }
   }
 `;
