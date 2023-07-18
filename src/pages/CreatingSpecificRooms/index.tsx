@@ -7,6 +7,7 @@ import DoodleCompass from '@/assets/DoodleCompass.png';
 import Chatter from '@/assets/Chatter.png';
 import { roomElement } from '@/constants/roomElement';
 import Header from '@/common/Header';
+import { motion } from 'framer-motion';
 const CreatingRooms = () => {
   const [personnel, setPersonnel] = useState(2);
   const [seconds, setSeconds] = useState(10);
@@ -44,7 +45,11 @@ const CreatingRooms = () => {
       <ButtonContainer>
         {roomElement.map((item, index) => (
           <div key={index}>
-            <img src={item.image} alt={item.id} />
+            <motion.img
+              whileHover={{ scale: 1.1 }}
+              src={item.image}
+              alt={item.id}
+            />
             <div>{item.id}</div>
           </div>
         ))}
