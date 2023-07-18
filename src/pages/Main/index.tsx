@@ -79,7 +79,11 @@ const Buttons = styled.button`
   filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
   border-radius: 3rem;
   margin: 3rem 5rem;
+  position: relative;
+  z-index: 1;
   &:hover {
     background-color: #455e61;
+    transform: scale(1.1);
+    cursor: pointer;
   }
 `;

@@ -132,9 +132,9 @@ const Buttons = styled.button`
   background-color: white;
   border-radius: 3rem;
   margin-bottom: 3rem;
-  font-size: 2rem;
+  font-size: 3rem;
   &:hover {
-    transform: translateY(-5px);
+    transform: scale(1.1);
   }
   &:last-child {
     background-color: transparent;
