@@ -62,11 +62,13 @@ const Mains = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
+  position: relative;
 
   .FireExtinguisherImg {
-    margin-left: 65vw;
-    width: 32rem;
-    height: 13rem;
+    position: absolute;
+    right: 2rem;
+    bottom: 0;
+    width: 30rem;
   }
 `;
 
@@ -107,7 +109,11 @@ const Buttons = styled(motion.button)`
   filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
   border-radius: 3rem;
   margin: 3rem 5rem;
+  position: relative;
+  z-index: 1;
   &:hover {
     background-color: #455e61;
+    transform: scale(1.1);
+    cursor: pointer;
   }
 `;
