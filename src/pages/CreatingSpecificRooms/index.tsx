@@ -250,17 +250,22 @@ const UIContainer = styled.div`
   .IncreaseAndDecreaseButtons {
     display: flex;
     align-items: center;
-    font-size: 2rem;
+    font-size: 2.5rem;
     border: 2px solid white;
     height: 1.5em;
     color: white;
     position: relative;
-    top: 1.5rem;
+    top: 1rem;
     background-color: transparent;
     border-radius: 50%;
-    padding: 0.3em;
+    padding: 0.1rem 1rem;
     margin-right: 1rem;
     margin-left: 1rem;
+    cursor: pointer;
+    &:hover {
+      scale: 1.1;
+      opacity: 0.8;
+    }
   }
   .IncreaseAndDecreaseButtons :hover {
     cursor: pointer;

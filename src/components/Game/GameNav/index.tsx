@@ -30,11 +30,12 @@ const Nav = styled.div`
   align-items: center;
   justify-content: space-between;
   width: 100%;
-  max-width: 100rem;
+  max-width: 120rem;
   height: 120px;
   color: black;
   font-size: 3rem;
   padding-top: 3rem;
+  margin-left: 5rem;
 `;
 
 const Clock = styled.div`

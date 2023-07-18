@@ -4,7 +4,7 @@ import DrawingHeader from '@/common/DrawingHeader ';
 import chattingImg from '@/assets/Chatter.png';
 import CompassImg from '@/assets/DoodleCompass.png';
 import FunctionMathImg from '@/assets/DoodleFunctionMath.png';
-import { ResultCategory, ResultCategoryType } from '@/constants/ResultCategory';
+import { ResultCategoryType, ResultCategory } from '@/constants/resultCategory';
 
 const CategoryItemList = ({ img, title }: ResultCategoryType) => (
   <Category>

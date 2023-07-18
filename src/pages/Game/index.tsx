@@ -54,7 +54,7 @@ const Section = styled.section`
   width: 100%;
   & > div {
     width: 100%;
-    max-width: 100rem;
+    max-width: 120rem;
     height: calc(100vh - 120px);
     color: white;
     display: flex;
