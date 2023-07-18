@@ -4,22 +4,46 @@ import Header from '@/common/Header';
 import BlackboardDecoInMainPage from '@/assets/BlackboardDecoInMainPage.png';
 import FireExtinguisher from '@/assets/FireExtinguisher.png';
 import { useNavigate } from 'react-router-dom';
-
+import { motion } from 'framer-motion';
 const Main = () => {
   const navigate = useNavigate();
   const goToEntryRoom = () => navigate('/entryRoom');
   const goToCreatRoom = () => navigate('/creatingSpecificRooms');
 
+  const variants = {
+    hidden: { opacity: 0 },
+    visible: { opacity: 1 },
+  };
+  const transition = {
+    duration: 3, // 애니메이션의 지속 시간 (초 단위)
+  };
   return (
     <Mains>
       <Header />
       <Blackboard>
+        <BlackboardImg
+          src={BlackboardDecoInMainPage}
+          alt="Image"
+          initial="hidden"
+          animate="visible"
+          variants={variants}
+          transition={transition}
+        />
         <div className="itemInBlackBoard">
-          <span>핑고빙고</span>
+          <motion.span
+            transition={{ duration: 1, times: [0.1] }}
+            animate={{ scale: [1, 1.3, 1.1, 1.2, 1.1] }}
+          >
+            핑고빙고
+          </motion.span>
         </div>
         <div className="itemInBlackBoard">
-          <Buttons onClick={goToCreatRoom}>방 만들기</Buttons>
-          <Buttons onClick={goToEntryRoom}>입장하기</Buttons>
+          <Buttons whileTap={{ scale: 0.9 }} onClick={goToCreatRoom}>
+            방 만들기
+          </Buttons>
+          <Buttons whileTap={{ scale: 0.9 }} onClick={goToEntryRoom}>
+            입장하기
+          </Buttons>
         </div>
       </Blackboard>
       <img className="FireExtinguisherImg" src={FireExtinguisher} />
@@ -48,8 +72,14 @@ const Mains = styled.div`
   }
 `;
 
+const BlackboardImg = styled(motion.img)`
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  position: absolute;
+`;
 const Blackboard = styled.div`
-  background-image: url(${BlackboardDecoInMainPage});
+  position: relative;
   background-size: 70vw 65vh;
   display: flex;
   flex-direction: column;
@@ -68,7 +98,7 @@ const Blackboard = styled.div`
   }
 `;
 
-const Buttons = styled.button`
+const Buttons = styled(motion.button)`
   width: 16rem;
   height: 5rem;
   font-family: 'Uhbee mysen';

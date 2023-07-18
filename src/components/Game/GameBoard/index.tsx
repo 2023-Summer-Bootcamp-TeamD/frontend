@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { styled } from 'styled-components';
-import GameContent from '../GameContent';
 import StartButton from '../StartButton';
+import GameContent from '../GameContent';
 
 type Props = {
   setCurrentFocus: React.Dispatch<React.SetStateAction<string>>;

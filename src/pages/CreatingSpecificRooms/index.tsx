@@ -8,7 +8,7 @@ import Chatter from '@/assets/Chatter.png';
 import { roomElement } from '@/constants/roomElement';
 import Header from '@/common/Header';
 import Label from '@/components/Entrance/EntranceLabel';
-
+import { motion } from 'framer-motion';
 const CreatingRooms = () => {
   const [personnel, setPersonnel] = useState(2);
   const [seconds, setSeconds] = useState(10);
@@ -35,43 +35,24 @@ const CreatingRooms = () => {
   return (
     <Admissions>
       <Header />
-      <TeachingImg src={Teaching} alt="교탁" />
-      <FireExtinguisherImg src={FireExtinguisher} alt="소화기" />
-      <Blackboard>
-        <DoodleContainer>
-          <img
-            className="FunctionMathImg"
-            src={DoodleFunctionMath}
-            alt="함수낙서"
-          />
-          <img className="CompassImg" src={DoodleCompass} alt="컴퍼스낙서" />
-        </DoodleContainer>
-        <CategoryContainer>
-          {roomElement.map((item, index) => (
-            <div key={index}>
-              <img src={item.image} alt={item.id} />
-              <label>{item.id}</label>
-            </div>
-          ))}
-        </CategoryContainer>
-        <UIContainer>
-          <div>
-            <Label name="입장 인원" />
-            <div className="NumberOfAdmissionsRow">
-              <button
-                className="IncreaseAndDecreaseButtons"
-                onClick={decreasePersonnel}
-              >
-                &lt;
-              </button>
-              <div className="Personnels">{personnel}명</div>
-              <button
-                className="IncreaseAndDecreaseButtons"
-                onClick={increasePersonnel}
-              >
-                &gt;
-              </button>
-            </div>
+      <DoodleContainer>
+        <img
+          className="FunctionMathImg"
+          src={DoodleFunctionMath}
+          alt="함수낙서"
+        />
+        <img className="CompassImg" src={DoodleCompass} alt="컴퍼스낙서" />
+      </DoodleContainer>
+      <ButtonContainer>
+        {roomElement.map((item, index) => (
+          <div key={index}>
+            <motion.img
+              whileHover={{ scale: 1.1 }}
+              whileTap={{ scale: 0.9 }}
+              src={item.image}
+              alt={item.id}
+            />
+            <div>{item.id}</div>
           </div>
           <div>
             <Label name="닉네임" />
@@ -81,23 +62,33 @@ const CreatingRooms = () => {
               maxLength={5}
             />
           </div>
-          <div>
-            <Label name="라운드 당 제한 시간" />
-            <div className="TimeLimitPerRoundRow">
-              <button
-                className="IncreaseAndDecreaseButtons"
-                onClick={decreaseSeconds}
-              >
-                &lt;
-              </button>
-              <div className="Seconds">{seconds}s</div>
-              <button
-                className="IncreaseAndDecreaseButtons"
-                onClick={increaseSeconds}
-              >
-                &gt;
-              </button>
-            </div>
+        </div>
+        <div>
+          <div className="NickName">닉네임</div>
+          <input
+            className="InputNickName"
+            type="text"
+            placeholder="닉네임을 입력해주세요"
+            required
+            maxLength={5}
+          />
+          <motion.button
+            whileTap={{ scale: 0.9 }}
+            className="CreatingRoomButton"
+          >
+            방 만들기
+          </motion.button>
+        </div>
+        <div>
+          <div className="TimeLimitPerRound">라운드 당 제한시간</div>
+          <div className="TimeLimitPerRoundRow">
+            <button className="IncreaseSeconds" onClick={decreaseSeconds}>
+              &lt;
+            </button>
+            <div className="Seconds">{seconds}s</div>
+            <button className="DecreaseSeconds" onClick={increaseSeconds}>
+              &gt;
+            </button>
           </div>
         </UIContainer>
         <button className="CreatingRoomButton">방 만들기</button>
