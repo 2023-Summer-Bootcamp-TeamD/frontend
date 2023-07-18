@@ -311,13 +311,13 @@ const ChatterImg = styled.img`
 `;
 const TeachingImg = styled.img`
   position: absolute;
-  width: 30vw;
   bottom: 0;
+  width: 45rem;
+  z-index: 1;
 `;
 const FireExtinguisherImg = styled.img`
-  width: 10wh;
-  height: 15vh;
   position: absolute;
+  right: 2rem;
   bottom: 0;
-  right: 2em;
+  width: 30rem;
 `;

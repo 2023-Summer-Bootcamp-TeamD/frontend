@@ -38,11 +38,13 @@ const Mains = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
+  position: relative;
 
   .FireExtinguisherImg {
-    margin-left: 65vw;
-    width: 32rem;
-    height: 13rem;
+    position: absolute;
+    right: 2rem;
+    bottom: 0;
+    width: 30rem;
   }
 `;
 
