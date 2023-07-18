@@ -38,8 +38,12 @@ const Main = () => {
           </motion.span>
         </div>
         <div className="itemInBlackBoard">
-          <Buttons onClick={goToCreatRoom}>방 만들기</Buttons>
-          <Buttons onClick={goToEntryRoom}>입장하기</Buttons>
+          <Buttons whileTap={{ scale: 0.9 }} onClick={goToCreatRoom}>
+            방 만들기
+          </Buttons>
+          <Buttons whileTap={{ scale: 0.9 }} onClick={goToEntryRoom}>
+            입장하기
+          </Buttons>
         </div>
       </Blackboard>
       <img className="FireExtinguisherImg" src={FireExtinguisher} />
@@ -92,7 +96,7 @@ const Blackboard = styled.div`
   }
 `;
 
-const Buttons = styled.button`
+const Buttons = styled(motion.button)`
   width: 16rem;
   height: 5rem;
   font-family: 'Uhbee mysen';

@@ -47,6 +47,7 @@ const CreatingRooms = () => {
           <div key={index}>
             <motion.img
               whileHover={{ scale: 1.1 }}
+              whileTap={{ scale: 0.9 }}
               src={item.image}
               alt={item.id}
             />
@@ -77,7 +78,12 @@ const CreatingRooms = () => {
             required
             maxLength={5}
           />
-          <button className="CreatingRoomButton">방 만들기</button>
+          <motion.button
+            whileTap={{ scale: 0.9 }}
+            className="CreatingRoomButton"
+          >
+            방 만들기
+          </motion.button>
         </div>
         <div>
           <div className="TimeLimitPerRound">라운드 당 제한시간</div>

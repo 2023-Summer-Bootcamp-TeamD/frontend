@@ -6,11 +6,11 @@ type MyComponentProps = {
 };
 
 const Button = ({ title }: MyComponentProps) => {
-  return <EntryButton>{title}</EntryButton>;
+  return <EntryButton whileTap={{ scale: 0.9 }}>{title}</EntryButton>;
 };
 
 export default Button;
-const EntryButton = styled.button`
+const EntryButton = styled(motion.button)`
   width: 13rem;
   height: 5rem;
   margin-top: 3rem;

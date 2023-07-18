@@ -7,7 +7,7 @@ import FunctionMathImg from '@/assets/DoodleFunctionMath.png';
 import { ResultCategory, ResultCategoryType } from '@/constants/ResultCategory';
 import { motion } from 'framer-motion';
 const CategoryItemList = ({ img, title }: ResultCategoryType) => (
-  <Category whileHover={{ scale: 1.1 }}>
+  <Category whileTap={{ scale: 0.9 }} whileHover={{ scale: 1.1 }}>
     <img src={img} />
     <label>{title}</label>
   </Category>

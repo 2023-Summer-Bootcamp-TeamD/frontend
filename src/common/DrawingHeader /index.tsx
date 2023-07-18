@@ -6,7 +6,7 @@ const DrawingHeader = () => {
   return (
     <PageHeader>
       <WrapBtn>
-        <ExitBtn whileHover={{ scale: 1.1 }}>
+        <ExitBtn whileTap={{ scale: 0.9 }} whileHover={{ scale: 1.1 }}>
           <ExitImg src={Exit} alt="돌아가기" />
           <Text>돌아가기</Text>
         </ExitBtn>
