@@ -1,15 +1,18 @@
-import React, { useState } from 'react';
+import React, { ChangeEventHandler, useState } from 'react';
 import { styled } from 'styled-components';
+import { roomElement } from '@/constants/roomElement';
 import Teaching from '@/assets/Teaching.png';
 import FireExtinguisher from '@/assets/FireExtinguisher.png';
 import DoodleFunctionMath from '@/assets/DoodleFunctionMath.png';
 import DoodleCompass from '@/assets/DoodleCompass.png';
 import Chatter from '@/assets/Chatter.png';
-import { roomElement } from '@/constants/roomElement';
 import Header from '@/common/Header';
+import HandlingData from '@/common/Handlingdata';
+
 const CreatingRooms = () => {
   const [personnel, setPersonnel] = useState(2);
   const [seconds, setSeconds] = useState(10);
+  const [name, setName] = useState('');
   const increasePersonnel = () => {
     if (personnel < 8) {
       setPersonnel(personnel + 1);
@@ -29,6 +32,9 @@ const CreatingRooms = () => {
     if (seconds > 10) {
       setSeconds(seconds - 10);
     }
+  };
+  const inputNickNames = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setName(e.target.value);
   };
   return (
     <Admissions>
@@ -54,13 +60,14 @@ const CreatingRooms = () => {
         <div>
           <div className="NumberOfAdmissions">입장 인원</div>
           <div className="NumberOfAdmissionsRow">
-            <button className="IncreaseButton" onClick={decreasePersonnel}>
+            {/* <button className="IncreaseButton" onClick={decreasePersonnel}>
               &lt;
             </button>
             <div className="Personnels">{personnel}명</div>
             <button className="DecreaseButton" onClick={increasePersonnel}>
               &gt;
-            </button>
+            </button> */}
+            <HandlingData values={2} />
           </div>
         </div>
         <div>
@@ -71,19 +78,21 @@ const CreatingRooms = () => {
             placeholder="닉네임을 입력해주세요"
             required
             maxLength={5}
+            onChange={inputNickNames}
           />
           <button className="CreatingRoomButton">방 만들기</button>
         </div>
         <div>
           <div className="TimeLimitPerRound">라운드 당 제한시간</div>
           <div className="TimeLimitPerRoundRow">
-            <button className="IncreaseSeconds" onClick={decreaseSeconds}>
+            {/* <button className="IncreaseSeconds" onClick={decreaseSeconds}>
               &lt;
             </button>
             <div className="Seconds">{seconds}s</div>
             <button className="DecreaseSeconds" onClick={increaseSeconds}>
               &gt;
-            </button>
+            </button> */}
+            <HandlingData values={10} />
           </div>
         </div>
       </UIContainer>
@@ -157,7 +166,7 @@ const ButtonContainer = styled.div`
 const UIContainer = styled.div`
   position: absolute;
   top: 14.5em;
-  left: 16.8em;
+  left: 18.3em;
   display: flex;
   flex-direction: row;
   justify-content: flex-end;
@@ -185,31 +194,6 @@ const UIContainer = styled.div`
     display: flex;
     flex-direction: row;
     justify-content: center;
-    > .IncreaseButton,
-    .DecreaseButton {
-      display: flex;
-      align-items: center;
-      font-size: 2em;
-      border: 2px solid white;
-      height: 1.5em;
-      color: white;
-      position: relative;
-      top: 1.5rem;
-      background-color: transparent;
-      border-radius: 50%;
-      padding: 0.3em;
-      margin-right: 2rem;
-      margin-left: 2rem;
-    }
-    > .Personnels {
-      width: 4vw;
-      font-size: 6em;
-      display: inline-block;
-      position: relative;
-      bottom: 0.1em;
-      color: white;
-      text-align: center;
-    }
   }
   > div:nth-child(2) > .NickName {
     font-size: 2em;
@@ -264,31 +248,6 @@ const UIContainer = styled.div`
       display: flex;
       flex-direction: row;
       justify-content: center;
-      > .IncreaseSeconds,
-      .DecreaseSeconds {
-        display: flex;
-        align-items: center;
-        font-size: 2em;
-        border: 2px solid white;
-        height: 1.5em;
-        color: white;
-        position: relative;
-        top: 1.5rem;
-        background-color: transparent;
-        border-radius: 50%;
-        padding: 0.3em;
-        margin-right: 1rem;
-        margin-left: 1rem;
-      }
-      .Seconds {
-        width: 4vw;
-        font-size: 6em;
-        display: inline-block;
-        position: relative;
-        bottom: 0.7rem;
-        color: white;
-        text-align: center;
-      }
     }
   }
 `;

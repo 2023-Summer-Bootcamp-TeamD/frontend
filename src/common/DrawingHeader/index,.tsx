@@ -1,6 +1,6 @@
 import { styled } from 'styled-components';
 import Exit from '@/assets/Exit.png';
-import { CircleText } from '@/constants/circleText';
+import { CircleText } from '@/constants/CircleText';
 
 const DrawingHeader = () => {
   return (
