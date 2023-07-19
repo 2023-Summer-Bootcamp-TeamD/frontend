@@ -5,6 +5,7 @@ import BlackboardDecoInMainPage from '@/assets/BlackboardDecoInMainPage.png';
 import FireExtinguisher from '@/assets/FireExtinguisher.png';
 import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
+import Loading from '@/assets/Loading.gif';
 const Main = () => {
   const navigate = useNavigate();
   const goToEntryRoom = () => navigate('/entryRoom');
