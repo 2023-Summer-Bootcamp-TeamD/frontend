@@ -1,4 +1,4 @@
-import React, { ChangeEventHandler, useState } from 'react';
+import React, { useState } from 'react';
 import { styled } from 'styled-components';
 import { roomElement } from '@/constants/roomElement';
 import Teaching from '@/assets/Teaching.png';
@@ -7,32 +7,9 @@ import DoodleFunctionMath from '@/assets/DoodleFunctionMath.png';
 import DoodleCompass from '@/assets/DoodleCompass.png';
 import Chatter from '@/assets/Chatter.png';
 import Header from '@/common/Header';
-import HandlingData from '@/common/Handlingdata';
 
 const CreatingRooms = () => {
-  const [personnel, setPersonnel] = useState(2);
-  const [seconds, setSeconds] = useState(10);
   const [name, setName] = useState('');
-  const increasePersonnel = () => {
-    if (personnel < 8) {
-      setPersonnel(personnel + 1);
-    }
-  };
-  const decreasePersonnel = () => {
-    if (personnel > 2) {
-      setPersonnel(personnel - 1);
-    }
-  };
-  const increaseSeconds = () => {
-    if (seconds < 60) {
-      setSeconds(seconds + 10);
-    }
-  };
-  const decreaseSeconds = () => {
-    if (seconds > 10) {
-      setSeconds(seconds - 10);
-    }
-  };
   const inputNickNames = (e: React.ChangeEvent<HTMLInputElement>) => {
     setName(e.target.value);
   };
@@ -59,16 +36,7 @@ const CreatingRooms = () => {
       <UIContainer>
         <div>
           <div className="NumberOfAdmissions">입장 인원</div>
-          <div className="NumberOfAdmissionsRow">
-            {/* <button className="IncreaseButton" onClick={decreasePersonnel}>
-              &lt;
-            </button>
-            <div className="Personnels">{personnel}명</div>
-            <button className="DecreaseButton" onClick={increasePersonnel}>
-              &gt;
-            </button> */}
-            <HandlingData values={2} />
-          </div>
+          <div className="NumberOfAdmissionsRow"></div>
         </div>
         <div>
           <div className="NickName">닉네임</div>
@@ -84,16 +52,7 @@ const CreatingRooms = () => {
         </div>
         <div>
           <div className="TimeLimitPerRound">라운드 당 제한시간</div>
-          <div className="TimeLimitPerRoundRow">
-            {/* <button className="IncreaseSeconds" onClick={decreaseSeconds}>
-              &lt;
-            </button>
-            <div className="Seconds">{seconds}s</div>
-            <button className="DecreaseSeconds" onClick={increaseSeconds}>
-              &gt;
-            </button> */}
-            <HandlingData values={10} />
-          </div>
+          <div className="TimeLimitPerRoundRow"></div>
         </div>
       </UIContainer>
       <ChatterImg src={Chatter} alt="떠든사람" />
