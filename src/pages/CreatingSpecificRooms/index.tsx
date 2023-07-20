@@ -204,6 +204,7 @@ const CategoryContainer = styled.div`
     cursor: pointer;
     &:hover {
       background-color: rgba(255, 255, 255, 0.18);
+      transform: scale(1.1);
     }
   }
   > div > img {
@@ -376,6 +377,7 @@ const Blackboard = styled.div`
     &:hover {
       background-color: rgba(255, 255, 255, 0.18);
       cursor: pointer;
+      transform: scale(1.1);
     }
   }
 `;
