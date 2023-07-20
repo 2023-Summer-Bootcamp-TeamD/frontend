@@ -127,8 +127,13 @@ const Buttons = styled.div`
     background-color: transparent;
     margin-right: 5rem;
   }
-  background-image: url(${wrong});
-  background-size: contain;
+  &:first-child {
+    background-image: url(${wrong});
+    background-size: contain;
+  }
+  .drawingRoom-icon {
+    width: 8rem;
+  }
 `;
 
 const Ranking = styled.div`
