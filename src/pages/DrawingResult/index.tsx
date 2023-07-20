@@ -5,15 +5,15 @@ import chattingImg from '@/assets/Chatter.png';
 import CompassImg from '@/assets/DoodleCompass.png';
 import FunctionMathImg from '@/assets/DoodleFunctionMath.png';
 import { ResultCategory, ResultCategoryType } from '@/constants/resultCategory';
-
+import { motion } from 'framer-motion';
 const CategoryItemList = ({ img, title }: ResultCategoryType) => (
-  <Category>
+  <Category whileTap={{ scale: 0.9 }} whileHover={{ scale: 1.1 }}>
     <img src={img} />
     <label>{title}</label>
   </Category>
 );
 
-const DrawingREsult = () => {
+const DrawingResult = () => {
   return (
     <Wrap>
       <DrawingHeader />
@@ -36,7 +36,7 @@ const DrawingREsult = () => {
   );
 };
 
-export default DrawingREsult;
+export default DrawingResult;
 
 const Wrap = styled.div`
   width: 100%;
@@ -95,7 +95,7 @@ const CategoryWrap = styled.div`
   justify-content: space-evenly;
 `;
 
-const Category = styled.button`
+const Category = styled(motion.button)`
   width: 17rem;
   height: 17rem;
   border-radius: 20px;

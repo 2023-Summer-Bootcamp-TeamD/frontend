@@ -25,7 +25,7 @@
     "@types/swiper": "^6.0.0",
     "axios": "^1.4.0",
     "dayjs": "^1.11.9",
-    "framer-motion": "^10.12.18",
+    "framer-motion": "^10.12.22",
     "husky": "^8.0.3",
     "lint-staged": "13.2.3",
     "msw": "^1.2.2",

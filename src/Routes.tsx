@@ -7,6 +7,7 @@ const CreatingSpecificRoomPage = lazy(
 const EntryRoomPage = lazy(() => import('@/pages/EntryRoom'));
 const DrawingResultPage = lazy(() => import('@/pages/DrawingResult'));
 const GamePage = lazy(() => import('@/pages/Game'));
+const GameResultPage = lazy(() => import('@/pages/GameResult'));
 export const routes = [
   {
     path: '/',
@@ -20,6 +21,7 @@ export const routes = [
         path: '/game',
         element: <GamePage />,
       },
+      { path: '/result', element: <GameResultPage /> },
     ],
   },
 ];

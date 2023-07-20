@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { styled } from 'styled-components';
-import GameContent from '../GameContent';
 import StartButton from '../StartButton';
+import GameContent from '../GameContent';
 
 type Props = {
   setCurrentFocus: React.Dispatch<React.SetStateAction<string>>;
@@ -22,7 +22,7 @@ export default GameBoard;
 const Board = styled.div`
   box-shadow: 5px 7px 12px -9px #000000;
   position: relative;
-  width: 60rem;
+  width: 70rem;
   height: 50rem;
   background-color: #1c3b3e;
   border: 5px solid #8e5501;

@@ -1,4 +1,4 @@
-import React, { ChangeEventHandler, useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { styled } from 'styled-components';
 import { roomElement } from '@/constants/roomElement';
 import Teaching from '@/assets/Teaching.png';
@@ -7,11 +7,15 @@ import DoodleFunctionMath from '@/assets/DoodleFunctionMath.png';
 import DoodleCompass from '@/assets/DoodleCompass.png';
 import Chatter from '@/assets/Chatter.png';
 import Header from '@/common/Header';
-import HandlingData from '@/common/Handlingdata';
+import Label from '@/components/Entrance/EntranceLabel';
+import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 
 const CreatingRooms = () => {
+  const navigate = useNavigate();
   const [personnel, setPersonnel] = useState(2);
   const [seconds, setSeconds] = useState(10);
+  const [category, setCategory] = useState({});
   const [name, setName] = useState('');
   const increasePersonnel = () => {
     if (personnel < 8) {
@@ -36,69 +40,99 @@ const CreatingRooms = () => {
   const inputNickNames = (e: React.ChangeEvent<HTMLInputElement>) => {
     setName(e.target.value);
   };
+  const selectGenre = (event: React.MouseEvent<HTMLDivElement>) => {
+    const showing = roomElement.filter(
+      (item) => item.itemIndex === event.currentTarget.id,
+    );
+    setCategory(showing[0].itemIndex);
+  };
+  // 선택한 카테고리를 바로 확인할 수 있는 코드.
+  useEffect(() => {
+    console.log(category);
+  }, [category]);
+
+  const GamInfo = [
+    { nickname: name },
+    { category_id: category },
+    { time: seconds },
+    { player_num: personnel },
+  ];
+  const sendRoomInfo = async () => {
+    try {
+      const reponse = await axios.post('http://localhost:8080/api/v1/rooms', {
+        nickname: name,
+        category_id: category,
+        time: seconds,
+        player_num: personnel,
+      });
+      navigate('/game', { state: GamInfo });
+    } catch (e) {
+      console.log(e);
+    }
+  };
+
   return (
     <Admissions>
       <Header />
-      <DoodleContainer>
-        <img
-          className="FunctionMathImg"
-          src={DoodleFunctionMath}
-          alt="함수낙서"
-        />
-        <img className="CompassImg" src={DoodleCompass} alt="컴퍼스낙서" />
-      </DoodleContainer>
-      <ButtonContainer>
-        {roomElement.map((item, index) => (
-          <div key={index}>
-            <img src={item.image} alt={item.id} />
-            <div>{item.id}</div>
-          </div>
-        ))}
-      </ButtonContainer>
-      <Blackboard />
-      <UIContainer>
-        <div>
-          <div className="NumberOfAdmissions">입장 인원</div>
-          <div className="NumberOfAdmissionsRow">
-            {/* <button className="IncreaseButton" onClick={decreasePersonnel}>
-              &lt;
-            </button>
-            <div className="Personnels">{personnel}명</div>
-            <button className="DecreaseButton" onClick={increasePersonnel}>
-              &gt;
-            </button> */}
-            <HandlingData values={2} />
-          </div>
-        </div>
-        <div>
-          <div className="NickName">닉네임</div>
-          <input
-            className="InputNickName"
-            type="text"
-            placeholder="닉네임을 입력해주세요"
-            required
-            maxLength={5}
-            onChange={inputNickNames}
-          />
-          <button className="CreatingRoomButton">방 만들기</button>
-        </div>
-        <div>
-          <div className="TimeLimitPerRound">라운드 당 제한시간</div>
-          <div className="TimeLimitPerRoundRow">
-            {/* <button className="IncreaseSeconds" onClick={decreaseSeconds}>
-              &lt;
-            </button>
-            <div className="Seconds">{seconds}s</div>
-            <button className="DecreaseSeconds" onClick={increaseSeconds}>
-              &gt;
-            </button> */}
-            <HandlingData values={10} />
-          </div>
-        </div>
-      </UIContainer>
-      <ChatterImg src={Chatter} alt="떠든사람" />
       <TeachingImg src={Teaching} alt="교탁" />
       <FireExtinguisherImg src={FireExtinguisher} alt="소화기" />
+      <Blackboard>
+        <DoodleContainer>
+          <img
+            className="FunctionMathImg"
+            src={DoodleFunctionMath}
+            alt="함수낙서"
+          />
+          <img className="CompassImg" src={DoodleCompass} alt="컴퍼스낙서" />
+        </DoodleContainer>
+        <CategoryContainer>
+          {roomElement.map((item, index) => (
+            <div key={index} onClick={selectGenre} id={item.itemIndex}>
+              <img src={item.image} alt={item.id} />
+              <label>{item.id}</label>
+            </div>
+          ))}
+        </CategoryContainer>
+        <UIContainer>
+          <div>
+            <Label name="입장 인원" />
+            <div className="NumberOfAdmissionsRow">
+              <button className="IncreaseButton" onClick={decreasePersonnel}>
+                &lt;
+              </button>
+              <div className="Personnels">{personnel}명</div>
+              <button className="DecreaseButton" onClick={increasePersonnel}>
+                &gt;
+              </button>
+            </div>
+          </div>
+          <div>
+            <Label name="닉네임" />
+            <NickNameInput
+              placeholder="닉네임을 입력해주세요"
+              required
+              maxLength={5}
+              onChange={inputNickNames}
+            />
+          </div>
+          <div>
+            <Label name="라운드 당 제한 시간" />
+            <div className="TimeLimitPerRoundRow">
+              <button className="IncreaseSeconds" onClick={decreaseSeconds}>
+                &lt;
+              </button>
+              <div className="Seconds">{seconds}s</div>
+              <button className="DecreaseSeconds" onClick={increaseSeconds}>
+                &gt;
+              </button>
+            </div>
+          </div>
+        </UIContainer>
+        <button className="CreatingRoomButton" onClick={sendRoomInfo}>
+          방 만들기
+        </button>
+        <ChatterImg src={Chatter} alt="떠든사람" />
+      </Blackboard>
     </Admissions>
   );
 };
@@ -122,55 +156,58 @@ const DoodleContainer = styled.div`
     position: absolute;
   }
   > .FunctionMathImg {
-    left: 16em;
-    top: 12em;
+    left: 1rem;
+    top: 0.7rem;
+    width: 10rem;
   }
   > .CompassImg {
-    left: 25em;
-    top: 12em;
+    left: 12rem;
+    top: 2rem;
+    width: 6rem;
   }
 `;
-const ButtonContainer = styled.div`
+const CategoryContainer = styled.div`
   display: flex;
   justify-content: center;
   position: absolute;
-  top: 9.8em;
+  top: 6rem;
+
   > div {
+    margin: 2rem;
+    width: 12rem;
+    height: 12rem;
+    border-radius: 20px;
+    border: 0.15rem solid #fff;
+    background-color: transparent;
     display: flex;
-    flex-direction: column;
+    position: relative;
+    align-items: center;
     justify-content: center;
+    cursor: pointer;
+    &:hover {
+      background-color: rgba(255, 255, 255, 0.18);
+    }
   }
   > div > img {
-    width: 6vw;
-    height: 12vh;
-    border: 0.3rem solid #ffffff;
-    border-radius: 2rem;
-    margin: 2rem;
-    background-color: rgba(255, 255, 255, 0);
-    display: flex;
-    z-index: 1;
+    height: 12rem;
+    width: 12rem;
   }
-  > div > div {
-    font-size: 1.5em;
-    font-weight: bold;
-    color: #ffffff;
-    position: relative;
-    bottom: 2.2em;
-    left: 2.4em;
-    z-index: 1;
+  > div > label {
+    font-size: 2.5rem;
+    color: #fff;
+    position: absolute;
+    bottom: 2rem;
   }
-  > div > img:hover {
+  > div:hover {
     background-color: rgba(255, 255, 255, 0.2);
   }
 `;
 const UIContainer = styled.div`
-  position: absolute;
-  top: 14.5em;
-  left: 18.3em;
   display: flex;
-  flex-direction: row;
-  justify-content: flex-end;
+  justify-content: space-evenly;
   align-items: center;
+  margin-top: 12rem;
+
   > div {
     display: flex;
     flex-direction: column;
@@ -178,6 +215,7 @@ const UIContainer = styled.div`
     z-index: 1;
     align-items: center;
     position: relative;
+    width: 25rem;
     .NumberOfAdmissions {
       text-align: center;
       color: white;
@@ -194,6 +232,31 @@ const UIContainer = styled.div`
     display: flex;
     flex-direction: row;
     justify-content: center;
+    > .IncreaseButton,
+    .DecreaseButton {
+      display: flex;
+      align-items: center;
+      font-size: 2rem;
+      border: 2px solid white;
+      height: 1.5em;
+      color: white;
+      position: relative;
+      top: 1.5rem;
+      background-color: transparent;
+      border-radius: 50%;
+      padding: 0.3em;
+      margin-right: 2rem;
+      margin-left: 2rem;
+    }
+    > .Personnels {
+      width: 4vw;
+      font-size: 5rem;
+      display: inline-block;
+      position: relative;
+      bottom: 0.1em;
+      color: white;
+      text-align: center;
+    }
   }
   > div:nth-child(2) > .NickName {
     font-size: 2em;
@@ -218,21 +281,6 @@ const UIContainer = styled.div`
       background-color: rgba(255, 255, 255, 0);
     }
   }
-  > div:nth-child(2) > .CreatingRoomButton {
-    width: 10vw;
-    font-family: 'Uhbee mysen';
-    border-radius: 2em;
-    background-color: rgba(255, 255, 255, 0);
-    font-size: 2.5em;
-    text-align: center;
-    color: white;
-    border: 0.2rem solid white;
-    margin-top: 1.5rem;
-    margin-bottom: auto;
-    &:hover {
-      background-color: rgba(255, 255, 255, 0.3);
-    }
-  }
   > div:nth-child(3) {
     position: relative;
     left: 7em;
@@ -248,6 +296,31 @@ const UIContainer = styled.div`
       display: flex;
       flex-direction: row;
       justify-content: center;
+      > .IncreaseSeconds,
+      .DecreaseSeconds {
+        display: flex;
+        align-items: center;
+        font-size: 2rem;
+        border: 2px solid white;
+        height: 1.5em;
+        color: white;
+        position: relative;
+        top: 1.5rem;
+        background-color: transparent;
+        border-radius: 50%;
+        padding: 0.3em;
+        margin-right: 1rem;
+        margin-left: 1rem;
+      }
+      .Seconds {
+        width: 4vw;
+        font-size: 5rem;
+        display: inline-block;
+        position: relative;
+        bottom: 0.7rem;
+        color: white;
+        text-align: center;
+      }
     }
   }
 `;
@@ -259,24 +332,65 @@ const Blackboard = styled.div`
   border: 15px solid #8e5501;
   box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
   border-radius: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
   position: relative;
-  bottom: 2rem;
+
+  .CreatingRoomButton {
+    width: 13rem;
+    height: 5rem;
+    margin-top: 5rem;
+    border-radius: 20rem;
+    border: 0.05rem solid #fff;
+    background-color: transparent;
+    color: #fff;
+    font-size: 3rem;
+    &::placeholder {
+      color: #fff;
+    }
+
+    &:hover {
+      background-color: rgba(255, 255, 255, 0.18);
+      cursor: pointer;
+    }
+  }
 `;
+
+const NickNameInput = styled.input`
+  text-align: center;
+  border: 0.05rem solid #fff;
+  background-color: rgba(255, 255, 255, 0.18);
+  border-radius: 20rem;
+  width: 23rem;
+  height: 4rem;
+  font-size: 2.5rem;
+  color: #fff;
+  &:focus {
+    outline: none;
+    box-shadow: 0px 0px 1px 1px #fff;
+  }
+  &::placeholder {
+    color: rgba(255, 255, 255, 0.8);
+  }
+`;
+
 const ChatterImg = styled.img`
   position: absolute;
-  top: 21em;
-  right: 10em;
-  z-index: 1;
+  right: 2rem;
+  bottom: 3rem;
+  width: 10rem;
 `;
 const TeachingImg = styled.img`
   position: absolute;
-  width: 30vw;
   bottom: 0;
+  width: 45rem;
+  z-index: 1;
 `;
 const FireExtinguisherImg = styled.img`
-  width: 10wh;
-  height: 15vh;
   position: absolute;
+  right: 2rem;
   bottom: 0;
-  right: 2em;
+  width: 30rem;
 `;

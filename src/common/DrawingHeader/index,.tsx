@@ -1,12 +1,12 @@
 import { styled } from 'styled-components';
 import Exit from '@/assets/Exit.png';
-import { CircleText } from '@/constants/CircleText';
-
+import { CircleText } from '@/constants/circleText';
+import { motion } from 'framer-motion';
 const DrawingHeader = () => {
   return (
     <PageHeader>
       <WrapBtn>
-        <ExitBtn>
+        <ExitBtn whileTap={{ scale: 0.9 }} whileHover={{ scale: 1.1 }}>
           <ExitImg src={Exit} alt="돌아가기" />
           <Text>돌아가기</Text>
         </ExitBtn>
@@ -25,7 +25,7 @@ const WrapBtn = styled.div`
   left: 5rem;
   top: 4rem;
 `;
-const ExitBtn = styled.button`
+const ExitBtn = styled(motion.button)`
   position: relative;
   cursor: pointer;
   background-color: transparent;
