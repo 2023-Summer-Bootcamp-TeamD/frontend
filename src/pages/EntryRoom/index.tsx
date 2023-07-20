@@ -10,21 +10,34 @@ import Button from '@/components/Entrance/ EntranceButton';
 import Header from '@/common/Header';
 import { motion } from 'framer-motion';
 import { useMutation } from '@tanstack/react-query';
-import axios, { AxiosError, AxiosResponse } from 'axios';
+import axios, { AxiosError } from 'axios';
 import { useNavigate } from 'react-router-dom';
 
 const EntryRoom = () => {
-  const navigate = useNavigate();
-  const circleInitialData = {
+  type nickNameType = {
+    nickname: string;
+  };
+
+  type circleInputType = {
+    input1: string;
+    input2: string;
+    input3: string;
+    input4: string;
+    input5: string;
+  };
+
+  const circleInitialData: circleInputType = {
     input1: '',
     input2: '',
     input3: '',
     input4: '',
     input5: '',
   };
-  const [circleInput, setCircleInput] = useState(circleInitialData);
-  const [nickName, setNickName] = useState('');
+  const [circleInput, setCircleInput] =
+    useState<circleInputType>(circleInitialData);
+  const [nickName, setNickName] = useState<string>('');
 
+  const navigate = useNavigate();
   const onCodehandler = (e: ChangeEvent<HTMLInputElement>) => {
     setCircleInput({
       ...circleInput,
@@ -38,20 +51,21 @@ const EntryRoom = () => {
 
   const onSubmitHandler = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    mutate(nickName);
+    mutate({
+      nickname: nickName,
+    }); // posting 함수를 mutation으로 실행시키는 메서드
   };
 
-  const posting = async (nickName: string) => {
+  const postNickName = async (nickNameData: nickNameType) => {
     const uuid: string = Object.values(circleInput).join('');
+
     return await axios.post(
       `http://localhost:8080/api/v1/rooms/users/${uuid}`,
-      {
-        nickname: nickName,
-      },
+      nickNameData,
     );
   };
 
-  const { mutate } = useMutation(posting, {
+  const { mutate } = useMutation(postNickName, {
     onSuccess: () => {
       navigate('/game', { state: { nickname: nickName } });
     },
