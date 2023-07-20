@@ -39,7 +39,7 @@ const EntryRoom = () => {
   };
 
   const goToGame = async (e: React.MouseEvent<HTMLButtonElement>) => {
-    e.preventDefault(); // 기본 동작 막기
+    e.preventDefault();
 
     let entryCode = '';
     const codeArray = Object.values(codeInput);
@@ -53,7 +53,6 @@ const EntryRoom = () => {
         },
       );
 
-      console.log(response);
       navigate('/game', { state: { nickname } });
     }
   };

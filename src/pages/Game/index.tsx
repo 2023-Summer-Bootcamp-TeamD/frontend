@@ -10,10 +10,6 @@ const Game = () => {
 
   const { state } = useLocation();
 
-  useEffect(() => {
-    console.log(state);
-  }, []);
-
   const [xy, setXY] = useState({ x: 0, y: 0 });
   const [currentFocus, setCurrentFocus] = useState(pencil);
   const xyHandler = (e: React.MouseEvent<HTMLDivElement>) => {
