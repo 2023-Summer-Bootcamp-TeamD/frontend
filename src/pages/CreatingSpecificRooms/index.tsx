@@ -222,9 +222,6 @@ const CategoryContainer = styled.div`
   }
 `;
 const UIContainer = styled.div`
-  ///position: absolute;
-  //top: 14.5em;
-  //left: 16.8em;
   display: flex;
   justify-content: space-evenly;
   align-items: center;
@@ -364,7 +361,6 @@ const Blackboard = styled.div`
     width: 13rem;
     height: 5rem;
     margin-top: 5rem;
-    //margin-bottom: 5rem;
     border-radius: 20rem;
     border: 0.05rem solid #fff;
     background-color: transparent;
