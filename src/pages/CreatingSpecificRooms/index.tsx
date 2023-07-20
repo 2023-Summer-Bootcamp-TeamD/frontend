@@ -42,13 +42,11 @@ const CreatingRooms = () => {
 
   const createSpecificRoom = async () => {
     try {
-      const response = await axios.post('/api/v1/rooms', {
-        params: {
-          nickname: nickname,
-          category_id: selectedCategory,
-          time: seconds,
-          player_num: personnel,
-        },
+      const response = await axios.post('http://localhost:8080/api/v1/rooms', {
+        nickname: nickname,
+        category_id: selectedCategory,
+        time: seconds,
+        player_num: personnel,
       });
 
       console.log(response);
