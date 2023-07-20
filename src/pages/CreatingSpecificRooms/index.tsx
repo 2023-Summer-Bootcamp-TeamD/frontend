@@ -45,7 +45,7 @@ const CreatingRooms = () => {
       const response = await axios.post('/api/v1/rooms', {
         params: {
           nickname: nickname,
-          category_id: 2,
+          category_id: selectedCategory,
           time: seconds,
           player_num: personnel,
         },
@@ -77,7 +77,16 @@ const CreatingRooms = () => {
         </DoodleContainer>
         <CategoryContainer>
           {roomElement.map((item, index) => (
-            <div key={index + 1} onClick={() => clickCategory(index + 1)}>
+            <div
+              key={index + 1}
+              onClick={() => clickCategory(index + 1)}
+              style={{
+                backgroundColor:
+                  index + 1 === selectedCategory
+                    ? 'rgba(255, 255, 255, 0.18)'
+                    : '',
+              }}
+            >
               <img src={item.image} alt={item.id} />
               <label>{item.id}</label>
             </div>
