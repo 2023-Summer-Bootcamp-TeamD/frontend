@@ -1,4 +1,4 @@
-import React, { Suspense } from 'react';
+import React, { useEffect, useState } from 'react';
 import { styled } from 'styled-components';
 import chattingImg from '@/assets/Chatter.png';
 import CompassImg from '@/assets/DoodleCompass.png';
@@ -9,8 +9,55 @@ import Label from '@/components/Entrance/EntranceLabel';
 import Button from '@/components/Entrance/ EntranceButton';
 import Header from '@/common/Header';
 import { motion } from 'framer-motion';
+import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
 
 const EntryRoom = () => {
+  const navigate = useNavigate();
+  const [nickname, setNickname] = useState('');
+
+  const [codeInput, setCodeInput] = useState({
+    code1: '',
+    code2: '',
+    code3: '',
+    code4: '',
+    code5: '',
+  });
+
+  const { code1, code2, code3, code4, code5 } = codeInput;
+
+  const onChangeCodeInput = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target; // destructuring
+    setCodeInput({
+      ...codeInput,
+      [name]: value,
+    });
+  };
+
+  const onChangeNickname = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setNickname(e.target.value);
+  };
+
+  const goToGame = async (e: React.MouseEvent<HTMLButtonElement>) => {
+    e.preventDefault(); // 기본 동작 막기
+
+    let entryCode = '';
+    const codeArray = Object.values(codeInput);
+    codeArray.forEach((code) => (entryCode += code));
+
+    if (entryCode !== '') {
+      const response = await axios.post(
+        `http://localhost:8080/api/v1/rooms/users/${entryCode}`,
+        {
+          nickname,
+        },
+      );
+
+      console.log(response);
+      navigate('/game', { state: { nickname } });
+    }
+  };
+
   return (
     <Wrap>
       <Header />
@@ -23,19 +70,51 @@ const EntryRoom = () => {
         <EntryForm>
           <Label name="입장코드" />
           <CodeWrap>
-            <CodeInput required maxLength={1} />
-            <CodeInput required maxLength={1} />
-            <CodeInput required maxLength={1} />
-            <CodeInput required maxLength={1} />
-            <CodeInput required maxLength={1} />
+            <CodeInput
+              name="code1"
+              value={code1}
+              onChange={onChangeCodeInput}
+              required
+              maxLength={1}
+            />
+            <CodeInput
+              name="code2"
+              value={code2}
+              onChange={onChangeCodeInput}
+              required
+              maxLength={1}
+            />
+            <CodeInput
+              name="code3"
+              value={code3}
+              onChange={onChangeCodeInput}
+              required
+              maxLength={1}
+            />
+            <CodeInput
+              name="code4"
+              value={code4}
+              onChange={onChangeCodeInput}
+              required
+              maxLength={1}
+            />
+            <CodeInput
+              name="code5"
+              value={code5}
+              onChange={onChangeCodeInput}
+              required
+              maxLength={1}
+            />
           </CodeWrap>
           <Label name="닉네임" />
           <NickNameInput
+            value={nickname}
+            onChange={onChangeNickname}
             placeholder="닉네임을 입력해주세요"
             required
             maxLength={5}
           />
-          <Button title="입장하기" />
+          <Button title="입장하기" onClickEvent={goToGame} />
         </EntryForm>
       </Blackboard>
     </Wrap>

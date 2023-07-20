@@ -3,10 +3,15 @@ import { styled } from 'styled-components';
 import { motion } from 'framer-motion';
 type MyComponentProps = {
   title: string;
+  onClickEvent(e: React.MouseEvent<HTMLButtonElement>): void;
 };
 
-const Button = ({ title }: MyComponentProps) => {
-  return <EntryButton whileTap={{ scale: 0.9 }}>{title}</EntryButton>;
+const Button = ({ title, onClickEvent }: MyComponentProps) => {
+  return (
+    <EntryButton whileTap={{ scale: 0.9 }} onClick={onClickEvent}>
+      {title}
+    </EntryButton>
+  );
 };
 
 export default Button;
