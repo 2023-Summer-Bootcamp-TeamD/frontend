@@ -41,7 +41,7 @@ const EntryRoom = () => {
     mutate(nickName);
   };
 
-  const posting = async (nickname: string) => {
+  const posting = async (nickName: string) => {
     const uuid: string = Object.values(circleInput).join('');
     return await axios.post(
       `http://localhost:8080/api/v1/rooms/users/${uuid}`,
@@ -72,42 +72,16 @@ const EntryRoom = () => {
         <EntryForm onSubmit={onSubmitHandler}>
           <Label name="입장코드" />
           <CodeWrap>
-            <CodeInput
-              name="input1"
-              onChange={onCodehandler}
-              value={circleInput.input1}
-              required
-              maxLength={1}
-            />
-
-            <CodeInput
-              name="input2"
-              onChange={onCodehandler}
-              value={circleInput.input2}
-              required
-              maxLength={1}
-            />
-            <CodeInput
-              name="input3"
-              onChange={onCodehandler}
-              value={circleInput.input3}
-              required
-              maxLength={1}
-            />
-            <CodeInput
-              name="input4"
-              onChange={onCodehandler}
-              value={circleInput.input4}
-              required
-              maxLength={1}
-            />
-            <CodeInput
-              name="input5"
-              onChange={onCodehandler}
-              value={circleInput.input5}
-              required
-              maxLength={1}
-            />
+            {Object.values(circleInput).map((value, index) => (
+              <CodeInput
+                key={index}
+                name={`input${index + 1}`}
+                onChange={onCodehandler}
+                value={value}
+                required
+                maxLength={1}
+              />
+            ))}
           </CodeWrap>
           <Label name="닉네임" />
           <NickNameInput
