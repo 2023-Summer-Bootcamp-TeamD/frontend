@@ -1,10 +1,19 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { useLocation, useNavigate } from 'react-router-dom';
 import GameBoard from '@/components/Game/GameBoard';
 import GameNav from '@/components/Game/GameNav';
 import UsersChat from '@/components/Game/UsersChat';
 import { styled } from 'styled-components';
 import pencil from '@/assets/pencil.png';
 const Game = () => {
+  const navigate = useNavigate();
+
+  const { state } = useLocation();
+
+  useEffect(() => {
+    console.log(state);
+  }, []);
+
   const [xy, setXY] = useState({ x: 0, y: 0 });
   const [currentFocus, setCurrentFocus] = useState(pencil);
   const xyHandler = (e: React.MouseEvent<HTMLDivElement>) => {

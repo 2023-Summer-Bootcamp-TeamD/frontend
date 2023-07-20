@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { styled } from 'styled-components';
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 import Teaching from '@/assets/Teaching.png';
 import FireExtinguisher from '@/assets/FireExtinguisher.png';
 import DoodleFunctionMath from '@/assets/DoodleFunctionMath.png';
@@ -11,6 +12,8 @@ import Header from '@/common/Header';
 import Label from '@/components/Entrance/EntranceLabel';
 
 const CreatingRooms = () => {
+  const navigate = useNavigate();
+
   const [selectedCategory, setSelectedCategory] = useState(1);
   const [nickname, setNickname] = useState('');
   const [personnel, setPersonnel] = useState(2);
@@ -40,6 +43,16 @@ const CreatingRooms = () => {
     setNickname(e.target.value);
   };
 
+  type GameInfoProps = {
+    nickname: string;
+    time: number;
+    player_num: number;
+    entry_code: string;
+  };
+
+  const goToGame = (gameInfo: GameInfoProps) =>
+    navigate('/game', { state: gameInfo });
+
   const createSpecificRoom = async () => {
     try {
       const response = await axios.post('http://localhost:8080/api/v1/rooms', {
@@ -49,7 +62,14 @@ const CreatingRooms = () => {
         player_num: personnel,
       });
 
-      console.log(response);
+      const gameInfo = {
+        nickname,
+        time: seconds,
+        player_num: personnel,
+        entry_code: response.data.uuid,
+      };
+
+      goToGame(gameInfo);
     } catch (e) {
       console.error(e);
     }
