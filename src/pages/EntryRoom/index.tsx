@@ -19,14 +19,19 @@ const EntryRoom = () => {
     input5: '',
   };
   const [circleInput, setCircleInput] = useState(circleInputData);
-
+  const [nickName, setNickName] = useState('');
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     setCircleInput({
       ...circleInput,
       [e.target.name]: e.target.value, //circleInput 배열 복사 후 여기만 덮어씌우기
     });
   };
+  const onNickNamehandler = (e: ChangeEvent<HTMLInputElement>) => {
+    setNickName(e.target.value);
+  };
 
+  console.log(circleInput);
+  console.log('닉네임 : ' + nickName);
   return (
     <Wrap>
       <Header />
@@ -81,6 +86,8 @@ const EntryRoom = () => {
             placeholder="닉네임을 입력해주세요"
             required
             maxLength={5}
+            value={nickName}
+            onChange={onNickNamehandler}
           />
           <Button title="입장하기" />
         </EntryForm>
