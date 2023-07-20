@@ -28,7 +28,7 @@ const EntryRoom = () => {
   const onCodehandler = (e: ChangeEvent<HTMLInputElement>) => {
     setCircleInput({
       ...circleInput,
-      [e.target.name]: e.target.value, //circleInput 배열 복사 후 여기만 덮어씌우기
+      [e.target.name]: e.target.value,
     });
   };
 
@@ -53,7 +53,7 @@ const EntryRoom = () => {
 
   const { mutate } = useMutation(posting, {
     onSuccess: () => {
-      navigate('/game');
+      navigate('/game', { state: { nickname: nickName } });
     },
     onError: (error: AxiosError) => {
       console.log(error.response?.data);
