@@ -17,6 +17,7 @@ const CreatingRooms = () => {
   const [seconds, setSeconds] = useState(10);
   const [category, setCategory] = useState({});
   const [name, setName] = useState('');
+  const [uuid, setUuid] = useState('');
   const increasePersonnel = () => {
     if (personnel < 8) {
       setPersonnel(personnel + 1);
@@ -40,23 +41,20 @@ const CreatingRooms = () => {
   const inputNickNames = (e: React.ChangeEvent<HTMLInputElement>) => {
     setName(e.target.value);
   };
-  const selectGenre = (event: React.MouseEvent<HTMLDivElement>) => {
+  const selectCategory = (event: React.MouseEvent<HTMLDivElement>) => {
     const showing = roomElement.filter(
       (item) => item.itemIndex === event.currentTarget.id,
     );
     setCategory(showing[0].itemIndex);
   };
-  // 선택한 카테고리를 바로 확인할 수 있는 코드.
-  useEffect(() => {
-    console.log(category);
-  }, [category]);
 
-  const GamInfo = [
-    { nickname: name },
-    { category_id: category },
-    { time: seconds },
-    { player_num: personnel },
-  ];
+  const GameInfo = {
+    nickname: name,
+    category_id: category,
+    time: seconds,
+    player_num: personnel,
+    uuid: uuid,
+  };
   const sendRoomInfo = async () => {
     try {
       const reponse = await axios.post('http://localhost:8080/api/v1/rooms', {
@@ -65,7 +63,8 @@ const CreatingRooms = () => {
         time: seconds,
         player_num: personnel,
       });
-      navigate('/game', { state: GamInfo });
+      navigate('/game', { state: GameInfo });
+      setUuid(reponse.data.uuid);
     } catch (e) {
       console.log(e);
     }
@@ -87,7 +86,7 @@ const CreatingRooms = () => {
         </DoodleContainer>
         <CategoryContainer>
           {roomElement.map((item, index) => (
-            <div key={index} onClick={selectGenre} id={item.itemIndex}>
+            <div key={index} onClick={selectCategory} id={item.itemIndex}>
               <img src={item.image} alt={item.id} />
               <label>{item.id}</label>
             </div>
