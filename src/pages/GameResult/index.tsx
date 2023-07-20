@@ -94,7 +94,7 @@ const TheFirstAward = styled.div`
   }
   span:nth-child(6) {
     font-size: 1.5rem;
-    margin-top: 10rem;
+    margin-top: 14rem;
     margin-bottom: 0;
   }
   span:nth-child(7) {
@@ -150,7 +150,7 @@ const Ranking = styled.div`
     height: 53vh;
   }
   & > span {
-    font-size: 4.2rem;
+    font-size: 4.5rem;
     font-weight: 700;
   }
 

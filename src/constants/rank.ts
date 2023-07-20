@@ -1,7 +1,7 @@
 const nowDate = new Date();
 export const DAY = `${nowDate.getFullYear()}년 ${
   nowDate.getMonth() + 1
-}월${nowDate.getDate()}일`;
+}월 ${nowDate.getDate()}일`;
 export const USERRANK = [
   '1등급 서근재',
   '2등급 김진수',
