@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { ChangeEvent, useState } from 'react';
 import { styled } from 'styled-components';
 import chattingImg from '@/assets/Chatter.png';
 import CompassImg from '@/assets/DoodleCompass.png';
@@ -11,6 +11,22 @@ import Header from '@/common/Header';
 import { motion } from 'framer-motion';
 
 const EntryRoom = () => {
+  const circleInputData = {
+    input1: '',
+    input2: '',
+    input3: '',
+    input4: '',
+    input5: '',
+  };
+  const [circleInput, setCircleInput] = useState(circleInputData);
+
+  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
+    setCircleInput({
+      ...circleInput,
+      [e.target.name]: e.target.value, //circleInput 배열 복사 후 여기만 덮어씌우기
+    });
+  };
+
   return (
     <Wrap>
       <Header />
@@ -23,11 +39,42 @@ const EntryRoom = () => {
         <EntryForm>
           <Label name="입장코드" />
           <CodeWrap>
-            <CodeInput required maxLength={1} />
-            <CodeInput required maxLength={1} />
-            <CodeInput required maxLength={1} />
-            <CodeInput required maxLength={1} />
-            <CodeInput required maxLength={1} />
+            <CodeInput
+              name="input1"
+              onChange={handleChange}
+              value={circleInput.input1}
+              required
+              maxLength={1}
+            />
+
+            <CodeInput
+              name="input2"
+              onChange={handleChange}
+              value={circleInput.input2}
+              required
+              maxLength={1}
+            />
+            <CodeInput
+              name="input3"
+              onChange={handleChange}
+              value={circleInput.input3}
+              required
+              maxLength={1}
+            />
+            <CodeInput
+              name="input4"
+              onChange={handleChange}
+              value={circleInput.input4}
+              required
+              maxLength={1}
+            />
+            <CodeInput
+              name="input5"
+              onChange={handleChange}
+              value={circleInput.input5}
+              required
+              maxLength={1}
+            />
           </CodeWrap>
           <Label name="닉네임" />
           <NickNameInput
