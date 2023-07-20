@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { styled } from 'styled-components';
+import axios from 'axios';
 import Teaching from '@/assets/Teaching.png';
 import FireExtinguisher from '@/assets/FireExtinguisher.png';
 import DoodleFunctionMath from '@/assets/DoodleFunctionMath.png';
@@ -10,6 +11,7 @@ import Header from '@/common/Header';
 import Label from '@/components/Entrance/EntranceLabel';
 
 const CreatingRooms = () => {
+  const [nickname, setNickname] = useState('');
   const [personnel, setPersonnel] = useState(2);
   const [seconds, setSeconds] = useState(10);
   const increasePersonnel = () => {
@@ -32,6 +34,28 @@ const CreatingRooms = () => {
       setSeconds(seconds - 10);
     }
   };
+
+  const handleNicknameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setNickname(e.target.value);
+  };
+
+  const createSpecificRoom = async () => {
+    try {
+      const response = await axios.post('/api/v1/rooms', {
+        params: {
+          nickname: nickname,
+          category_id: 2,
+          time: seconds,
+          player_num: personnel,
+        },
+      });
+
+      console.log(response);
+    } catch (e) {
+      console.error(e);
+    }
+  };
+
   return (
     <Admissions>
       <Header />
@@ -71,6 +95,8 @@ const CreatingRooms = () => {
             <Label name="닉네임" />
             <NickNameInput
               placeholder="닉네임을 입력해주세요"
+              value={nickname}
+              onChange={handleNicknameChange}
               required
               maxLength={5}
             />
@@ -88,7 +114,9 @@ const CreatingRooms = () => {
             </div>
           </div>
         </UIContainer>
-        <button className="CreatingRoomButton">방 만들기</button>
+        <button className="CreatingRoomButton" onClick={createSpecificRoom}>
+          방 만들기
+        </button>
         <ChatterImg src={Chatter} alt="떠든사람" />
       </Blackboard>
     </Admissions>
