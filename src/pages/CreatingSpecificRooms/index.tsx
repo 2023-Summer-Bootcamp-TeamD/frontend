@@ -11,6 +11,7 @@ import Header from '@/common/Header';
 import Label from '@/components/Entrance/EntranceLabel';
 
 const CreatingRooms = () => {
+  const [selectedCategory, setSelectedCategory] = useState(1);
   const [nickname, setNickname] = useState('');
   const [personnel, setPersonnel] = useState(2);
   const [seconds, setSeconds] = useState(10);
@@ -56,6 +57,10 @@ const CreatingRooms = () => {
     }
   };
 
+  const clickCategory = (categoryId: number) => {
+    setSelectedCategory(categoryId);
+  };
+
   return (
     <Admissions>
       <Header />
@@ -72,7 +77,7 @@ const CreatingRooms = () => {
         </DoodleContainer>
         <CategoryContainer>
           {roomElement.map((item, index) => (
-            <div key={index}>
+            <div key={index + 1} onClick={() => clickCategory(index + 1)}>
               <img src={item.image} alt={item.id} />
               <label>{item.id}</label>
             </div>
