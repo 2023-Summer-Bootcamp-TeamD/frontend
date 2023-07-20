@@ -9,29 +9,57 @@ import Label from '@/components/Entrance/EntranceLabel';
 import Button from '@/components/Entrance/ EntranceButton';
 import Header from '@/common/Header';
 import { motion } from 'framer-motion';
+import { useMutation } from '@tanstack/react-query';
+import axios, { AxiosError, AxiosResponse } from 'axios';
+import { useNavigate } from 'react-router-dom';
 
 const EntryRoom = () => {
-  const circleInputData = {
+  const navigate = useNavigate();
+  const circleInitialData = {
     input1: '',
     input2: '',
     input3: '',
     input4: '',
     input5: '',
   };
-  const [circleInput, setCircleInput] = useState(circleInputData);
+  const [circleInput, setCircleInput] = useState(circleInitialData);
   const [nickName, setNickName] = useState('');
-  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
+
+  const onCodehandler = (e: ChangeEvent<HTMLInputElement>) => {
     setCircleInput({
       ...circleInput,
       [e.target.name]: e.target.value, //circleInput 배열 복사 후 여기만 덮어씌우기
     });
   };
+
   const onNickNamehandler = (e: ChangeEvent<HTMLInputElement>) => {
     setNickName(e.target.value);
   };
 
-  console.log(circleInput);
-  console.log('닉네임 : ' + nickName);
+  const onSubmitHandler = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    mutate(nickName);
+  };
+
+  const posting = async (nickname: string) => {
+    const uuid: string = Object.values(circleInput).join('');
+    return await axios.post(
+      `http://localhost:8080/api/v1/rooms/users/${uuid}`,
+      {
+        nickname: nickName,
+      },
+    );
+  };
+
+  const { mutate } = useMutation(posting, {
+    onSuccess: () => {
+      navigate('/game');
+    },
+    onError: (error: AxiosError) => {
+      console.log(error.response?.data);
+    },
+  });
+
   return (
     <Wrap>
       <Header />
@@ -41,12 +69,12 @@ const EntryRoom = () => {
         <DoodleCompass />
         <DoodleMath />
         <DoodleChatting />
-        <EntryForm>
+        <EntryForm onSubmit={onSubmitHandler}>
           <Label name="입장코드" />
           <CodeWrap>
             <CodeInput
               name="input1"
-              onChange={handleChange}
+              onChange={onCodehandler}
               value={circleInput.input1}
               required
               maxLength={1}
@@ -54,28 +82,28 @@ const EntryRoom = () => {
 
             <CodeInput
               name="input2"
-              onChange={handleChange}
+              onChange={onCodehandler}
               value={circleInput.input2}
               required
               maxLength={1}
             />
             <CodeInput
               name="input3"
-              onChange={handleChange}
+              onChange={onCodehandler}
               value={circleInput.input3}
               required
               maxLength={1}
             />
             <CodeInput
               name="input4"
-              onChange={handleChange}
+              onChange={onCodehandler}
               value={circleInput.input4}
               required
               maxLength={1}
             />
             <CodeInput
               name="input5"
-              onChange={handleChange}
+              onChange={onCodehandler}
               value={circleInput.input5}
               required
               maxLength={1}
@@ -85,9 +113,9 @@ const EntryRoom = () => {
           <NickNameInput
             placeholder="닉네임을 입력해주세요"
             required
+            onChange={onNickNamehandler}
             maxLength={5}
             value={nickName}
-            onChange={onNickNamehandler}
           />
           <Button title="입장하기" />
         </EntryForm>
