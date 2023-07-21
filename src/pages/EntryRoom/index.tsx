@@ -8,36 +8,24 @@ import TeachingImg from '@/assets/Teaching.png';
 import Label from '@/components/Entrance/EntranceLabel';
 import Button from '@/components/Entrance/ EntranceButton';
 import Header from '@/common/Header';
-import { motion } from 'framer-motion';
 import { useMutation } from '@tanstack/react-query';
 import axios, { AxiosError } from 'axios';
 import { useNavigate } from 'react-router-dom';
+import { CircleInputType, NickNameType } from '@/types/entryRoom';
+import { entryAPI } from '@/apis/entryRoom';
 
 const EntryRoom = () => {
-  type nickNameType = {
-    nickname: string;
-  };
+  const navigate = useNavigate();
 
-  type circleInputType = {
-    input1: string;
-    input2: string;
-    input3: string;
-    input4: string;
-    input5: string;
-  };
-
-  const circleInitialData: circleInputType = {
+  const [circleInput, setCircleInput] = useState<CircleInputType>({
     input1: '',
     input2: '',
     input3: '',
     input4: '',
     input5: '',
-  };
-  const [circleInput, setCircleInput] =
-    useState<circleInputType>(circleInitialData);
+  });
   const [nickName, setNickName] = useState<string>('');
 
-  const navigate = useNavigate();
   const onCodehandler = (e: ChangeEvent<HTMLInputElement>) => {
     setCircleInput({
       ...circleInput,
@@ -56,13 +44,9 @@ const EntryRoom = () => {
     }); // posting 함수를 mutation으로 실행시키는 메서드
   };
 
-  const postNickName = async (nickNameData: nickNameType) => {
+  const postNickName = async (nickNameData: NickNameType) => {
     const uuid: string = Object.values(circleInput).join('');
-
-    return await axios.post(
-      `http://localhost:8080/api/v1/rooms/users/${uuid}`,
-      nickNameData,
-    );
+    return await entryAPI(uuid);
   };
 
   const { mutate } = useMutation(postNickName, {

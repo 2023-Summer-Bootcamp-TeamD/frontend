@@ -31,7 +31,7 @@ export const getClient = (() => {
 
 const { VITE_BASE_URL } = import.meta.env;
 
-const BASE_URL = VITE_BASE_URL;
+const BASE_URL = 'http://localhost:8080/api/v1';
 
 export const restFetcher = async ({
   method,
