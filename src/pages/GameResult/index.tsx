@@ -5,11 +5,22 @@ import DrawingRoom from '@/assets/DrawingRoomIcon.png';
 import { useNavigate } from 'react-router-dom';
 import wrong from '@/assets/wrong.png';
 import { DAY, USERRANK, bestPlayerName, crapeTalk } from '@/constants/rank';
+import { useEffect } from 'react';
+import axios from 'axios';
+
 const GameResult = () => {
   const naviagte = useNavigate();
 
   const goToMain = () => naviagte('/');
   const goToDrwaingRoom = () => naviagte('/drawingroom');
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const res = await axios.get('/results');
+      console.log(res.data);
+    };
+    fetchData();
+  }, []);
 
   return (
     <GameResultContainer>
