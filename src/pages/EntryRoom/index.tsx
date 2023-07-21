@@ -41,12 +41,12 @@ const EntryRoom = () => {
     e.preventDefault();
     mutate({
       nickname: nickName,
-    }); // posting 함수를 mutation으로 실행시키는 메서드
+    }); //  postNickName 함수를 mutation으로 실행시키는 메서드
   };
 
   const postNickName = async (nickNameData: NickNameType) => {
     const uuid: string = Object.values(circleInput).join('');
-    return await entryAPI(uuid);
+    return await entryAPI(uuid, nickNameData);
   };
 
   const { mutate } = useMutation(postNickName, {
