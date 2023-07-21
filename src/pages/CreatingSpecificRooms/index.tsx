@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { styled } from 'styled-components';
-import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import Teaching from '@/assets/Teaching.png';
 import FireExtinguisher from '@/assets/FireExtinguisher.png';
@@ -10,6 +9,8 @@ import Chatter from '@/assets/Chatter.png';
 import { roomElement } from '@/constants/roomElement';
 import Header from '@/common/Header';
 import Label from '@/components/Entrance/EntranceLabel';
+import { GameInfoProps } from '@/types/creatingSpecificRooms';
+import { makeRoomAPI } from '@/apis/creatingSpecificRoomsAPI';
 
 const CreatingRooms = () => {
   const navigate = useNavigate();
@@ -18,6 +19,7 @@ const CreatingRooms = () => {
   const [nickname, setNickname] = useState('');
   const [personnel, setPersonnel] = useState(2);
   const [seconds, setSeconds] = useState(10);
+
   const increasePersonnel = () => {
     if (personnel < 8) {
       setPersonnel(personnel + 1);
@@ -43,40 +45,22 @@ const CreatingRooms = () => {
     setNickname(e.target.value);
   };
 
-  type GameInfoProps = {
-    nickname: string;
-    time: number;
-    player_num: number;
-    entry_code: string;
-  };
-
-  const goToGame = (gameInfo: GameInfoProps) =>
-    navigate('/game', { state: gameInfo });
-
-  const createSpecificRoom = async () => {
-    try {
-      const response = await axios.post('http://localhost:8080/api/v1/rooms', {
-        nickname: nickname,
-        category_id: selectedCategory,
-        time: seconds,
-        player_num: personnel,
-      });
-
-      const gameInfo = {
-        nickname,
-        time: seconds,
-        player_num: personnel,
-        entry_code: response.data.uuid,
-      };
-
-      goToGame(gameInfo);
-    } catch (e) {
-      console.error(e);
-    }
-  };
-
   const clickCategory = (categoryId: number) => {
     setSelectedCategory(categoryId);
+  };
+
+  const goToGame = (gameInfo?: GameInfoProps) =>
+    navigate(`/game/${gameInfo?.entry_code}`, { state: gameInfo });
+
+  const handleMakeRoom = async () => {
+    const data = {
+      nickname,
+      selectedCategory,
+      seconds,
+      personnel,
+    };
+    const result = await makeRoomAPI(data);
+    goToGame(result);
   };
 
   return (
@@ -146,7 +130,7 @@ const CreatingRooms = () => {
             </div>
           </div>
         </UIContainer>
-        <button className="CreatingRoomButton" onClick={createSpecificRoom}>
+        <button className="CreatingRoomButton" onClick={handleMakeRoom}>
           방 만들기
         </button>
         <ChatterImg src={Chatter} alt="떠든사람" />

@@ -18,7 +18,7 @@ export const routes = [
       { path: '/entryRoom', element: <EntryRoomPage /> },
       { path: '/drawingRoom', element: <DrawingResultPage /> },
       {
-        path: '/game',
+        path: '/game/:UUID',
         element: <GamePage />,
       },
       { path: '/result', element: <GameResultPage /> },

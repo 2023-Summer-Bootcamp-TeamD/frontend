@@ -6,13 +6,7 @@ import UsersChat from '@/components/Game/UsersChat';
 import { styled } from 'styled-components';
 import pencil from '@/assets/pencil.png';
 const Game = () => {
-  const navigate = useNavigate();
-
-  const { state } = useLocation();
-
-  useEffect(() => {
-    console.log(state);
-  }, []);
+  const { nickname, time, player_num, entry_code } = useLocation().state;
 
   const [xy, setXY] = useState({ x: 0, y: 0 });
   const [currentFocus, setCurrentFocus] = useState(pencil);
