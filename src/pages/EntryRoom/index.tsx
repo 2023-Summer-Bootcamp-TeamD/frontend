@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { ChangeEvent, useState } from 'react';
 import { styled } from 'styled-components';
 import chattingImg from '@/assets/Chatter.png';
 import CompassImg from '@/assets/DoodleCompass.png';
@@ -8,9 +8,57 @@ import TeachingImg from '@/assets/Teaching.png';
 import Label from '@/components/Entrance/EntranceLabel';
 import Button from '@/components/Entrance/ EntranceButton';
 import Header from '@/common/Header';
-import { motion } from 'framer-motion';
+import { useMutation } from '@tanstack/react-query';
+import { AxiosError } from 'axios';
+import { useNavigate } from 'react-router-dom';
+import { CircleInputType, NickNameType } from '@/types/entryRoom';
+import { entryAPI } from '@/apis/entryRoom';
 
 const EntryRoom = () => {
+  const navigate = useNavigate();
+
+  const [circleInput, setCircleInput] = useState<CircleInputType>({
+    input1: '',
+    input2: '',
+    input3: '',
+    input4: '',
+    input5: '',
+  });
+  const [nickName, setNickName] = useState<string>('');
+  const [uuid, setUUID] = useState('');
+  const onCodehandler = (e: ChangeEvent<HTMLInputElement>) => {
+    setCircleInput({
+      ...circleInput,
+      [e.target.name]: e.target.value,
+    });
+  };
+
+  const onNickNamehandler = (e: ChangeEvent<HTMLInputElement>) => {
+    setNickName(e.target.value);
+  };
+
+  const onSubmitHandler = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    mutate({
+      nickname: nickName,
+    }); //  postNickName 함수를 mutation으로 실행시키는 메서드
+  };
+
+  const postNickName = async (nickNameData: NickNameType) => {
+    const uuid: string = Object.values(circleInput).join('');
+    setUUID(uuid);
+    return await entryAPI(uuid, nickNameData);
+  };
+
+  const { mutate } = useMutation(postNickName, {
+    onSuccess: () => {
+      navigate(`/game/${uuid}`, { state: { nickname: nickName } });
+    },
+    onError: (error: AxiosError) => {
+      console.log(error.response?.data);
+    },
+  });
+
   return (
     <Wrap>
       <Header />
@@ -20,20 +68,27 @@ const EntryRoom = () => {
         <DoodleCompass />
         <DoodleMath />
         <DoodleChatting />
-        <EntryForm>
+        <EntryForm onSubmit={onSubmitHandler}>
           <Label name="입장코드" />
           <CodeWrap>
-            <CodeInput required maxLength={1} />
-            <CodeInput required maxLength={1} />
-            <CodeInput required maxLength={1} />
-            <CodeInput required maxLength={1} />
-            <CodeInput required maxLength={1} />
+            {Object.values(circleInput).map((value, index) => (
+              <CodeInput
+                key={index}
+                name={`input${index + 1}`}
+                onChange={onCodehandler}
+                value={value}
+                required
+                maxLength={1}
+              />
+            ))}
           </CodeWrap>
           <Label name="닉네임" />
           <NickNameInput
             placeholder="닉네임을 입력해주세요"
             required
+            onChange={onNickNamehandler}
             maxLength={5}
+            value={nickName}
           />
           <Button title="입장하기" />
         </EntryForm>
