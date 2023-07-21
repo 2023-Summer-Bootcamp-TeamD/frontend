@@ -18,6 +18,7 @@ const CreatingRooms = () => {
   const [category, setCategory] = useState({});
   const [name, setName] = useState('');
   const [uuid, setUuid] = useState('');
+
   const increasePersonnel = () => {
     if (personnel < 8) {
       setPersonnel(personnel + 1);
@@ -62,6 +63,7 @@ const CreatingRooms = () => {
         category_id: category,
         time: seconds,
         player_num: personnel,
+        uuid: uuid,
       });
       navigate('/game', { state: GameInfo });
       setUuid(reponse.data.uuid);
