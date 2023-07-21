@@ -9,7 +9,7 @@ import Label from '@/components/Entrance/EntranceLabel';
 import Button from '@/components/Entrance/ EntranceButton';
 import Header from '@/common/Header';
 import { useMutation } from '@tanstack/react-query';
-import axios, { AxiosError } from 'axios';
+import { AxiosError } from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { CircleInputType, NickNameType } from '@/types/entryRoom';
 import { entryAPI } from '@/apis/entryRoom';
@@ -25,7 +25,7 @@ const EntryRoom = () => {
     input5: '',
   });
   const [nickName, setNickName] = useState<string>('');
-
+  const [uuid, setUUID] = useState('');
   const onCodehandler = (e: ChangeEvent<HTMLInputElement>) => {
     setCircleInput({
       ...circleInput,
@@ -46,12 +46,13 @@ const EntryRoom = () => {
 
   const postNickName = async (nickNameData: NickNameType) => {
     const uuid: string = Object.values(circleInput).join('');
+    setUUID(uuid);
     return await entryAPI(uuid, nickNameData);
   };
 
   const { mutate } = useMutation(postNickName, {
     onSuccess: () => {
-      navigate('/game', { state: { nickname: nickName } });
+      navigate(`/game/${uuid}`, { state: { nickname: nickName } });
     },
     onError: (error: AxiosError) => {
       console.log(error.response?.data);
