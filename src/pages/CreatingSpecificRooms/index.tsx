@@ -9,7 +9,7 @@ import Chatter from '@/assets/Chatter.png';
 import { roomElement } from '@/constants/roomElement';
 import Header from '@/common/Header';
 import Label from '@/components/Entrance/EntranceLabel';
-import { GameInfoProps, MakeRoomType } from '@/types/creatingSpecificRooms';
+import { MakeRoomType } from '@/types/creatingSpecificRooms';
 import { makeRoomAPI } from '@/apis/creatingSpecificRooms';
 import { useMutation } from '@tanstack/react-query';
 import { AxiosError } from 'axios';
