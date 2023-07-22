@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { styled } from 'styled-components';
+import { useNavigate } from 'react-router-dom';
 import Teaching from '@/assets/Teaching.png';
 import FireExtinguisher from '@/assets/FireExtinguisher.png';
 import DoodleFunctionMath from '@/assets/DoodleFunctionMath.png';
@@ -8,10 +9,19 @@ import Chatter from '@/assets/Chatter.png';
 import { roomElement } from '@/constants/roomElement';
 import Header from '@/common/Header';
 import Label from '@/components/Entrance/EntranceLabel';
+import { GameInfoProps, MakeRoomType } from '@/types/creatingSpecificRooms';
+import { makeRoomAPI } from '@/apis/creatingSpecificRooms';
+import { useMutation } from '@tanstack/react-query';
+import { AxiosError } from 'axios';
 
 const CreatingRooms = () => {
+  const navigate = useNavigate();
+
+  const [selectedCategory, setSelectedCategory] = useState(1);
+  const [nickname, setNickname] = useState('');
   const [personnel, setPersonnel] = useState(2);
   const [seconds, setSeconds] = useState(10);
+
   const increasePersonnel = () => {
     if (personnel < 8) {
       setPersonnel(personnel + 1);
@@ -32,6 +42,37 @@ const CreatingRooms = () => {
       setSeconds(seconds - 10);
     }
   };
+
+  const handleNicknameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setNickname(e.target.value);
+  };
+
+  const clickCategory = (categoryId: number) => {
+    setSelectedCategory(categoryId);
+  };
+
+  const onClickHandler = (e: React.MouseEvent<HTMLButtonElement>) => {
+    e.preventDefault();
+    mutate({
+      nickname,
+      selectedCategory,
+      seconds,
+      personnel,
+    });
+  };
+  const postGameInfo = async (data: MakeRoomType) => {
+    return await makeRoomAPI(data);
+  };
+
+  const { mutate } = useMutation(postGameInfo, {
+    onSuccess: (data) => {
+      navigate(`/game/${data?.entry_code}`, { state: data });
+    },
+    onError: (error: AxiosError) => {
+      console.log(error.response?.data);
+    },
+  });
+
   return (
     <Admissions>
       <Header />
@@ -48,7 +89,16 @@ const CreatingRooms = () => {
         </DoodleContainer>
         <CategoryContainer>
           {roomElement.map((item, index) => (
-            <div key={index}>
+            <div
+              key={index + 1}
+              onClick={() => clickCategory(index + 1)}
+              style={{
+                backgroundColor:
+                  index + 1 === selectedCategory
+                    ? 'rgba(255, 255, 255, 0.18)'
+                    : '',
+              }}
+            >
               <img src={item.image} alt={item.id} />
               <label>{item.id}</label>
             </div>
@@ -71,6 +121,8 @@ const CreatingRooms = () => {
             <Label name="닉네임" />
             <NickNameInput
               placeholder="닉네임을 입력해주세요"
+              value={nickname}
+              onChange={handleNicknameChange}
               required
               maxLength={5}
             />
@@ -88,7 +140,9 @@ const CreatingRooms = () => {
             </div>
           </div>
         </UIContainer>
-        <button className="CreatingRoomButton">방 만들기</button>
+        <button className="CreatingRoomButton" onClick={onClickHandler}>
+          방 만들기
+        </button>
         <ChatterImg src={Chatter} alt="떠든사람" />
       </Blackboard>
     </Admissions>
@@ -144,6 +198,7 @@ const CategoryContainer = styled.div`
     cursor: pointer;
     &:hover {
       background-color: rgba(255, 255, 255, 0.18);
+      transform: scale(1.1);
     }
   }
   > div > img {
@@ -161,9 +216,6 @@ const CategoryContainer = styled.div`
   }
 `;
 const UIContainer = styled.div`
-  ///position: absolute;
-  //top: 14.5em;
-  //left: 16.8em;
   display: flex;
   justify-content: space-evenly;
   align-items: center;
@@ -303,7 +355,6 @@ const Blackboard = styled.div`
     width: 13rem;
     height: 5rem;
     margin-top: 5rem;
-    //margin-bottom: 5rem;
     border-radius: 20rem;
     border: 0.05rem solid #fff;
     background-color: transparent;
@@ -316,6 +367,7 @@ const Blackboard = styled.div`
     &:hover {
       background-color: rgba(255, 255, 255, 0.18);
       cursor: pointer;
+      transform: scale(1.1);
     }
   }
 `;
