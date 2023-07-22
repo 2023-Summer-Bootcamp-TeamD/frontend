@@ -5,11 +5,34 @@ import DrawingRoom from '@/assets/DrawingRoomIcon.png';
 import { useNavigate } from 'react-router-dom';
 import wrong from '@/assets/wrong.png';
 import { DAY, USERRANK, bestPlayerName, crapeTalk } from '@/constants/rank';
+import { useQuery } from '@tanstack/react-query';
+import axios, { AxiosError } from 'axios';
+import { useState } from 'react';
+
 const GameResult = () => {
   const naviagte = useNavigate();
 
   const goToMain = () => naviagte('/');
   const goToDrwaingRoom = () => naviagte('/drawingroom');
+
+  const [resultScore, setResultScore] = useState([{ nickname: '', score: '' }]);
+  const getServerData = async () => {
+    const ResultAPI = await axios.get('/test');
+    return ResultAPI;
+  };
+  const { data } = useQuery(['Result'], getServerData, {
+    refetchOnWindowFocus: false,
+    onSuccess: (data) => {
+      setResultScore(data.data['석차']);
+    },
+    onError: (e) => {
+      console.log('onError', e);
+    },
+  });
+
+  if (resultScore) {
+    console.log(resultScore);
+  }
 
   return (
     <GameResultContainer>
@@ -25,9 +48,12 @@ const GameResult = () => {
       <div className="right-items">
         <Buttons onClick={goToMain}></Buttons>
         <Ranking>
-          {USERRANK.map((user, index) => {
-            return <span key={index}>{user}</span>;
-          })}
+          {resultScore.map((u, index) => (
+            <>
+              <p>{u.nickname}</p>
+              <p>{u.score}</p>
+            </>
+          ))}
         </Ranking>
         <Buttons onClick={goToDrwaingRoom}>
           <img src={DrawingRoom} className="drawingRoom-icon" />
@@ -98,7 +124,7 @@ const TheFirstAward = styled.div`
     margin-bottom: 0;
   }
   span:nth-child(7) {
-    font-size: 1%.5;
+    font-size: 1.5;
     margin-top: 1rem;
     margin-bottom: 0;
   }
