@@ -4,7 +4,7 @@ const dummy = {
   석차: [
     {
       nickname: '고양양양이',
-      score: 10,
+      score: 1,
     },
     {
       nickname: 'hello',
@@ -28,7 +28,7 @@ const dummy = {
     },
     {
       nickname: '고고',
-      score: 1,
+      score: 10,
     },
     {
       nickname: '핑뭐시기',

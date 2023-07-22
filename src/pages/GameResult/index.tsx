@@ -15,7 +15,11 @@ const GameResult = () => {
   const goToMain = () => naviagte('/');
   const goToDrwaingRoom = () => naviagte('/drawingroom');
 
-  const [resultScore, setResultScore] = useState([{ nickname: '', score: '' }]);
+  type resultScoreType = {
+    nickname: string;
+    score: number;
+  };
+  const [resultScore, setResultScore] = useState<resultScoreType[]>([]);
   const getServerData = async () => {
     const ResultAPI = await axios.get('/test');
     return ResultAPI;
@@ -29,10 +33,6 @@ const GameResult = () => {
       console.log('onError', e);
     },
   });
-
-  if (resultScore) {
-    console.log(resultScore);
-  }
 
   return (
     <GameResultContainer>
@@ -48,12 +48,14 @@ const GameResult = () => {
       <div className="right-items">
         <Buttons onClick={goToMain}></Buttons>
         <Ranking>
-          {resultScore.map((u, index) => (
-            <>
-              <p>{u.nickname}</p>
-              <p>{u.score}</p>
-            </>
-          ))}
+          {resultScore
+            .sort((a, b) => b.score - a.score)
+            .map((u, index) => (
+              <>
+                <p>{u.nickname}</p>
+                <p>{u.score}</p>
+              </>
+            ))}
         </Ranking>
         <Buttons onClick={goToDrwaingRoom}>
           <img src={DrawingRoom} className="drawingRoom-icon" />
