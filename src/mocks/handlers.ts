@@ -18,10 +18,7 @@ const dummy = {
       nickname: 'nodes',
       score: 10,
     },
-    {
-      nickname: '고양양양이',
-      score: 5,
-    },
+
     {
       nickname: '노든도나',
       score: 2,
