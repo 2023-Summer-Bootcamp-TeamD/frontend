@@ -3,6 +3,7 @@ import React, { useEffect, useRef } from 'react';
 import { styled } from 'styled-components';
 import MyMessage from './MyMessage';
 import OtherMessage from './OtherMessage';
+import useSocket from '@/hooks/useSocket';
 
 type Props = {
   chatList: messageType[];
@@ -19,7 +20,7 @@ const MessageView = ({ chatList }: Props) => {
 
   useEffect(() => {
     scrollToBottom();
-  }, [chatList]);
+  });
 
   return (
     <MessageBox ref={chatBoxRef}>

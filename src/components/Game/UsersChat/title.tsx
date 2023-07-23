@@ -1,14 +1,32 @@
 import { copyAndPaste } from '@/apis/game';
-import React from 'react';
+import { useSocketContext } from '@/context/SocketContext';
+import useSocket from '@/hooks/useSocket';
+import React, { useEffect, useState } from 'react';
+import { Socket } from 'socket.io-client';
 import { styled } from 'styled-components';
 
-const Title = () => {
+type TitleProps = {
+  UUID: string;
+};
+
+const Title = ({ UUID }: TitleProps) => {
+  const { socketState } = useSocketContext();
+  const { socket, isConnected } = socketState;
+
+  const [playerCount, setPlayerCount] = useState(0);
+  useEffect(() => {
+    if (socket && isConnected) {
+      socket.on('updateChatNum', (count: number) => {
+        setPlayerCount(() => count);
+      });
+    }
+  }, [socket, isConnected]);
   return (
     <TitleBox>
-      <div>참여 인원 6/6</div>
-      <div onClick={() => copyAndPaste('X59C6')}>
+      <div>참여 인원 {playerCount}/6</div>
+      <div onClick={() => copyAndPaste(UUID)}>
         <div>입장코드</div>
-        <div>X59C6</div>
+        <div>{UUID}</div>
       </div>
     </TitleBox>
   );

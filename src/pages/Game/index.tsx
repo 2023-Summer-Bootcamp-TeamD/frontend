@@ -1,10 +1,19 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import GameBoard from '@/components/Game/GameBoard';
 import GameNav from '@/components/Game/GameNav';
 import UsersChat from '@/components/Game/UsersChat';
 import { styled } from 'styled-components';
 import pencil from '@/assets/pencil.png';
+import { useLocation, useParams } from 'react-router-dom';
+import { useSocketContext } from '@/context/SocketContext';
+
 const Game = () => {
+  const hostData = useLocation().state;
+  const { UUID } = useParams();
+
+  const { socketState } = useSocketContext();
+  const { socket, isConnected } = socketState;
+
   const [xy, setXY] = useState({ x: 0, y: 0 });
   const [currentFocus, setCurrentFocus] = useState(pencil);
 
@@ -13,6 +22,16 @@ const Game = () => {
     const mouseY = e.clientY;
     setXY({ x: mouseX, y: mouseY });
   };
+
+  useEffect(() => {
+    if (socket && isConnected) {
+      socket.emit('createUser', hostData.nickname, UUID);
+    }
+    return () => {
+      socket?.off('createUser');
+    };
+  }, [socket, isConnected, hostData.nickname, UUID]);
+
   return (
     <GamePage onMouseMove={xyHandler}>
       <Nav>
@@ -21,7 +40,7 @@ const Game = () => {
       <Section>
         <div>
           <GameBoard setCurrentFocus={setCurrentFocus} />
-          <UsersChat />
+          <UsersChat UUID={UUID} {...hostData} />
         </div>
       </Section>
       <Cursor

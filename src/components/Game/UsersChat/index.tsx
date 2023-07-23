@@ -5,16 +5,29 @@ import MessageView from './messageView';
 import ChatInputView from './chatInputView';
 import { messageType } from '@/types/chatRoom';
 import { messages } from '@/constants/chatList';
+import useSocket from '@/hooks/useSocket';
 
-const UsersChat = () => {
+type UserChatProps = {
+  nickname: string;
+  uuid: string;
+  UUID: string;
+};
+
+const UsersChat = ({ nickname, UUID }: UserChatProps) => {
   const [chat, setChat] = useState<string>('');
   const [chatList, setChatList] = useState<messageType[]>(messages);
 
   return (
     <ChatRoom>
-      <Title />
+      <Title UUID={UUID} />
       <MessageView chatList={chatList} />
-      <ChatInputView chat={chat} setChat={setChat} setChatList={setChatList} />
+      <ChatInputView
+        nickname={nickname}
+        chat={chat}
+        setChat={setChat}
+        setChatList={setChatList}
+        chatList={chatList}
+      />
     </ChatRoom>
   );
 };

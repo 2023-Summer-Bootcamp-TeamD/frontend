@@ -1,18 +1,30 @@
 import { messageType } from '@/types/chatRoom';
-import React from 'react';
+import React, { useEffect } from 'react';
 import { styled } from 'styled-components';
 import dayjs from 'dayjs';
 import sendImg from '@/assets/sendIcon.png';
+import useSocket from '@/hooks/useSocket';
 type Props = {
   chat: string;
   setChat: React.Dispatch<React.SetStateAction<string>>;
   setChatList: React.Dispatch<React.SetStateAction<messageType[]>>;
+  chatList: messageType[];
+  nickname: string;
 };
 
-const ChatInputView = ({ setChat, chat, setChatList }: Props) => {
+const ChatInputView = ({
+  nickname,
+  setChat,
+  chat,
+  setChatList,
+  chatList,
+}: Props) => {
   const textHandler = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     setChat(e.target.value);
   };
+
+  const socketURL = 'http://localhost:8080';
+  const { socket, isConnected } = useSocket(socketURL);
 
   //텍스트창에서 엔터를 눌렀을때 실행되는 함수
   const sendMessageToEnter = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
@@ -35,7 +47,7 @@ const ChatInputView = ({ setChat, chat, setChatList }: Props) => {
 
   const sendSumit = () => {
     const data = {
-      nickname: '승환',
+      nickname: nickname,
       message: chat,
       date: dayjs().format('HH:mm'),
     };
