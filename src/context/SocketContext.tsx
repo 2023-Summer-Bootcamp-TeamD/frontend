@@ -2,9 +2,9 @@
 import React, { createContext, useContext } from 'react';
 import useSocket, { SocketState } from '../hooks/useSocket'; // useSocket 훅을 가져옵니다.
 
-interface SocketContextType {
+type SocketContextType = {
   socketState: SocketState;
-}
+};
 
 const SocketContext = createContext<SocketContextType | null>(null);
 
