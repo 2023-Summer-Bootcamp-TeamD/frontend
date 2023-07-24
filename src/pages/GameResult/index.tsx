@@ -56,6 +56,11 @@ const GameResult = () => {
       });
     }
   }, [resultScore]);
+  const winner =
+    rankScored !== undefined &&
+    rankScored
+      .filter((item) => item.rank === 1)
+      .map((item) => item.nickname + ' ');
 
   return (
     <GameResultContainer>
@@ -64,7 +69,7 @@ const GameResult = () => {
 
         <span className="center-items">상장</span>
         <span className="center-items">The Best Player of Game</span>
-        <span className="right-items">성명</span>
+        <span className="right-items">성명 : {winner}</span>
         <span className="center-items">{crapeTalk}</span>
         <span className="center-items">{DAY}</span>
         <span className="center-items">Team D 대표 최현정</span>
