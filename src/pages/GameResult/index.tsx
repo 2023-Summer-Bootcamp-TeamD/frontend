@@ -10,22 +10,42 @@ import { gameResultAPI } from '@/apis/gameResult';
 import GoldMedal from '@/assets/GoldMedal.png';
 import SilverMedal from '@/assets/SilverMedal.png';
 import BronzeMedal from '@/assets/BronzeMedal.png';
+import { UserRankType } from '@/types/userRank';
 
 import axios from 'axios';
 
 const GameResult = () => {
   const naviagte = useNavigate();
 
-  const [userRank, setUserRank] = useState<object[]>([]);
+  const [bestPlayers, setBestPlayers] = useState<string>('');
+  const [userRank, setUserRank] = useState<UserRankType[]>([]);
+
   let currentRanking = 1;
-  let isTiedCount = 0;
+  let isTiedCount = 0; // 둉졈자 수
 
   const goToMain = () => naviagte('/');
   const goToDrwaingRoom = () => naviagte('/drawingroom');
 
   const getGameResults = async (uuid: string) => {
     const res = await gameResultAPI(uuid);
-    setUserRank(res?.data.석차);
+    const ranking: UserRankType[] = res?.data.석차;
+    setUserRank(ranking);
+
+    if (ranking.length !== 0) {
+      const maxScore = ranking[0].score;
+      const bestPlayerArray: UserRankType[] = ranking.filter(
+        (user) => user.score === maxScore,
+      );
+      let nameOfBestPlayers = '';
+      bestPlayerArray.map((user, index) => {
+        if (index === 0) {
+          nameOfBestPlayers += user.nickname;
+        } else {
+          nameOfBestPlayers += ', ' + user.nickname;
+        }
+      });
+      setBestPlayers(nameOfBestPlayers);
+    }
   };
   useEffect(() => {
     getGameResults('34516');
@@ -37,7 +57,7 @@ const GameResult = () => {
         <span className="right-items">발급번호: Techeer-600000호</span>
         <span className="center-items">상장</span>
         <span className="center-items">The Best Player of Game</span>
-        <span className="right-items">성명 {bestPlayerName}</span>
+        <span className="right-items">성 명 {bestPlayers}</span>
         <span className="center-items">{crapeTalk}</span>
         <span className="center-items">{DAY}</span>
         <span className="center-items">Team D 대표 최현정</span>
@@ -56,7 +76,18 @@ const GameResult = () => {
               }
             }
             return (
-              <span key={index}>
+              <UserInRanking
+                key={index}
+                color={
+                  currentRanking === 1
+                    ? '#e94600'
+                    : currentRanking === 2
+                    ? '#5282ff'
+                    : currentRanking === 3
+                    ? '#bc00fe'
+                    : 'black'
+                }
+              >
                 <Medal
                   src={
                     currentRanking === 1
@@ -68,10 +99,8 @@ const GameResult = () => {
                       : ''
                   }
                 />
-                {currentRanking}등급 {user.nickname} {'(점수: '}
-                {user.score}
-                {')'}
-              </span>
+                {currentRanking}등급 {user.nickname}
+              </UserInRanking>
             );
           })}
         </Ranking>
@@ -190,27 +219,14 @@ const Ranking = styled.div`
   & > img {
     height: 53vh;
   }
-  & > span {
-    font-size: 4.5rem;
-    font-weight: 700;
-  }
-
-  & > span:nth-child(1) {
-    color: #e94600;
-    opacity: 0.9;
-    font-weight: 700;
-  }
-  & > span:nth-child(2) {
-    color: #5282ff;
-    font-weight: 700;
-  }
-  & > span:nth-child(3) {
-    color: #bc00fe;
-    opacity: 0.7;
-    font-weight: 700;
-  }
 `;
 
 const Medal = styled.img`
   width: 4rem;
+`;
+
+const UserInRanking = styled.span`
+  font-size: 4.4rem;
+  font-weight: 700;
+  color: ${(props) => props.color};
 `;
