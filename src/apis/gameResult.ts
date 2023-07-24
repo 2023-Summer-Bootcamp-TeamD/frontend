@@ -6,7 +6,7 @@ export const gameResultAPI = async () => {
     //   method:'GET',
     //   path: '/result',
     // });
-    const response = await axios.get('/test');
+    const response = await axios.get('/test'); //msw
     return response;
   } catch (e) {
     alert('연동 에러');

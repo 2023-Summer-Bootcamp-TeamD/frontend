@@ -1,4 +1,4 @@
-import { styled } from 'styled-components';
+import { styled, css } from 'styled-components';
 import Award from '@/assets/Award.png';
 import RankingMemo from '@/assets/RankingMemo.png';
 import DrawingRoom from '@/assets/DrawingRoomIcon.png';
@@ -14,7 +14,7 @@ import { useQuery } from '@tanstack/react-query';
 import axios from 'axios';
 import { useState, useMemo } from 'react';
 import { gameResultAPI } from '@/apis/gameResult';
-import { resultScoreType } from '@/types/gameResult';
+import { resultScoreType, RankTextProps } from '@/types/gameResult';
 
 const GameResult = () => {
   const naviagte = useNavigate();
@@ -61,9 +61,10 @@ const GameResult = () => {
     <GameResultContainer>
       <TheFirstAward>
         <span className="right-items">발급번호: Techeer-600000호</span>
+
         <span className="center-items">상장</span>
         <span className="center-items">The Best Player of Game</span>
-        <span className="right-items">성명 {bestPlayerName}</span>
+        <span className="right-items">성명</span>
         <span className="center-items">{crapeTalk}</span>
         <span className="center-items">{DAY}</span>
         <span className="center-items">Team D 대표 최현정</span>
@@ -72,11 +73,13 @@ const GameResult = () => {
         <Buttons onClick={goToMain}></Buttons>
         <Ranking>
           {rankScored !== undefined &&
-            rankScored.map((i, index) => (
-              <>
-                <p>{i.nickname}</p>
-                <p>{i.rank}</p>
-              </>
+            rankScored.map((i) => (
+              <RankWrap key={i.nickname}>
+                <RankText rank={i.rank}>{i.rank}등급</RankText>
+                <RankText rank={i.rank} nickname>
+                  {i.nickname}
+                </RankText>
+              </RankWrap>
             ))}
         </Ranking>
         <Buttons onClick={goToDrwaingRoom}>
@@ -188,7 +191,6 @@ const Ranking = styled.div`
   background-size: 35vw 60vh;
   display: flex;
   flex-direction: column;
-  align-items: center;
   margin-left: 10rem;
   padding-top: 13rem;
   & > img {
@@ -213,6 +215,38 @@ const Ranking = styled.div`
     opacity: 0.7;
     font-weight: 700;
   }
+`;
+
+const RankWrap = styled.div`
+  display: flex;
+  margin: 0.5rem 7rem 1.1rem 10rem;
+`;
+
+const RankText = styled.h3<RankTextProps>`
+  font-family: 'KyoboHandwriting2019';
+  font-size: 3rem;
+  ${(props) =>
+    props.nickname &&
+    css`
+      margin-left: 2rem;
+    `}
+
+  ${(props) =>
+    props.rank === 1 &&
+    css`
+      color: #e91700;
+    `}
+    ${(props) =>
+    props.rank === 2 &&
+    css`
+      color: #5282ff;
+    `}
+
+  ${(props) =>
+    props.rank === 3 &&
+    css`
+      color: #bc00fe;
+    `}
 `;
 function rankedScore(rankedScore: any) {
   throw new Error('Function not implemented.');
