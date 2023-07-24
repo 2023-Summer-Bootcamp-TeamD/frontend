@@ -18,14 +18,15 @@ export const makeRoomAPI = async ({
         player_num: personnel,
       },
     });
-    console.log(response);
+
     const gameInfo = {
       nickname,
+      selectedCategory,
       time: seconds,
       player_num: personnel,
       entry_code: response.uuid,
     };
-    console.log(gameInfo);
+
     return gameInfo;
   } catch (e) {
     console.error(e);

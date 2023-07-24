@@ -1,6 +1,7 @@
 import React from 'react';
 import { styled } from 'styled-components';
 import user from '@/assets/blue.png';
+
 type Props = {
   flag: number;
   nickname: string;
@@ -8,7 +9,6 @@ type Props = {
   date: string;
 };
 
-// eslint-disable-next-line react/prop-types
 const OtherMessage = ({ flag, nickname, message, date }: Props) => {
   return (
     <OtherChat>
@@ -95,7 +95,7 @@ const Content = styled.div`
   }
   & > div > span {
     text-align: end;
-    font-size: 1.8rem;
+    font-size: 1.5rem;
     opacity: 0.8;
     margin-left: 0.5rem;
   }

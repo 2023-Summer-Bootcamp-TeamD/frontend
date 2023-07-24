@@ -10,7 +10,6 @@ import { useSocketContext } from '@/context/SocketContext';
 const Game = () => {
   const hostData = useLocation().state;
   const { UUID } = useParams();
-
   const { socketState } = useSocketContext();
   const { socket, isConnected } = socketState;
 

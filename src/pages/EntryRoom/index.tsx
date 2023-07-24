@@ -41,18 +41,26 @@ const EntryRoom = () => {
     e.preventDefault();
     mutate({
       nickname: nickName,
-    }); //  postNickName 함수를 mutation으로 실행시키는 메서드
+    });
   };
-
   const postNickName = async (nickNameData: NickNameType) => {
     const uuid: string = Object.values(circleInput).join('');
     setUUID(uuid);
-    return await entryAPI(uuid, nickNameData);
+    const result = await entryAPI(uuid, nickNameData);
+    console.log(result);
+    /**
+time
+player_num
+category_id
+Score
+     */
   };
 
   const { mutate } = useMutation(postNickName, {
     onSuccess: () => {
-      navigate(`/game/${uuid}`, { state: { nickname: nickName } });
+      navigate(`/game/${uuid}`, {
+        state: { nickname: nickName },
+      });
     },
     onError: (error: AxiosError) => {
       console.log(error.response?.data);

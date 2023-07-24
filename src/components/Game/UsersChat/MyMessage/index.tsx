@@ -5,6 +5,7 @@ type Props = {
   message: string;
   date: string;
 };
+
 const MyMessage = ({ message, date }: Props) => {
   return (
     <MyMessageBox>
@@ -31,7 +32,7 @@ const MyMessageBox = styled.div`
   & > div > span {
     display: flex;
     justify-content: flex-start;
-    font-size: 1.8rem;
+    font-size: 1.5rem;
     opacity: 0.8;
     align-items: end;
     margin-right: 0.5rem;
