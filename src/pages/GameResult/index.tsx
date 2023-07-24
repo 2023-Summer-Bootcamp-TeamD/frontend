@@ -4,10 +4,17 @@ import RankingMemo from '@/assets/RankingMemo.png';
 import DrawingRoom from '@/assets/DrawingRoomIcon.png';
 import { useNavigate } from 'react-router-dom';
 import wrong from '@/assets/wrong.png';
-import { DAY, USERRANK, bestPlayerName, crapeTalk } from '@/constants/rank';
+import {
+  DAY,
+  bestPlayerName,
+  crapeTalk,
+  InitialResult,
+} from '@/constants/rank';
 import { useQuery } from '@tanstack/react-query';
-import axios, { AxiosError } from 'axios';
-import { useState, useEffect, useMemo } from 'react';
+import axios from 'axios';
+import { useState, useMemo } from 'react';
+import { gameResultAPI } from '@/apis/gameResult';
+import { resultScoreType } from '@/types/gameResult';
 
 const GameResult = () => {
   const naviagte = useNavigate();
@@ -15,23 +22,18 @@ const GameResult = () => {
   const goToMain = () => naviagte('/');
   const goToDrwaingRoom = () => naviagte('/drawingroom');
 
-  type resultScoreType = {
-    nickname: string;
-    score: number;
-  };
   const [resultScore, setResultScore] = useState<resultScoreType[]>([
-    { nickname: '', score: 0 },
+    InitialResult,
   ]);
 
-  const getServerData = async () => {
-    const ResultAPI = await axios.get('/test');
-    return ResultAPI;
+  const getServerData = () => {
+    return gameResultAPI();
   };
 
   const { data } = useQuery(['Result'], getServerData, {
     refetchOnWindowFocus: false,
     onSuccess: (data) => {
-      setResultScore(data.data['석차']);
+      if (data !== undefined) setResultScore(data.data['석차']);
     },
     onError: (e) => {
       console.log('onError', e);
@@ -70,10 +72,10 @@ const GameResult = () => {
         <Buttons onClick={goToMain}></Buttons>
         <Ranking>
           {rankScored !== undefined &&
-            rankScored.map((u, index) => (
+            rankScored.map((i, index) => (
               <>
-                <p>{u.nickname}</p>
-                <p>{u.rank}</p>
+                <p>{i.nickname}</p>
+                <p>{i.rank}</p>
               </>
             ))}
         </Ranking>
