@@ -13,7 +13,7 @@ const resultRes = {
     },
     {
       nickname: 'hihih',
-      score: 5,
+      score: 4,
     },
     {
       nickname: 'nodes',

@@ -7,6 +7,9 @@ import wrong from '@/assets/wrong.png';
 import { DAY, USERRANK, bestPlayerName, crapeTalk } from '@/constants/rank';
 import { useEffect, useState } from 'react';
 import { gameResultAPI } from '@/apis/gameResult';
+import GoldMedal from '@/assets/GoldMedal.png';
+import SilverMedal from '@/assets/SilverMedal.png';
+import BronzeMedal from '@/assets/BronzeMedal.png';
 
 import axios from 'axios';
 
@@ -54,6 +57,17 @@ const GameResult = () => {
             }
             return (
               <span key={index}>
+                <Medal
+                  src={
+                    currentRanking === 1
+                      ? GoldMedal
+                      : currentRanking === 2
+                      ? SilverMedal
+                      : currentRanking === 3
+                      ? BronzeMedal
+                      : ''
+                  }
+                />
                 {currentRanking}등급 {user.nickname} {'(점수: '}
                 {user.score}
                 {')'}
@@ -177,7 +191,7 @@ const Ranking = styled.div`
     height: 53vh;
   }
   & > span {
-    font-size: 4.2rem;
+    font-size: 4.5rem;
     font-weight: 700;
   }
 
@@ -195,4 +209,8 @@ const Ranking = styled.div`
     opacity: 0.7;
     font-weight: 700;
   }
+`;
+
+const Medal = styled.img`
+  width: 4rem;
 `;
