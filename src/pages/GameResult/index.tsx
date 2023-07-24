@@ -253,6 +253,3 @@ const RankText = styled.h3<RankTextProps>`
       color: #bc00fe;
     `}
 `;
-function rankedScore(rankedScore: any) {
-  throw new Error('Function not implemented.');
-}
