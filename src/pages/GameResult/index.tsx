@@ -7,6 +7,7 @@ import wrong from '@/assets/wrong.png';
 import { DAY, USERRANK, bestPlayerName, crapeTalk } from '@/constants/rank';
 import { useEffect, useState } from 'react';
 import { gameResultAPI } from '@/apis/gameResult';
+
 import axios from 'axios';
 
 const GameResult = () => {
@@ -15,7 +16,6 @@ const GameResult = () => {
   const [userRank, setUserRank] = useState<object[]>([]);
   let currentRanking = 1;
   let isTiedCount = 0;
-  //const [newScore, setNewScore] = useState(0);
 
   const goToMain = () => naviagte('/');
   const goToDrwaingRoom = () => naviagte('/drawingroom');
@@ -23,18 +23,10 @@ const GameResult = () => {
   const getGameResults = async (uuid: string) => {
     const res = await gameResultAPI(uuid);
     setUserRank(res?.data.석차);
-    // if(userRank.length !== 0){
-    //   console.log(userRank);
-    //   setIsLoading(false);
-    // }
   };
   useEffect(() => {
     getGameResults('34516');
   }, []);
-
-  // if (isLoading) {
-  //   return <div>Loading...</div>;
-  // }
 
   return (
     <GameResultContainer>
