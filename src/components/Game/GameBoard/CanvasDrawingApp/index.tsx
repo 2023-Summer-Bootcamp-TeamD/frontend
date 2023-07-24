@@ -1,5 +1,6 @@
 import React, { useRef, useEffect, useState } from 'react';
 import GamePointer from '../GamePointer';
+import { styled } from 'styled-components';
 
 type Props = {
   setCurrentFocus: React.Dispatch<React.SetStateAction<string>>;
@@ -66,7 +67,8 @@ const CanvasDrawingApp = ({ setCurrentFocus }: Props) => {
   }, []);
 
   return (
-    <div>
+    <Board>
+      <Stage>1/5 Round</Stage>
       <canvas
         ref={canvasRef}
         width={700}
@@ -83,8 +85,17 @@ const CanvasDrawingApp = ({ setCurrentFocus }: Props) => {
         clearCanvas={clearCanvas}
         setIsErasing={setIsErasing}
       />
-    </div>
+    </Board>
   );
 };
 
 export default CanvasDrawingApp;
+
+const Board = styled.div`
+  position: relative;
+`;
+const Stage = styled.div`
+  position: absolute;
+  right: 2rem;
+  font-size: 3rem;
+`;
