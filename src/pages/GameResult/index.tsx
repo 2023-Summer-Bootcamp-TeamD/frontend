@@ -7,7 +7,7 @@ import wrong from '@/assets/wrong.png';
 import { DAY, USERRANK, bestPlayerName, crapeTalk } from '@/constants/rank';
 import { useQuery } from '@tanstack/react-query';
 import axios, { AxiosError } from 'axios';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useMemo } from 'react';
 
 const GameResult = () => {
   const naviagte = useNavigate();
@@ -19,21 +19,15 @@ const GameResult = () => {
     nickname: string;
     score: number;
   };
-  type resultRankType = {
-    nickname: string;
-    rank: number;
-  };
-
   const [resultScore, setResultScore] = useState<resultScoreType[]>([
     { nickname: '', score: 0 },
   ]);
-  const [resultRank, setResultRank] = useState<resultRankType[]>([
-    { nickname: '', rank: 0 },
-  ]);
+
   const getServerData = async () => {
     const ResultAPI = await axios.get('/test');
     return ResultAPI;
   };
+
   const { data } = useQuery(['Result'], getServerData, {
     refetchOnWindowFocus: false,
     onSuccess: (data) => {
@@ -43,24 +37,24 @@ const GameResult = () => {
       console.log('onError', e);
     },
   });
-  useEffect(() => {
-    let currentRank = 1;
 
+  const rankScored = useMemo(() => {
+    let currentRank = 1;
     const sortedScore = [...resultScore].sort((a, b) => b.score - a.score);
+
     if (sortedScore[0].score !== undefined) {
       let prevScore = sortedScore[0].score;
 
-      const rankedScore = sortedScore.map((item) => {
+      return sortedScore.map((item) => {
         if (item.score !== prevScore) {
-          currentRank++; // Increment rank when the score changes
+          currentRank++;
         }
-        prevScore = item.score; // Update prevScore for the next iteration
-        return { ...item, rank: currentRank }; // Add rank property to the item
+        prevScore = item.score;
+        return { ...item, rank: currentRank };
       });
-
-      setResultRank(rankedScore);
     }
   }, [resultScore]);
+
   return (
     <GameResultContainer>
       <TheFirstAward>
@@ -75,12 +69,13 @@ const GameResult = () => {
       <div className="right-items">
         <Buttons onClick={goToMain}></Buttons>
         <Ranking>
-          {resultRank.map((u, index) => (
-            <>
-              <p>{u.nickname}</p>
-              <p>{u.rank}</p>
-            </>
-          ))}
+          {rankScored !== undefined &&
+            rankScored.map((u, index) => (
+              <>
+                <p>{u.nickname}</p>
+                <p>{u.rank}</p>
+              </>
+            ))}
         </Ranking>
         <Buttons onClick={goToDrwaingRoom}>
           <img src={DrawingRoom} className="drawingRoom-icon" />
