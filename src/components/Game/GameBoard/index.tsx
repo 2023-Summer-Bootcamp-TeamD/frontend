@@ -8,7 +8,6 @@ type Props = {
 };
 const GameBoard = ({ setCurrentFocus }: Props) => {
   const [start, setStart] = useState(false);
-
   return (
     <Board>
       {!start && <StartButton setStart={setStart} />}

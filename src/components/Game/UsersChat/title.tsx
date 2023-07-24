@@ -1,7 +1,9 @@
 import { copyAndPaste } from '@/apis/game';
+import { playerCountState } from '@/atom/game';
 import { useSocketContext } from '@/context/SocketContext';
 import useSocket from '@/hooks/useSocket';
 import React, { useEffect, useState } from 'react';
+import { useRecoilState } from 'recoil';
 import { Socket } from 'socket.io-client';
 import { styled } from 'styled-components';
 
@@ -13,7 +15,8 @@ const Title = ({ UUID }: TitleProps) => {
   const { socketState } = useSocketContext();
   const { socket, isConnected } = socketState;
 
-  const [playerCount, setPlayerCount] = useState(0);
+  const [playerCount, setPlayerCount] = useRecoilState(playerCountState);
+
   useEffect(() => {
     if (socket && isConnected) {
       socket.on('updateChatNum', (count: number) => {
