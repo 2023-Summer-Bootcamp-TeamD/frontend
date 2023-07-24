@@ -5,7 +5,6 @@ import MessageView from './messageView';
 import ChatInputView from './chatInputView';
 import { messageType } from '@/types/chatRoom';
 import { messages } from '@/constants/chatList';
-import useSocket from '@/hooks/useSocket';
 
 type UserChatProps = {
   nickname: string;
@@ -20,13 +19,12 @@ const UsersChat = ({ nickname, UUID }: UserChatProps) => {
   return (
     <ChatRoom>
       <Title UUID={UUID} />
-      <MessageView chatList={chatList} />
+      <MessageView chatList={chatList} nickname={nickname} />
       <ChatInputView
         nickname={nickname}
         chat={chat}
         setChat={setChat}
         setChatList={setChatList}
-        chatList={chatList}
       />
     </ChatRoom>
   );

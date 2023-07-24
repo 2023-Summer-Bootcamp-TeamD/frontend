@@ -3,12 +3,12 @@ import React, { useEffect, useRef } from 'react';
 import { styled } from 'styled-components';
 import MyMessage from './MyMessage';
 import OtherMessage from './OtherMessage';
-import useSocket from '@/hooks/useSocket';
 
 type Props = {
   chatList: messageType[];
+  nickname: string;
 };
-const MessageView = ({ chatList }: Props) => {
+const MessageView = ({ chatList, nickname }: Props) => {
   const chatBoxRef = useRef<HTMLDivElement>(null);
 
   const scrollToBottom = () => {
@@ -20,21 +20,20 @@ const MessageView = ({ chatList }: Props) => {
 
   useEffect(() => {
     scrollToBottom();
-  });
+  }, [chatList]);
 
   return (
     <MessageBox ref={chatBoxRef}>
       {chatList.map((chat, index) => {
-        if (chat.nickname === '나무') {
+        if (chat.nickname === nickname) {
           return (
             <MyMessage key={index} message={chat.message} date={chat.date} />
           );
         } else {
           let flag = 0;
-          //전과 같은 사람이 채팅을 쳤다면
           if (
-            chatList[index - 1]?.nickname === chatList[index].nickname &&
-            index !== 0
+            index !== 0 &&
+            chatList[index - 1].nickname === chatList[index].nickname
           ) {
             flag = 1;
           }

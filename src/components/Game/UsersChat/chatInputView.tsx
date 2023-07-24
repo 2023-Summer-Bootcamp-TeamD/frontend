@@ -3,28 +3,40 @@ import React, { useEffect } from 'react';
 import { styled } from 'styled-components';
 import dayjs from 'dayjs';
 import sendImg from '@/assets/sendIcon.png';
-import useSocket from '@/hooks/useSocket';
+import { useSocketContext } from '@/context/SocketContext';
 type Props = {
   chat: string;
   setChat: React.Dispatch<React.SetStateAction<string>>;
   setChatList: React.Dispatch<React.SetStateAction<messageType[]>>;
-  chatList: messageType[];
   nickname: string;
 };
 
-const ChatInputView = ({
-  nickname,
-  setChat,
-  chat,
-  setChatList,
-  chatList,
-}: Props) => {
+const ChatInputView = ({ nickname, setChat, chat, setChatList }: Props) => {
   const textHandler = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     setChat(e.target.value);
   };
 
-  const socketURL = 'http://localhost:8080';
-  const { socket, isConnected } = useSocket(socketURL);
+  const { socketState } = useSocketContext();
+  const { socket, isConnected } = socketState;
+
+  useEffect(() => {
+    if (socket && isConnected) {
+      // 서버로부터 메시지를 받았을 때의 처리
+      socket.on('updateChat', (nickname, msg) => {
+        setChatList((prevChatList) => [
+          ...prevChatList,
+          { nickname: nickname, message: msg, date: dayjs().format('HH:mm') },
+        ]);
+      });
+    }
+
+    // Clean up the event listener when the component unmounts
+    return () => {
+      if (socket && isConnected) {
+        socket.off('updateChat');
+      }
+    };
+  }, [socket, isConnected]);
 
   //텍스트창에서 엔터를 눌렀을때 실행되는 함수
   const sendMessageToEnter = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
@@ -46,12 +58,7 @@ const ChatInputView = ({
   };
 
   const sendSumit = () => {
-    const data = {
-      nickname: nickname,
-      message: chat,
-      date: dayjs().format('HH:mm'),
-    };
-    setChatList((pre) => [...pre, data]);
+    socket?.emit('sendMessage', chat);
     setChat('');
   };
 

@@ -13,7 +13,7 @@ const OtherMessage = ({ flag, nickname, message, date }: Props) => {
   return (
     <OtherChat>
       <Profile>
-        {flag && (
+        {!flag && (
           <div>
             <img src={user} alt="상대방 프로필" />
             <p>{nickname}</p>
@@ -23,8 +23,8 @@ const OtherMessage = ({ flag, nickname, message, date }: Props) => {
       <Content>
         <div>
           <ChatBox>{message}</ChatBox>
+          <span>{date}</span>
         </div>
-        <span>{date}</span>
       </Content>
     </OtherChat>
   );
@@ -36,7 +36,6 @@ const OtherChat = styled.div`
   display: flex;
   justify-content: flex-start;
   margin-left: 2rem;
-  margin-bottom: 1.5rem;
   & > div > p {
     font-size: 1.5rem;
     margin-bottom: 1rem;
@@ -89,11 +88,15 @@ const ChatBox = styled.div`
 
 const Content = styled.div`
   display: flex;
-  flex-direction: column;
 
-  & > span {
+  & > div {
+    display: flex;
+    align-items: end;
+  }
+  & > div > span {
     text-align: end;
     font-size: 1.8rem;
     opacity: 0.8;
+    margin-left: 0.5rem;
   }
 `;
