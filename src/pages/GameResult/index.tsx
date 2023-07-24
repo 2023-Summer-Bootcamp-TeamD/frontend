@@ -5,22 +5,36 @@ import DrawingRoom from '@/assets/DrawingRoomIcon.png';
 import { useNavigate } from 'react-router-dom';
 import wrong from '@/assets/wrong.png';
 import { DAY, USERRANK, bestPlayerName, crapeTalk } from '@/constants/rank';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
+import { gameResultAPI } from '@/apis/gameResult';
 import axios from 'axios';
 
 const GameResult = () => {
   const naviagte = useNavigate();
 
+  const [userRank, setUserRank] = useState<object[]>([]);
+  let currentRanking = 1;
+  let isTiedCount = 0;
+  //const [newScore, setNewScore] = useState(0);
+
   const goToMain = () => naviagte('/');
   const goToDrwaingRoom = () => naviagte('/drawingroom');
 
+  const getGameResults = async (uuid: string) => {
+    const res = await gameResultAPI(uuid);
+    setUserRank(res?.data.석차);
+    // if(userRank.length !== 0){
+    //   console.log(userRank);
+    //   setIsLoading(false);
+    // }
+  };
   useEffect(() => {
-    const fetchData = async () => {
-      const res = await axios.get('/results');
-      console.log(res.data);
-    };
-    fetchData();
+    getGameResults('34516');
   }, []);
+
+  // if (isLoading) {
+  //   return <div>Loading...</div>;
+  // }
 
   return (
     <GameResultContainer>
@@ -36,8 +50,23 @@ const GameResult = () => {
       <div className="right-items">
         <Buttons onClick={goToMain}></Buttons>
         <Ranking>
-          {USERRANK.map((user, index) => {
-            return <span key={index}>{user}</span>;
+          {userRank.map((user, index) => {
+            if (index !== 0) {
+              if (userRank[index - 1].score === user.score) {
+                isTiedCount++;
+              } else {
+                currentRanking++;
+                currentRanking += isTiedCount;
+                isTiedCount = 0;
+              }
+            }
+            return (
+              <span key={index}>
+                {currentRanking}등급 {user.nickname} {'(점수: '}
+                {user.score}
+                {')'}
+              </span>
+            );
           })}
         </Ranking>
         <Buttons onClick={goToDrwaingRoom}>

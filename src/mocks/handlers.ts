@@ -17,19 +17,19 @@ const resultRes = {
     },
     {
       nickname: 'nodes',
-      score: 5,
+      score: 3,
     },
     {
       nickname: 'teamD',
-      score: 5,
+      score: 2,
     },
     {
       nickname: '노드노드다',
-      score: 5,
+      score: 2,
     },
     {
       nickname: '강아지이이',
-      score: 1,
+      score: 2,
     },
     {
       nickname: '안녕하세요',
@@ -45,7 +45,7 @@ export const handlers = [
   }),
 
   // 최종 점수 및 석차 조회 api
-  rest.get('/results', (req, res, ctx) => {
+  rest.get('/results/34516', (req, res, ctx) => {
     return res(ctx.status(200), ctx.json(resultRes));
   }),
 ];
