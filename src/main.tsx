@@ -5,6 +5,7 @@ import { BrowserRouter } from 'react-router-dom';
 
 import { worker } from './mocks/worker';
 import { SocketProvider } from './context/SocketContext';
+import { RecoilRoot } from 'recoil';
 
 // if (import.meta.env.DEV) {
 //   worker.start();
@@ -12,10 +13,12 @@ import { SocketProvider } from './context/SocketContext';
 const socketUrl = 'http://localhost:8080';
 ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
   <React.StrictMode>
-    <BrowserRouter>
-      <SocketProvider url={socketUrl}>
-        <App />
-      </SocketProvider>
-    </BrowserRouter>
+    <RecoilRoot>
+      <BrowserRouter>
+        <SocketProvider url={socketUrl}>
+          <App />
+        </SocketProvider>
+      </BrowserRouter>
+    </RecoilRoot>
   </React.StrictMode>,
 );

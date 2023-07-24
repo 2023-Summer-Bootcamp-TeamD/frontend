@@ -1,10 +1,8 @@
 import { copyAndPaste } from '@/apis/game';
 import { playerCountState } from '@/atom/game';
 import { useSocketContext } from '@/context/SocketContext';
-import useSocket from '@/hooks/useSocket';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { useRecoilState } from 'recoil';
-import { Socket } from 'socket.io-client';
 import { styled } from 'styled-components';
 
 type TitleProps = {

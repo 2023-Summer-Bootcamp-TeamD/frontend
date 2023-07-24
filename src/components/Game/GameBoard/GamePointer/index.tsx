@@ -116,24 +116,27 @@ const Colors = styled.div`
     cursor: pointer;
   }
   & > div:nth-child(1) {
-    background-color: #ff0000;
+    background-color: #ffffff;
   }
   & > div:nth-child(2) {
-    background-color: #ff8c00;
+    background-color: #ff0000;
   }
   & > div:nth-child(3) {
-    background-color: #ffff00;
+    background-color: #ff8c00;
   }
   & > div:nth-child(4) {
-    background-color: #008000;
+    background-color: #ffff00;
   }
   & > div:nth-child(5) {
-    background-color: #0000ff;
+    background-color: #008000;
   }
   & > div:nth-child(6) {
-    background-color: #4b0082;
+    background-color: #0000ff;
   }
   & > div:nth-child(7) {
+    background-color: #4b0082;
+  }
+  & > div:nth-child(8) {
     background-color: #800080;
   }
 `;

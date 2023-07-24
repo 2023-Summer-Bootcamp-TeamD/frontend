@@ -14,16 +14,7 @@ const CanvasDrawingApp = ({ setCurrentFocus }: Props) => {
   const [isErasing, setIsErasing] = useState<boolean>(false);
   const [lineColor, setLineColor] = useState<string>('#ffffff');
   const [lineWidth, setLineWidth] = useState<number>(4);
-
-  useEffect(() => {
-    const canvas = canvasRef.current;
-    if (canvas) {
-      const ctx = canvas.getContext('2d');
-      if (ctx) {
-        setContext(ctx);
-      }
-    }
-  }, []);
+  const [isImageClicked, setIsImageClicked] = useState<boolean>(false);
 
   const startDrawing = (event: React.MouseEvent<HTMLCanvasElement>) => {
     const { offsetX, offsetY } = event.nativeEvent;
@@ -60,11 +51,19 @@ const CanvasDrawingApp = ({ setCurrentFocus }: Props) => {
     }
   };
 
-  const [isImageClicked, setIsImageClicked] = useState<boolean>(false);
-
   const handleImageClick = () => {
     setIsImageClicked(true);
   };
+
+  useEffect(() => {
+    const canvas = canvasRef.current;
+    if (canvas) {
+      const ctx = canvas.getContext('2d');
+      if (ctx) {
+        setContext(ctx);
+      }
+    }
+  }, []);
 
   return (
     <div>

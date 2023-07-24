@@ -8,6 +8,9 @@ type Props = {
 };
 
 const StartButton = ({ setStart }: Props) => {
+  //제한인원과 현재인원이 같을때만 startButton 활성화
+  //제한인원은 state로 가져오고 현재인원은 recoil로 관리
+
   return (
     <Content variants={opacityVariants} initial="initial" animate="mount">
       <StartGame onClick={() => setStart(true)}>게임 시작</StartGame>
