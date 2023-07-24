@@ -72,7 +72,7 @@ const CanvasDrawingApp = ({ setCurrentFocus }: Props) => {
       <canvas
         ref={canvasRef}
         width={700}
-        height={450}
+        height={475}
         onMouseDown={startDrawing}
         onMouseMove={draw}
         onMouseUp={stopDrawing}
