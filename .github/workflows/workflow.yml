@@ -6,9 +6,6 @@ on:
       - develop
     types: [opened, assigned, synchronize, labeled]
 
-defaults:
-  run:
-    working-directory: ./frontend   
 
 jobs:
   lint-format:
