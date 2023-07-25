@@ -8,7 +8,6 @@ import { messages } from '@/constants/chatList';
 
 type UserChatProps = {
   nickname: string;
-  uuid: string;
   UUID: string;
 };
 

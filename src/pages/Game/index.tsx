@@ -24,9 +24,11 @@ const Game = () => {
 
   useEffect(() => {
     if (socket && isConnected) {
+      socket.emit('createRoom', UUID);
       socket.emit('createUser', hostData.nickname, UUID);
     }
     return () => {
+      socket?.off('createRoom');
       socket?.off('createUser');
     };
   }, [socket, isConnected, hostData.nickname, UUID]);

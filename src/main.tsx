@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom/client';
 import App from './App';
 import { BrowserRouter } from 'react-router-dom';
 
-import { worker } from './mocks/worker';
+// import { worker } from './mocks/worker';
 import { SocketProvider } from './context/SocketContext';
 import { RecoilRoot } from 'recoil';
 

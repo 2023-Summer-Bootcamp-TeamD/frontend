@@ -60,6 +60,7 @@ const CreatingRooms = () => {
       personnel,
     });
   };
+
   const postGameInfo = async (data: MakeRoomType) => {
     return await makeRoomAPI(data);
   };

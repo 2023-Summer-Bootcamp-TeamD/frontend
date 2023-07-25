@@ -15,16 +15,18 @@ const Title = ({ UUID }: TitleProps) => {
 
   const [playerCount, setPlayerCount] = useRecoilState(playerCountState);
 
-  useEffect(() => {
-    if (socket && isConnected) {
-      socket.on('updateChatNum', (count: number) => {
-        setPlayerCount(() => count);
-      });
-    }
-  }, [socket, isConnected]);
+  // useEffect(() => {
+  //   if (socket && isConnected) {
+  //     socket.on('updateChatNum', (count: number) => {
+  //       console.log(count);
+  //       setPlayerCount(() => count);
+  //     });
+  //   }
+  // }, [socket, isConnected]);
+
   return (
     <TitleBox>
-      <div>참여 인원 {playerCount}/6</div>
+      <div>참여 인원 /6</div>
       <div onClick={() => copyAndPaste(UUID)}>
         <div>입장코드</div>
         <div>{UUID}</div>

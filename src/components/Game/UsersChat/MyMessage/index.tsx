@@ -41,8 +41,7 @@ const MyMessageBox = styled.div`
 
 const ChatBox = styled.div`
   max-width: 30rem;
-  width: 10rem;
-  min-height: 4.5rem;
+  min-height: 3.5rem;
   word-break: break-all;
   background-color: #f9de79;
   border-radius: 5px;
@@ -51,4 +50,5 @@ const ChatBox = styled.div`
   align-items: center;
   box-sizing: border-box;
   font-size: 1.6rem;
+  padding: 0 1rem;
 `;
