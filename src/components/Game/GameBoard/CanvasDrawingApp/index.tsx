@@ -82,8 +82,10 @@ const CanvasDrawingApp = ({ setCurrentFocus, UUID }: Props) => {
   }, []);
 
   useEffect(() => {
-    socket?.on('canvasDraw', (drawData) => {
+    socket?.on('canvasDraw', ({ drawData }) => {
       if (!drawData.isDrawing || !context) return;
+
+      console.log(drawData);
       context.lineJoin = 'round';
       context.lineCap = 'round';
       context.lineWidth = isErasing ? lineWidth + 5 : lineWidth;
