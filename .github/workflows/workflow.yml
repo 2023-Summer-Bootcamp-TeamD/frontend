@@ -27,7 +27,6 @@ jobs:
       - name: Run lint
         run: |
           npm run lint
-      
       - name: Run format
         run: |
           npm run format
@@ -50,7 +49,7 @@ jobs:
         run: |
           npm run lint-staged
   
-  dev:
+  build:
     runs-on: ubuntu-latest
     strategy:
       matrix:
@@ -64,8 +63,8 @@ jobs:
           node-version: ${{ matrix.node }}
       - name: Install Dependencies
         run: npm install    
-      - name: Run Dev
+      - name: Run Build
         run: |
-          npm run dev
+          npm run build
 
    
