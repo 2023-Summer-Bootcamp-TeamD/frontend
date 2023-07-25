@@ -21,12 +21,19 @@ const Game = () => {
     const mouseY = e.clientY;
     setXY({ x: mouseX, y: mouseY });
   };
+  useEffect(() => {
+    console.log(hostData);
+  }, []);
 
   useEffect(() => {
     if (socket && isConnected) {
-      socket.emit('createRoom', UUID);
-      socket.emit('createUser', hostData.nickname, UUID);
+      if (hostData.entry_code) {
+        console.log('hi');
+        socket.emit('createRoom', UUID);
+      }
+      socket.emit('createUser', { nickname: hostData.nickname, roomId: UUID });
     }
+
     return () => {
       socket?.off('createRoom');
       socket?.off('createUser');
@@ -94,3 +101,24 @@ const Cursor = styled.img<{ xy: { x: number; y: number } }>`
   z-index: 2;
   pointer-events: none;
 `;
+
+/**
+ * 
+ * 
+ * 유저
+ category_id
+: 
+1
+nickname
+: 
+"10000"
+player_num
+: 
+2
+score
+: 
+0
+time
+: 
+10
+ */

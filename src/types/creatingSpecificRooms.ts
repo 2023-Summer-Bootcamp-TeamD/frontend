@@ -7,7 +7,7 @@ export type GameInfoProps = {
 
 export type MakeRoomType = {
   nickname: string;
-  selectedCategory: number;
+  category_id: number;
   seconds: number;
   personnel: number;
 };

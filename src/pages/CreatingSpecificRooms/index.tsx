@@ -17,7 +17,7 @@ import { AxiosError } from 'axios';
 const CreatingRooms = () => {
   const navigate = useNavigate();
 
-  const [selectedCategory, setSelectedCategory] = useState(1);
+  const [category_id, setCategory_id] = useState(1);
   const [nickname, setNickname] = useState('');
   const [personnel, setPersonnel] = useState(2);
   const [seconds, setSeconds] = useState(10);
@@ -48,14 +48,14 @@ const CreatingRooms = () => {
   };
 
   const clickCategory = (categoryId: number) => {
-    setSelectedCategory(categoryId);
+    setCategory_id(() => categoryId);
   };
 
   const onClickHandler = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
     mutate({
       nickname,
-      selectedCategory,
+      category_id,
       seconds,
       personnel,
     });
@@ -67,7 +67,9 @@ const CreatingRooms = () => {
 
   const { mutate } = useMutation(postGameInfo, {
     onSuccess: (data) => {
-      navigate(`/game/${data?.entry_code}`, { state: data });
+      navigate(`/game/${data?.entry_code}`, {
+        state: { ...data },
+      });
     },
     onError: (error: AxiosError) => {
       console.log(error.response?.data);
@@ -95,9 +97,7 @@ const CreatingRooms = () => {
               onClick={() => clickCategory(index + 1)}
               style={{
                 backgroundColor:
-                  index + 1 === selectedCategory
-                    ? 'rgba(255, 255, 255, 0.18)'
-                    : '',
+                  index + 1 === category_id ? 'rgba(255, 255, 255, 0.18)' : '',
               }}
             >
               <img src={item.image} alt={item.id} />
@@ -125,7 +125,6 @@ const CreatingRooms = () => {
               value={nickname}
               onChange={handleNicknameChange}
               required
-              maxLength={5}
             />
           </div>
           <div>

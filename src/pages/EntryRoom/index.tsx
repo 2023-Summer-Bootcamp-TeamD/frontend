@@ -24,7 +24,7 @@ const EntryRoom = () => {
     input4: '',
     input5: '',
   });
-  const [nickName, setNickName] = useState<string>('');
+  const [nickname, setNickName] = useState<string>('');
   const [uuid, setUUID] = useState('');
   const onCodehandler = (e: ChangeEvent<HTMLInputElement>) => {
     setCircleInput({
@@ -40,26 +40,19 @@ const EntryRoom = () => {
   const onSubmitHandler = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     mutate({
-      nickname: nickName,
+      nickname: nickname,
     });
   };
   const postNickName = async (nickNameData: NickNameType) => {
     const uuid: string = Object.values(circleInput).join('');
     setUUID(uuid);
-    const result = await entryAPI(uuid, nickNameData);
-    console.log(result);
-    /**
-time
-player_num
-category_id
-Score
-     */
+    return await entryAPI(uuid, nickNameData);
   };
 
   const { mutate } = useMutation(postNickName, {
-    onSuccess: () => {
+    onSuccess: (data) => {
       navigate(`/game/${uuid}`, {
-        state: { nickname: nickName },
+        state: { ...data, nickname },
       });
     },
     onError: (error: AxiosError) => {
@@ -95,8 +88,7 @@ Score
             placeholder="닉네임을 입력해주세요"
             required
             onChange={onNickNamehandler}
-            maxLength={5}
-            value={nickName}
+            value={nickname}
           />
           <Button title="입장하기" />
         </EntryForm>
