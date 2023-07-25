@@ -76,29 +76,8 @@ const GameResult = () => {
               }
             }
             return (
-              <UserInRanking
-                key={index}
-                color={
-                  currentRanking === 1
-                    ? '#e94600'
-                    : currentRanking === 2
-                    ? '#5282ff'
-                    : currentRanking === 3
-                    ? '#bc00fe'
-                    : 'black'
-                }
-              >
-                <Medal
-                  src={
-                    currentRanking === 1
-                      ? GoldMedal
-                      : currentRanking === 2
-                      ? SilverMedal
-                      : currentRanking === 3
-                      ? BronzeMedal
-                      : ''
-                  }
-                />
+              <UserInRanking key={index} rank={currentRanking}>
+                <Medal rank={currentRanking} />
                 {currentRanking}등급 {user.nickname}
               </UserInRanking>
             );
@@ -221,12 +200,29 @@ const Ranking = styled.div`
   }
 `;
 
-const Medal = styled.img`
+const Medal = styled.img<{ rank: number }>`
   width: 4rem;
+  ${(props) => {
+    if (props.rank === 1) {
+      return `content: url(${GoldMedal});`;
+    } else if (props.rank === 2) {
+      return `content: url(${SilverMedal});`;
+    } else if (props.rank === 3) {
+      return `content: url(${BronzeMedal});`;
+    }
+  }}
 `;
 
-const UserInRanking = styled.span`
+const UserInRanking = styled.span<{ rank: number }>`
   font-size: 4.4rem;
   font-weight: 700;
-  color: ${(props) => props.color};
+  color: ${(props) => {
+    if (props.rank === 1) {
+      return '#e94600';
+    } else if (props.rank === 2) {
+      return '#5282ff';
+    } else if (props.rank === 3) {
+      return '#bc00fe';
+    }
+  }};
 `;
