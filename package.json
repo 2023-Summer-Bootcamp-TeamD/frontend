@@ -4,13 +4,13 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "dev": "vite",
+    "dev": "vite", 
     "build": "tsc && vite build",
-    "lint": "eslint --cache .",
+    "lint": "eslint --cache .", 
     "preview": "vite preview",
     "postinstall": "husky install",
     "format": "prettier --cache --write .",
-    "lint-staged": "lint-staged"
+    "lint-staged": "lint-staged" 
   },
   "lint-staged": {
     "**/*.{tsx,ts,jsx,js}": [
