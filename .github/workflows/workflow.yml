@@ -22,9 +22,12 @@ jobs:
           node-version: ${{ matrix.node }}
       - name: Install Dependencies
         run: npm install     
+      - name: Install Prettier
+        run: npm install --save-dev prettier   
       - name: Run lint
         run: |
           npm run lint
+      
       - name: Run format
         run: |
           npm run format
@@ -42,7 +45,7 @@ jobs:
         with:
           node-version: ${{ matrix.node }}
       - name: Install Dependencies
-        run: npm install     
+        run: npm install  
       - name: Run lint-staged
         run: |
           npm run lint-staged
