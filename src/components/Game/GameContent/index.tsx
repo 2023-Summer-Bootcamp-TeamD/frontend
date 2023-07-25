@@ -6,12 +6,13 @@ import CanvasDrawingApp from '../GameBoard/CanvasDrawingApp';
 
 type Props = {
   setCurrentFocus: React.Dispatch<React.SetStateAction<string>>;
+  UUID?: string;
 };
 
-const GameContent = ({ setCurrentFocus }: Props) => {
+const GameContent = ({ setCurrentFocus, UUID }: Props) => {
   return (
     <Content variants={opacityVariants} initial="initial" animate="mount">
-      <CanvasDrawingApp setCurrentFocus={setCurrentFocus} />
+      <CanvasDrawingApp UUID={UUID} setCurrentFocus={setCurrentFocus} />
     </Content>
   );
 };

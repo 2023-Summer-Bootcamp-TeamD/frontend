@@ -22,18 +22,22 @@ const ChatInputView = ({ nickname, setChat, chat, setChatList }: Props) => {
   useEffect(() => {
     if (socket && isConnected) {
       // 서버로부터 메시지를 받았을 때의 처리
-      socket.on('updateChat', (nickname, msg) => {
+      socket.on('updateChat', (data) => {
         setChatList((prevChatList) => [
           ...prevChatList,
-          { nickname: nickname, message: msg, date: dayjs().format('HH:mm') },
+          {
+            nickname: data.nickname,
+            message: data.message,
+            date: dayjs().format('HH:mm'),
+          },
         ]);
       });
-      return () => {
-        if (socket && isConnected) {
-          socket.off('updateChat');
-        }
-      };
     }
+    return () => {
+      if (socket && isConnected) {
+        socket.off('updateChat');
+      }
+    };
   }, [socket, isConnected]);
 
   //텍스트창에서 엔터를 눌렀을때 실행되는 함수
@@ -56,11 +60,7 @@ const ChatInputView = ({ nickname, setChat, chat, setChatList }: Props) => {
   };
 
   const sendSumit = () => {
-    socket?.emit('sendMessage', (message: string) => {
-      socket?.on('updateChat', (nickname, message) => {
-        console.log(nickname, message);
-      });
-    });
+    socket?.emit('sendMessage', chat);
     setChat('');
   };
 

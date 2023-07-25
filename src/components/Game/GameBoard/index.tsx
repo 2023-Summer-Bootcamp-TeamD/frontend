@@ -5,14 +5,20 @@ import GameContent from '../GameContent';
 
 type Props = {
   setCurrentFocus: React.Dispatch<React.SetStateAction<string>>;
+  UUID?: string;
 };
-const GameBoard = ({ setCurrentFocus }: Props) => {
+const GameBoard = ({ setCurrentFocus, UUID }: Props) => {
   const [start, setStart] = useState(false);
 
   return (
     <Board>
       {!start && <StartButton setStart={setStart} />}
-      {start && <GameContent setCurrentFocus={setCurrentFocus}></GameContent>}
+      {start && (
+        <GameContent
+          UUID={UUID}
+          setCurrentFocus={setCurrentFocus}
+        ></GameContent>
+      )}
     </Board>
   );
 };

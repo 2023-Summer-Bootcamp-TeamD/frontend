@@ -24,6 +24,7 @@ const Game = () => {
 
   useEffect(() => {
     if (socket && isConnected) {
+      //방장만 호출
       if (hostData.entry_code) {
         socket.emit('createRoom', UUID);
       }
@@ -43,7 +44,7 @@ const Game = () => {
       </Nav>
       <Section>
         <div>
-          <GameBoard setCurrentFocus={setCurrentFocus} />
+          <GameBoard UUID={UUID} setCurrentFocus={setCurrentFocus} />
           <UsersChat UUID={UUID} {...hostData} />
         </div>
       </Section>
