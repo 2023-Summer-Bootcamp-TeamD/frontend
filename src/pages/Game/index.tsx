@@ -21,14 +21,10 @@ const Game = () => {
     const mouseY = e.clientY;
     setXY({ x: mouseX, y: mouseY });
   };
-  useEffect(() => {
-    console.log(hostData);
-  }, []);
 
   useEffect(() => {
     if (socket && isConnected) {
       if (hostData.entry_code) {
-        console.log('hi');
         socket.emit('createRoom', UUID);
       }
       socket.emit('createUser', { nickname: hostData.nickname, roomId: UUID });
