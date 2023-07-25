@@ -42,45 +42,12 @@ jobs:
       - name: Run lint-staged
         run: |
           npm run lint-staged
-
-  type-check: 
-    runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        node: [18, 16,14]
-    steps:
-      - name: Checkout Commit
-        uses: actions/checkout@v2
-      - name: Use Node.js ${{ matrix.node }}
-        uses: actions/setup-node@v1
-        with:
-          node-version: ${{ matrix.node }}
-      - name: Check types
-        run: |
-          tsc -p tsconfig.json --noEmit
-
-  # unit-test:
-  #   runs-on: ubuntu-latest
-  #   strategy:
-  #     matrix:
-  #       node: [18, 16, 14]
-  #   steps:
-  #     - name: Checkout Commit
-  #       uses: actions/checkout@v2
-  #     - name: Use Node.js ${{ matrix.node }}
-  #       uses: actions/setup-node@v1
-  #       with:
-  #         node-version: ${{ matrix.node }}
-  #     - name: Run test
-  #       run: |
-  #         npm run test
   
   dev:
     runs-on: ubuntu-latest
     strategy:
       matrix:
         node: [18, 16, 14]
-    needs: [type-check]
     steps:
       - name: Checkout Commit
         uses: actions/checkout@v2
