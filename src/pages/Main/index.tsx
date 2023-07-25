@@ -5,6 +5,7 @@ import BlackboardDecoInMainPage from '@/assets/BlackboardDecoInMainPage.png';
 import FireExtinguisher from '@/assets/FireExtinguisher.png';
 import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
+import Theme from '@/constants/MainResponsive';
 const Main = () => {
   const navigate = useNavigate();
   const goToEntryRoom = () => navigate('/entryRoom');
@@ -30,12 +31,12 @@ const Main = () => {
           transition={transition}
         />
         <div className="itemInBlackBoard">
-          <motion.span
+          <AppName
             transition={{ duration: 1, times: [0.1] }}
             animate={{ scale: [1, 1.3, 1.1, 1.2, 1.1] }}
           >
             핑고빙고
-          </motion.span>
+          </AppName>
         </div>
         <div className="itemInBlackBoard">
           <Buttons whileTap={{ scale: 0.9 }} onClick={goToCreatRoom}>
@@ -69,15 +70,48 @@ const Mains = styled.div`
     right: 2rem;
     bottom: 0;
     width: 30rem;
+    @media ${Theme.MainPageTheme.SemiSmallSemiMedium} {
+      width: 23rem;
+    }
+    @media ${Theme.MainPageTheme.TabletSemiSmall} {
+      width: 20rem;
+    }
   }
 `;
 
+const AppName = styled(motion.span)`
+  font-size: 13rem;
+  @media ${Theme.MainPageTheme.SemiSmallSemiMedium} {
+    font-size: 10rem;
+  }
+  @media ${Theme.MainPageTheme.TabletSemiSmall} {
+    font-size: 7rem;
+  }
+`;
 const BlackboardImg = styled(motion.img)`
   width: 100%;
   height: 100%;
   object-fit: cover;
   position: absolute;
+
+  @media ${Theme.MainPageTheme.LargeXLarge} {
+    width: 90%;
+    height: 90% auto;
+  }
+  @media ${Theme.MainPageTheme.SemiMediumLarge} {
+    width: 90%;
+    height: auto;
+  }
+  @media ${Theme.MainPageTheme.SemiSmallSemiMedium} {
+    width: 90%;
+    height: auto;
+  }
+  @media ${Theme.MainPageTheme.TabletSemiSmall} {
+    width: 90%;
+    height: auto;
+  }
 `;
+
 const Blackboard = styled.div`
   position: relative;
   background-size: 70vw 65vh;
@@ -106,7 +140,6 @@ const Buttons = styled(motion.button)`
   color: white;
   background-color: #1c3b3e;
   border: 0.2rem solid #ffffff;
-  filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
   border-radius: 3rem;
   margin: 3rem 5rem;
   position: relative;
@@ -115,5 +148,15 @@ const Buttons = styled(motion.button)`
     background-color: #455e61;
     transform: scale(1.1);
     cursor: pointer;
+  }
+  @media ${Theme.MainPageTheme.SemiSmallSmall} {
+    width: 13rem;
+    height: 4rem;
+    font-size: 3rem;
+  }
+  @media ${Theme.MainPageTheme.TabletSemiSmall} {
+    width: 10rem;
+    height: 3rem;
+    font-size: 2.8rem;
   }
 `;

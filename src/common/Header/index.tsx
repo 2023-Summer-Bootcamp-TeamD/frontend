@@ -1,7 +1,7 @@
 import { styled } from 'styled-components';
 import KoreanFlag from '@/assets/KoreanFlag.png';
 import Clock from '@/assets/WallClock.png';
-
+import Theme from '@/constants/MainResponsive';
 const Header = () => {
   return (
     <PageHeader>
@@ -47,11 +47,41 @@ const ClassMotto = styled.div`
   :last-child {
     font-size: 3.5rem;
   }
+  @media ${Theme.HeaderTheme.SemiSmallSmall} {
+    width: 14vw;
+    height: 12vh;
+    :first-child {
+      font-size: 3rem;
+    }
+    :last-child {
+      font-size: 2.5rem;
+    }
+  }
+  @media ${Theme.HeaderTheme.TabletSemiSmall} {
+    width: 13vw;
+    height: 10vh;
+    :first-child {
+      font-size: 2.5rem;
+    }
+    :last-child {
+      font-size: 2.2rem;
+    }
+  }
 `;
 
 const WallClockImg = styled.img`
   height: 7rem;
   margin-right: 7vw;
+
+  @media ${Theme.HeaderTheme.SmallMedium} {
+    height: 6rem;
+  }
+  @media ${Theme.HeaderTheme.SemiSmallSmall} {
+    height: 5rem;
+  }
+  @media ${Theme.HeaderTheme.TabletSemiSmall} {
+    height: 4.5rem;
+  }
 `;
 
 const KoreanFlagImg = styled.img`
@@ -59,4 +89,19 @@ const KoreanFlagImg = styled.img`
   height: 12vh;
   background: #ffffff;
   border: 0.7rem solid #734200;
+
+  @media ${Theme.HeaderTheme.SmallMedium} {
+    width: 10vw;
+    height: 12vh;
+  }
+
+  @media ${Theme.HeaderTheme.SemiSmallSmall} {
+    width: 9vw;
+    height: 11vh;
+  }
+
+  @media ${Theme.HeaderTheme.TabletSemiSmall} {
+    width: 8vw;
+    height: 10vh;
+  }
 `;
