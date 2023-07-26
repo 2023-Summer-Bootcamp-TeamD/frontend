@@ -58,8 +58,12 @@ const Blackboard = styled.div`
   border-radius: 20px;
   display: flex;
   align-items: center;
-  justify-content: center;
   position: relative;
+  justify-content: center;
+  @media (max-width: 480px) {
+    border: 5px solid #8e5501;
+    border-radius: 10px;
+  }
 `;
 
 const DoodleCompass = styled.img.attrs({
@@ -93,6 +97,12 @@ const CategoryWrap = styled.div`
   height: 17rem;
   display: flex;
   justify-content: space-evenly;
+
+  @media (max-width: 480px) {
+    flex-direction: column;
+    width: auto;
+    height: auto;
+  }
 `;
 
 const Category = styled(motion.button)`
@@ -105,6 +115,7 @@ const Category = styled(motion.button)`
   position: relative;
   align-items: center;
   justify-content: center;
+
   cursor: pointer;
   &:hover {
     background-color: rgba(255, 255, 255, 0.18);
@@ -133,6 +144,19 @@ const Category = styled(motion.button)`
     }
     & > label {
       font-size: 2.5rem;
+    }
+  }
+  @media (max-width: 480px) {
+    width: 17rem;
+    height: 17rem;
+    border-radius: 20px;
+    margin-top: 5rem;
+    & > img {
+      height: 17rem;
+      width: 17rem;
+    }
+    & > label {
+      font-size: 4rem;
     }
   }
 `;

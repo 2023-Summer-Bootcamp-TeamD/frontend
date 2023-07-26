@@ -49,7 +49,7 @@ const ExitImg = styled.img`
   }
   @media (max-width: 768px) {
     width: 12rem;
-    height: 7rem;
+    height: 8rem;
   }
 `;
 
