@@ -1,10 +1,9 @@
 import React, { useRef, useEffect, useState } from 'react';
 import GamePointer from '../GamePointer';
 import { styled } from 'styled-components';
-import html2canvas from 'html2canvas';
-import axios from 'axios';
 import { useSocketContext } from '@/context/SocketContext';
-import { Socket } from 'socket.io-client';
+import { DrawData, HandType, SelectedColorType } from '@/types/canvas';
+
 type Props = {
   setCurrentFocus: React.Dispatch<React.SetStateAction<string>>;
   UUID?: string;
@@ -24,6 +23,7 @@ const CanvasDrawingApp = ({ setCurrentFocus, UUID }: Props) => {
   const [lineWidth, setLineWidth] = useState<number>(4);
   const [isImageClicked, setIsImageClicked] = useState<boolean>(false);
 
+  //그리기 시작
   const startDrawing = (event: React.MouseEvent<HTMLCanvasElement>) => {
     const { offsetX, offsetY } = event.nativeEvent;
     setIsDrawing(true);
@@ -31,6 +31,7 @@ const CanvasDrawingApp = ({ setCurrentFocus, UUID }: Props) => {
     setLastY(offsetY);
   };
 
+  //그리기 기능
   const draw = (event: React.MouseEvent<HTMLCanvasElement>) => {
     if (!isDrawing || !context) return;
     const { offsetX, offsetY } = event.nativeEvent;
@@ -57,10 +58,17 @@ const CanvasDrawingApp = ({ setCurrentFocus, UUID }: Props) => {
     socket?.emit('canvasDraw', { roomId: UUID, drawData });
   };
 
+  //그리기 멈추기
   const stopDrawing = () => {
     setIsDrawing(false);
   };
 
+  //지우개 / 연필타입 전환
+  const handleImageClick = () => {
+    setIsImageClicked(true);
+  };
+
+  //전체 지우기
   const clearCanvas = () => {
     if (context) {
       context.clearRect(0, 0, context.canvas.width, context.canvas.height);
@@ -68,6 +76,7 @@ const CanvasDrawingApp = ({ setCurrentFocus, UUID }: Props) => {
     }
   };
 
+  //서버에서 전체 지우기 가져오기
   useEffect(() => {
     const handleCanvasEraseAll = () => {
       const canvas = canvasRef.current;
@@ -86,22 +95,9 @@ const CanvasDrawingApp = ({ setCurrentFocus, UUID }: Props) => {
     };
   }, [socket]);
 
-  const handleImageClick = () => {
-    setIsImageClicked(true);
-  };
-
+  //서버에서 그리기 가져오기
   useEffect(() => {
-    const canvas = canvasRef.current;
-    if (canvas) {
-      const ctx = canvas.getContext('2d');
-      if (ctx) {
-        setContext(ctx);
-      }
-    }
-  }, []);
-
-  useEffect(() => {
-    const DrawHandler = ({ drawData }: any) => {
+    const DrawHandler = ({ drawData }: { drawData: DrawData }) => {
       if (!drawData.isDrawing || !context) return;
 
       context.lineJoin = 'round';
@@ -125,8 +121,9 @@ const CanvasDrawingApp = ({ setCurrentFocus, UUID }: Props) => {
     };
   }, [socket, context, isErasing, lineWidth, lineColor]);
 
+  //서버에서 색깔변경 가져오기
   useEffect(() => {
-    const handleCanvasChangeColor = ({ selectedColor }: any) => {
+    const handleCanvasChangeColor = ({ selectedColor }: SelectedColorType) => {
       setLineColor(selectedColor);
     };
 
@@ -137,8 +134,9 @@ const CanvasDrawingApp = ({ setCurrentFocus, UUID }: Props) => {
     };
   }, [socket, isConnected]);
 
+  //서버에서 연필/지우개 타입 가져오기
   useEffect(() => {
-    const handleCanvasChangeHandType = ({ handType }: any) => {
+    const handleCanvasChangeHandType = ({ handType }: HandType) => {
       setIsErasing(handType);
     };
 
@@ -148,6 +146,17 @@ const CanvasDrawingApp = ({ setCurrentFocus, UUID }: Props) => {
       socket?.off('canvasChangeType', handleCanvasChangeHandType);
     };
   }, [socket, isConnected]);
+
+  //캔버스 생성
+  useEffect(() => {
+    const canvas = canvasRef.current;
+    if (canvas) {
+      const ctx = canvas.getContext('2d');
+      if (ctx) {
+        setContext(ctx);
+      }
+    }
+  }, []);
 
   return (
     <Board ref={screenShotRef}>
@@ -176,15 +185,12 @@ const CanvasDrawingApp = ({ setCurrentFocus, UUID }: Props) => {
 export default CanvasDrawingApp;
 
 const Board = styled.div`
-  position: relative;
+  & > canvas {
+    position: relative;
+  }
 `;
 const Stage = styled.div`
   position: absolute;
   right: 2rem;
   font-size: 3rem;
-`;
-
-const Image = styled.img`
-  width: 100px;
-  height: 100px;
 `;
