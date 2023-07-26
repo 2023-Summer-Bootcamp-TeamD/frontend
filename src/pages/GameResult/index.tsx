@@ -1,23 +1,75 @@
-import { styled } from 'styled-components';
+import { styled, css } from 'styled-components';
 import Award from '@/assets/Award.png';
 import RankingMemo from '@/assets/RankingMemo.png';
 import DrawingRoom from '@/assets/DrawingRoomIcon.png';
 import { useNavigate } from 'react-router-dom';
 import wrong from '@/assets/wrong.png';
-import { DAY, USERRANK, bestPlayerName, crapeTalk } from '@/constants/rank';
+import {
+  DAY,
+  bestPlayerName,
+  crapeTalk,
+  InitialResult,
+} from '@/constants/rank';
+import { useQuery } from '@tanstack/react-query';
+import axios from 'axios';
+import { useState, useMemo } from 'react';
+import { gameResultAPI } from '@/apis/gameResult';
+import { resultScoreType, RankTextProps } from '@/types/gameResult';
+
 const GameResult = () => {
   const naviagte = useNavigate();
 
   const goToMain = () => naviagte('/');
   const goToDrwaingRoom = () => naviagte('/drawingroom');
 
+  const [resultScore, setResultScore] = useState<resultScoreType[]>([
+    InitialResult,
+  ]);
+
+  const getServerData = () => {
+    return gameResultAPI();
+  };
+
+  const { data } = useQuery(['Result'], getServerData, {
+    refetchOnWindowFocus: false,
+    onSuccess: (data) => {
+      if (data !== undefined) setResultScore(data.data['석차']);
+    },
+    onError: (e) => {
+      console.log('onError', e);
+    },
+  });
+
+  const rankScored = useMemo(() => {
+    let currentRank = 1;
+    const sortedScore = [...resultScore].sort((a, b) => b.score - a.score);
+
+    if (sortedScore[0].score !== undefined) {
+      let prevScore = sortedScore[0].score;
+
+      return sortedScore.map((item) => {
+        if (item.score !== prevScore) {
+          currentRank++;
+        }
+        prevScore = item.score;
+        return { ...item, rank: currentRank };
+      });
+    }
+  }, [resultScore]);
+  const winner =
+    rankScored !== undefined &&
+    rankScored
+      .filter((item) => item.rank === 1)
+      .map((item) => item.nickname + ' ');
+
   return (
     <GameResultContainer>
       <TheFirstAward>
         <span className="right-items">발급번호: Techeer-600000호</span>
+
         <span className="center-items">상장</span>
         <span className="center-items">The Best Player of Game</span>
-        <span className="right-items">성명 {bestPlayerName}</span>
+        <span className="right-items">성명 : {winner}</span>
         <span className="center-items">{crapeTalk}</span>
         <span className="center-items">{DAY}</span>
         <span className="center-items">Team D 대표 최현정</span>
@@ -25,9 +77,15 @@ const GameResult = () => {
       <div className="right-items">
         <Buttons onClick={goToMain}></Buttons>
         <Ranking>
-          {USERRANK.map((user, index) => {
-            return <span key={index}>{user}</span>;
-          })}
+          {rankScored !== undefined &&
+            rankScored.map((i) => (
+              <RankWrap key={i.nickname}>
+                <RankText rank={i.rank}>{i.rank}등급</RankText>
+                <RankText rank={i.rank} nickname>
+                  {i.nickname}
+                </RankText>
+              </RankWrap>
+            ))}
         </Ranking>
         <Buttons onClick={goToDrwaingRoom}>
           <img src={DrawingRoom} className="drawingRoom-icon" />
@@ -98,7 +156,7 @@ const TheFirstAward = styled.div`
     margin-bottom: 0;
   }
   span:nth-child(7) {
-    font-size: 1%.5;
+    font-size: 1.5;
     margin-top: 1rem;
     margin-bottom: 0;
   }
@@ -138,7 +196,6 @@ const Ranking = styled.div`
   background-size: 35vw 60vh;
   display: flex;
   flex-direction: column;
-  align-items: center;
   margin-left: 10rem;
   padding-top: 13rem;
   & > img {
@@ -163,4 +220,36 @@ const Ranking = styled.div`
     opacity: 0.7;
     font-weight: 700;
   }
+`;
+
+const RankWrap = styled.div`
+  display: flex;
+  margin: 0.5rem 7rem 1.1rem 10rem;
+`;
+
+const RankText = styled.h3<RankTextProps>`
+  font-family: 'KyoboHandwriting2019';
+  font-size: 3rem;
+  ${(props) =>
+    props.nickname &&
+    css`
+      margin-left: 2rem;
+    `}
+
+  ${(props) =>
+    props.rank === 1 &&
+    css`
+      color: #e91700;
+    `}
+    ${(props) =>
+    props.rank === 2 &&
+    css`
+      color: #5282ff;
+    `}
+
+  ${(props) =>
+    props.rank === 3 &&
+    css`
+      color: #bc00fe;
+    `}
 `;
