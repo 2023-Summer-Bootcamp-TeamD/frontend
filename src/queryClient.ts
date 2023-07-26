@@ -65,4 +65,4 @@ export const restFetcher = async ({
   }
 };
 
-export const QueryKeys = {};
+export const QueryKeys = { result: 'result' };

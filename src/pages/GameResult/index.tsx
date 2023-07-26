@@ -15,7 +15,7 @@ import axios from 'axios';
 import { useState, useMemo } from 'react';
 import { gameResultAPI } from '@/apis/gameResult';
 import { resultScoreType, RankTextProps } from '@/types/gameResult';
-
+import { QueryKeys } from '@/queryClient';
 const GameResult = () => {
   const naviagte = useNavigate();
 
@@ -30,7 +30,7 @@ const GameResult = () => {
     return gameResultAPI();
   };
 
-  const { data } = useQuery(['Result'], getServerData, {
+  const { data } = useQuery([QueryKeys.result], getServerData, {
     refetchOnWindowFocus: false,
     onSuccess: (data) => {
       if (data !== undefined) setResultScore(data.data['석차']);
