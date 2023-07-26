@@ -110,14 +110,19 @@ const Category = styled(motion.button)`
     background-color: rgba(255, 255, 255, 0.18);
   }
   & > img {
-    height: 15rem;
-    width: 15rem;
+    height: 14rem;
+    width: 14rem;
   }
   & > label {
-    font-size: 4rem;
+    font-size: 3.5rem;
     color: #fff;
     position: absolute;
     bottom: 2rem;
+  }
+
+  @media (max-width: 992px) {
+    width: 13.8rem;
+    height: 13.8rem;
   }
 `;
 
@@ -129,3 +134,8 @@ const FireExtinguisher = styled.img.attrs({
   bottom: 0;
   width: 30rem;
 `;
+
+// @media (max-width: 768px) {
+//   // 태블릿
+//   font-size: 50%; // 8px
+// }

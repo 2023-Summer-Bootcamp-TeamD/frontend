@@ -24,6 +24,9 @@ const WrapBtn = styled.div`
   position: absolute;
   left: 5rem;
   top: 4rem;
+  @media (max-width: 992px) {
+    left: 4rem;
+  }
 `;
 const ExitBtn = styled(motion.button)`
   position: relative;
@@ -34,6 +37,11 @@ const ExitBtn = styled(motion.button)`
 const ExitImg = styled.img`
   width: 14rem;
   height: 9rem;
+
+  @media (max-width: 992px) {
+    width: 13rem;
+    height: 8rem;
+  }
 `;
 const Text = styled.span`
   position: absolute;
@@ -43,6 +51,9 @@ const Text = styled.span`
   font-size: 3rem;
   font-weight: bold;
   color: #000000;
+  @media (max-width: 992px) {
+    font-size: 2.5rem;
+  }
 `;
 const PageHeader = styled.div`
   display: flex;
@@ -63,4 +74,10 @@ const CircleWrap = styled.div`
   font-size: 5rem;
   text-shadow: 1px 1px 2px #b8b8b8;
   box-shadow: 4px 4px 3px -1px #a6a6a6;
+  @media (max-width: 992px) {
+    width: 7rem;
+    height: 7rem;
+    margin-left: 2rem;
+    line-height: 7.5rem;
+  }
 `;
