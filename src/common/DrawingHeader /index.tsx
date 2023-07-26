@@ -27,6 +27,11 @@ const WrapBtn = styled.div`
   @media (max-width: 992px) {
     left: 4rem;
   }
+
+  @media (max-width: 768px) {
+    left: 3rem;
+    top: 3rem;
+  }
 `;
 const ExitBtn = styled(motion.button)`
   position: relative;
@@ -42,7 +47,12 @@ const ExitImg = styled.img`
     width: 13rem;
     height: 8rem;
   }
+  @media (max-width: 768px) {
+    width: 12rem;
+    height: 7rem;
+  }
 `;
+
 const Text = styled.span`
   position: absolute;
   top: 55%;
@@ -61,6 +71,10 @@ const PageHeader = styled.div`
   align-items: center;
   height: 180px;
   width: 100%;
+  @media (max-width: 768px) {
+    margin-top: 60px;
+    height: 120px;
+  }
 `;
 const CircleWrap = styled.div`
   width: 8rem;

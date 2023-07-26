@@ -124,6 +124,17 @@ const Category = styled(motion.button)`
     width: 13.8rem;
     height: 13.8rem;
   }
+  @media (max-width: 768px) {
+    width: 11rem;
+    height: 11rem;
+    & > img {
+      height: 10rem;
+      width: 10rem;
+    }
+    & > label {
+      font-size: 2.5rem;
+    }
+  }
 `;
 
 const FireExtinguisher = styled.img.attrs({
