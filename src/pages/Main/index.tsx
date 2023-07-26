@@ -2,6 +2,10 @@ import React from 'react';
 import { styled } from 'styled-components';
 import Header from '@/common/Header';
 import BlackboardDecoInMainPage from '@/assets/BlackboardDecoInMainPage.png';
+import BlackBoadrdBottomLeftImg from '@/assets/BottomLeftImg.png';
+import BlackBoadrdBottomRightImg from '@/assets/BottomRightImg.png';
+import BlackBoadrdTopLeftImg from '@/assets/TopLeftImg.png';
+import BlackBoadrdTopRightImg from '@/assets/TopRightImg.png';
 import FireExtinguisher from '@/assets/FireExtinguisher.png';
 import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
@@ -22,14 +26,34 @@ const Main = () => {
     <Mains>
       <Header />
       <Blackboard>
-        <BlackboardImg
-          src={BlackboardDecoInMainPage}
-          alt="Image"
+        <BlackboardGrid
+          className="Container"
           initial="hidden"
           animate="visible"
           variants={variants}
           transition={transition}
-        />
+        >
+          <img
+            className="LeftTop"
+            src={BlackBoadrdTopLeftImg}
+            alt="칠판 왼쪽 상단이미지"
+          />
+          <img
+            className="RightTop"
+            src={BlackBoadrdTopRightImg}
+            alt="칠판 오른쪽 상단이미지"
+          />
+          <img
+            className="LeftBottom"
+            src={BlackBoadrdBottomLeftImg}
+            alt="칠판 왼쪽 하단이미지"
+          />
+          <img
+            className="RightBottom"
+            src={BlackBoadrdBottomRightImg}
+            alt="칠판 오른쪽 하단이미지"
+          />
+        </BlackboardGrid>
         <div className="itemInBlackBoard">
           <AppName
             transition={{ duration: 1, times: [0.1] }}
@@ -88,27 +112,51 @@ const AppName = styled(motion.span)`
     font-size: 7rem;
   }
 `;
-const BlackboardImg = styled(motion.img)`
+const BlackboardGrid = styled(motion.div)`
   width: 100%;
   height: 100%;
-  object-fit: cover;
   position: absolute;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  row-gap: 6rem;
 
-  @media ${Theme.MainPageTheme.LargeXLarge} {
-    width: 90%;
-    height: 90% auto;
+  @media screen and (min-width: 768px) and (max-width: 1530px) {
+    row-gap: calc(2rem + ((100vw - 768px) / 170) * 10);
   }
-  @media ${Theme.MainPageTheme.SemiMediumLarge} {
-    width: 90%;
-    height: auto;
+  /* @media screen and (min-width: 1300px) and (max-width: 1400px) {
+    row-gap: 7rem;
   }
-  @media ${Theme.MainPageTheme.SemiSmallSemiMedium} {
-    width: 90%;
-    height: auto;
+  @media screen and (min-width: 1200px) and (max-width: 1300px) {
+    row-gap: 10rem;
   }
-  @media ${Theme.MainPageTheme.TabletSemiSmall} {
-    width: 90%;
-    height: auto;
+  @media screen and (min-width: 1100px) and (max-width: 1200px) {
+    row-gap: 13rem;
+  }
+  @media screen and (min-width: 1000px) and (max-width: 1100px) {
+    row-gap: 16rem;
+  }
+  @media screen and (min-width: 900px) and (max-width: 1000px) {
+    row-gap: 19rem;
+  }
+  @media screen and (min-width: 800px) and (max-width: 900px) {
+    row-gap: 22rem;
+  }
+  @media screen and (min-width: 768px) and (max-width: 800px) {
+    row-gap: 25rem;
+  } */
+  > .LeftTop {
+    width: 20%;
+  }
+  > .LeftBottom {
+    width: 40%;
+  }
+  > .RightTop {
+    width: 30%;
+    justify-self: end;
+  }
+  > .RightBottom {
+    justify-self: end;
+    width: 35%;
   }
 `;
 
