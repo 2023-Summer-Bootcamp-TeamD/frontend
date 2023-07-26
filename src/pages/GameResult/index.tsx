@@ -33,7 +33,7 @@ const GameResult = () => {
   const { data } = useQuery([QueryKeys.result], getServerData, {
     refetchOnWindowFocus: false,
     onSuccess: (data) => {
-      if (data !== undefined) setResultScore(data.data['석차']);
+      if (data) setResultScore(data.data['석차']);
     },
     onError: (e) => {
       console.log('onError', e);
@@ -44,23 +44,19 @@ const GameResult = () => {
     let currentRank = 1;
     const sortedScore = [...resultScore].sort((a, b) => b.score - a.score);
 
-    if (sortedScore[0].score !== undefined) {
-      let prevScore = sortedScore[0].score;
+    let prevScore = sortedScore[0].score;
 
-      return sortedScore.map((item) => {
-        if (item.score !== prevScore) {
-          currentRank++;
-        }
-        prevScore = item.score;
-        return { ...item, rank: currentRank };
-      });
-    }
+    return sortedScore.map((item) => {
+      if (item.score !== prevScore) {
+        currentRank++;
+      }
+      prevScore = item.score;
+      return { ...item, rank: currentRank };
+    });
   }, [resultScore]);
-  const winner =
-    rankScored !== undefined &&
-    rankScored
-      .filter((item) => item.rank === 1)
-      .map((item) => item.nickname + ' ');
+  const winner = rankScored
+    .filter((item) => item.rank === 1)
+    .map((item) => item.nickname + ' ');
 
   return (
     <GameResultContainer>
