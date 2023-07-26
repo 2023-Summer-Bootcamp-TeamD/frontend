@@ -5,12 +5,14 @@ import eraser from '@/assets/eraser.png';
 import pencil from '@/assets/pencil.png';
 import chatter from '@/assets/chatter.png';
 import { COLOR } from '@/constants/color';
+import { useSocketContext } from '@/context/SocketContext';
 type Props = {
   clearCanvas: () => void;
   setIsErasing: React.Dispatch<React.SetStateAction<boolean>>;
   setLineColor: React.Dispatch<React.SetStateAction<string>>;
   setCurrentFocus: React.Dispatch<React.SetStateAction<string>>;
   handleImageClick: () => void;
+  UUID?: string;
 };
 
 const GamePointer = ({
@@ -19,7 +21,10 @@ const GamePointer = ({
   setLineColor,
   handleImageClick,
   setCurrentFocus,
+  UUID,
 }: Props) => {
+  const { socketState } = useSocketContext();
+  const { socket, isConnected } = socketState;
   return (
     <PointerBox>
       <img src={Trash} onClick={clearCanvas} />
@@ -29,6 +34,12 @@ const GamePointer = ({
           setIsErasing(true);
           handleImageClick();
           setCurrentFocus(eraser);
+
+          if (socket && isConnected)
+            socket.emit('canvasChangeType', {
+              roomId: UUID,
+              handType: true,
+            });
         }}
       />
       <img
@@ -37,6 +48,11 @@ const GamePointer = ({
           setIsErasing(false);
           handleImageClick();
           setCurrentFocus(pencil);
+          if (socket && isConnected)
+            socket.emit('canvasChangeType', {
+              roomId: UUID,
+              handType: false,
+            });
         }}
       />
       <img src={chatter} />
@@ -50,6 +66,11 @@ const GamePointer = ({
                 setIsErasing(false);
                 handleImageClick();
                 setCurrentFocus(pencil);
+                if (socket && isConnected)
+                  socket.emit('canvasChangeColor', {
+                    roomId: UUID,
+                    selectedColor: col,
+                  });
               }}
             ></div>
           );

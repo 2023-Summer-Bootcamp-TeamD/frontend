@@ -64,8 +64,27 @@ const CanvasDrawingApp = ({ setCurrentFocus, UUID }: Props) => {
   const clearCanvas = () => {
     if (context) {
       context.clearRect(0, 0, context.canvas.width, context.canvas.height);
+      socket?.emit('canvasEraseAll', UUID);
     }
   };
+
+  useEffect(() => {
+    const handleCanvasEraseAll = () => {
+      const canvas = canvasRef.current;
+      if (canvas) {
+        const context = canvas.getContext('2d');
+        if (context) {
+          context.clearRect(0, 0, context.canvas.width, context.canvas.height);
+        }
+      }
+    };
+
+    socket?.on('canvasEraseAll', handleCanvasEraseAll);
+
+    return () => {
+      socket?.off('canvasEraseAll', handleCanvasEraseAll);
+    };
+  }, [socket]);
 
   const handleImageClick = () => {
     setIsImageClicked(true);
@@ -82,10 +101,9 @@ const CanvasDrawingApp = ({ setCurrentFocus, UUID }: Props) => {
   }, []);
 
   useEffect(() => {
-    socket?.on('canvasDraw', ({ drawData }) => {
+    const DrawHandler = ({ drawData }: any) => {
       if (!drawData.isDrawing || !context) return;
 
-      console.log(drawData);
       context.lineJoin = 'round';
       context.lineCap = 'round';
       context.lineWidth = isErasing ? lineWidth + 5 : lineWidth;
@@ -99,7 +117,36 @@ const CanvasDrawingApp = ({ setCurrentFocus, UUID }: Props) => {
       context.stroke();
       setLastX(drawData.offsetX);
       setLastY(drawData.offsetY);
-    });
+    };
+
+    socket?.on('canvasDraw', DrawHandler);
+    return () => {
+      socket?.off('canvasDraw', DrawHandler);
+    };
+  }, [socket, context, isErasing, lineWidth, lineColor]);
+
+  useEffect(() => {
+    const handleCanvasChangeColor = ({ selectedColor }: any) => {
+      setLineColor(selectedColor);
+    };
+
+    socket?.on('canvasChangeColor', handleCanvasChangeColor);
+
+    return () => {
+      socket?.off('canvasChangeColor', handleCanvasChangeColor);
+    };
+  }, [socket, isConnected]);
+
+  useEffect(() => {
+    const handleCanvasChangeHandType = ({ handType }: any) => {
+      setIsErasing(handType);
+    };
+
+    socket?.on('canvasChangeType', handleCanvasChangeHandType);
+
+    return () => {
+      socket?.off('canvasChangeType', handleCanvasChangeHandType);
+    };
   }, [socket, isConnected]);
 
   return (
@@ -115,6 +162,7 @@ const CanvasDrawingApp = ({ setCurrentFocus, UUID }: Props) => {
         onMouseOut={stopDrawing}
       />
       <GamePointer
+        UUID={UUID}
         setCurrentFocus={setCurrentFocus}
         handleImageClick={handleImageClick}
         setLineColor={setLineColor}
