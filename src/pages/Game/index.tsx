@@ -6,6 +6,8 @@ import { styled } from 'styled-components';
 import pencil from '@/assets/pencil.png';
 import { useLocation, useParams } from 'react-router-dom';
 import { useSocketContext } from '@/context/SocketContext';
+import { useRecoilState } from 'recoil';
+import { uuidState } from '@/atom/game';
 
 const Game = () => {
   const hostData = useLocation().state;
@@ -15,6 +17,7 @@ const Game = () => {
 
   const [xy, setXY] = useState({ x: 0, y: 0 });
   const [currentFocus, setCurrentFocus] = useState(pencil);
+  const [uuid, setUUID] = useRecoilState(uuidState);
 
   const xyHandler = (e: React.MouseEvent<HTMLDivElement>) => {
     const mouseX = e.clientX;
@@ -37,6 +40,10 @@ const Game = () => {
     };
   }, [socket, isConnected, hostData.nickname, UUID]);
 
+  useEffect(() => {
+    if (UUID) setUUID(UUID);
+  }, []);
+
   return (
     <GamePage onMouseMove={xyHandler}>
       <Nav>
@@ -44,8 +51,8 @@ const Game = () => {
       </Nav>
       <Section>
         <div>
-          <GameBoard UUID={UUID} setCurrentFocus={setCurrentFocus} />
-          <UsersChat UUID={UUID} {...hostData} />
+          <GameBoard setCurrentFocus={setCurrentFocus} />
+          <UsersChat {...hostData} />
         </div>
       </Section>
       <Cursor

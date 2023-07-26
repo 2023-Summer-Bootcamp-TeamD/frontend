@@ -6,13 +6,14 @@ import pencil from '@/assets/pencil.png';
 import chatter from '@/assets/chatter.png';
 import { COLOR } from '@/constants/color';
 import { useSocketContext } from '@/context/SocketContext';
+import { useRecoilValue } from 'recoil';
+import { uuidState } from '@/atom/game';
 type Props = {
   clearCanvas: () => void;
   setIsErasing: React.Dispatch<React.SetStateAction<boolean>>;
   setLineColor: React.Dispatch<React.SetStateAction<string>>;
   setCurrentFocus: React.Dispatch<React.SetStateAction<string>>;
   handleImageClick: () => void;
-  UUID?: string;
 };
 
 const GamePointer = ({
@@ -21,10 +22,11 @@ const GamePointer = ({
   setLineColor,
   handleImageClick,
   setCurrentFocus,
-  UUID,
 }: Props) => {
   const { socketState } = useSocketContext();
   const { socket, isConnected } = socketState;
+  const uuid = useRecoilValue(uuidState);
+
   return (
     <PointerBox>
       <img src={Trash} onClick={clearCanvas} />
@@ -37,7 +39,7 @@ const GamePointer = ({
 
           if (socket && isConnected)
             socket.emit('canvasChangeType', {
-              roomId: UUID,
+              roomId: uuid,
               handType: true,
             });
         }}
@@ -50,7 +52,7 @@ const GamePointer = ({
           setCurrentFocus(pencil);
           if (socket && isConnected)
             socket.emit('canvasChangeType', {
-              roomId: UUID,
+              roomId: uuid,
               handType: false,
             });
         }}
@@ -68,7 +70,7 @@ const GamePointer = ({
                 setCurrentFocus(pencil);
                 if (socket && isConnected)
                   socket.emit('canvasChangeColor', {
-                    roomId: UUID,
+                    roomId: uuid,
                     selectedColor: col,
                   });
               }}

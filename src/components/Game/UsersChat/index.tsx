@@ -8,16 +8,15 @@ import { messages } from '@/constants/chatList';
 
 type UserChatProps = {
   nickname: string;
-  UUID: string;
 };
 
-const UsersChat = ({ nickname, UUID }: UserChatProps) => {
+const UsersChat = ({ nickname }: UserChatProps) => {
   const [chat, setChat] = useState<string>('');
   const [chatList, setChatList] = useState<messageType[]>(messages);
 
   return (
     <ChatRoom>
-      <Title UUID={UUID} />
+      <Title />
       <MessageView chatList={chatList} nickname={nickname} />
       <ChatInputView
         nickname={nickname}

@@ -1,24 +1,18 @@
 import { copyAndPaste } from '@/apis/game';
-import { playerCountState } from '@/atom/game';
+import { playerCountState, uuidState } from '@/atom/game';
 import { useSocketContext } from '@/context/SocketContext';
 import React, { useEffect } from 'react';
-import { useRecoilState } from 'recoil';
+import { useRecoilValue, useRecoilState } from 'recoil';
 import { styled } from 'styled-components';
 
-type TitleProps = {
-  UUID: string;
-};
-
-const Title = ({ UUID }: TitleProps) => {
+const Title = () => {
   const { socketState } = useSocketContext();
   const { socket, isConnected } = socketState;
-
   const [playerCount, setPlayerCount] = useRecoilState(playerCountState);
-
+  const uuid = useRecoilValue(uuidState);
   useEffect(() => {
     if (socket && isConnected) {
       socket.on('updateChatNum', (count) => {
-        console.log(count);
         setPlayerCount(() => count.playerCount);
       });
     }
@@ -27,9 +21,9 @@ const Title = ({ UUID }: TitleProps) => {
   return (
     <TitleBox>
       <div>참여 인원 {playerCount}/6</div>
-      <div onClick={() => copyAndPaste(UUID)}>
+      <div onClick={() => copyAndPaste(uuid)}>
         <div>입장코드</div>
-        <div>{UUID}</div>
+        <div>{uuid}</div>
       </div>
     </TitleBox>
   );

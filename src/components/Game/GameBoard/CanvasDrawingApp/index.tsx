@@ -3,13 +3,14 @@ import GamePointer from '../GamePointer';
 import { styled } from 'styled-components';
 import { useSocketContext } from '@/context/SocketContext';
 import { DrawData, HandType, SelectedColorType } from '@/types/canvas';
+import { useRecoilValue } from 'recoil';
+import { uuidState } from '@/atom/game';
 
 type Props = {
   setCurrentFocus: React.Dispatch<React.SetStateAction<string>>;
-  UUID?: string;
 };
 
-const CanvasDrawingApp = ({ setCurrentFocus, UUID }: Props) => {
+const CanvasDrawingApp = ({ setCurrentFocus }: Props) => {
   const { socketState } = useSocketContext();
   const { socket, isConnected } = socketState;
   const screenShotRef = useRef<HTMLDivElement>(null);
@@ -22,6 +23,7 @@ const CanvasDrawingApp = ({ setCurrentFocus, UUID }: Props) => {
   const [lineColor, setLineColor] = useState<string>('#ffffff');
   const [lineWidth, setLineWidth] = useState<number>(4);
   const [isImageClicked, setIsImageClicked] = useState<boolean>(false);
+  const uuid = useRecoilValue(uuidState);
 
   //그리기 시작
   const startDrawing = (event: React.MouseEvent<HTMLCanvasElement>) => {
@@ -55,7 +57,7 @@ const CanvasDrawingApp = ({ setCurrentFocus, UUID }: Props) => {
       offsetY,
       isDrawing,
     };
-    socket?.emit('canvasDraw', { roomId: UUID, drawData });
+    socket?.emit('canvasDraw', { roomId: uuid, drawData });
   };
 
   //그리기 멈추기
@@ -72,7 +74,7 @@ const CanvasDrawingApp = ({ setCurrentFocus, UUID }: Props) => {
   const clearCanvas = () => {
     if (context) {
       context.clearRect(0, 0, context.canvas.width, context.canvas.height);
-      socket?.emit('canvasEraseAll', UUID);
+      socket?.emit('canvasEraseAll', uuid);
     }
   };
 
@@ -171,7 +173,6 @@ const CanvasDrawingApp = ({ setCurrentFocus, UUID }: Props) => {
         onMouseOut={stopDrawing}
       />
       <GamePointer
-        UUID={UUID}
         setCurrentFocus={setCurrentFocus}
         handleImageClick={handleImageClick}
         setLineColor={setLineColor}
