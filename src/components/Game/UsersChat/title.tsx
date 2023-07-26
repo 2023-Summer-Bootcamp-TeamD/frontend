@@ -12,7 +12,6 @@ const Title = () => {
   const [playerCount, setPlayerCount] = useState(0);
   //내가 최대인원
   const [player_num, setPlayer_num] = useRecoilState(playerCountState);
-  console.log(player_num);
   useEffect(() => {
     if (socket && isConnected) {
       socket.on('updateChatNum', (count) => {

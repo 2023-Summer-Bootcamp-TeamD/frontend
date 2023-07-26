@@ -138,14 +138,14 @@ const CanvasDrawingApp = ({ setCurrentFocus }: Props) => {
 
   //서버에서 연필/지우개 타입 가져오기
   useEffect(() => {
-    const handleCanvasChangeHandType = ({ handType }: HandType) => {
-      setIsErasing(handType);
+    const handleCanvasChangeHandType = ({ eraseData }: HandType) => {
+      setIsErasing(eraseData);
     };
 
-    socket?.on('canvasChangeType', handleCanvasChangeHandType);
+    socket?.on('canvasErase', handleCanvasChangeHandType);
 
     return () => {
-      socket?.off('canvasChangeType', handleCanvasChangeHandType);
+      socket?.off('canvasErase', handleCanvasChangeHandType);
     };
   }, [socket, isConnected]);
 

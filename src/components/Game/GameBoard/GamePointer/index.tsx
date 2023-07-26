@@ -38,9 +38,9 @@ const GamePointer = ({
           setCurrentFocus(eraser);
 
           if (socket && isConnected)
-            socket.emit('canvasChangeType', {
+            socket.emit('canvasErase', {
               roomId: uuid,
-              handType: true,
+              eraseData: true,
             });
         }}
       />
@@ -51,9 +51,9 @@ const GamePointer = ({
           handleImageClick();
           setCurrentFocus(pencil);
           if (socket && isConnected)
-            socket.emit('canvasChangeType', {
+            socket.emit('canvasErase', {
               roomId: uuid,
-              handType: false,
+              eraseData: false,
             });
         }}
       />
@@ -72,6 +72,12 @@ const GamePointer = ({
                   socket.emit('canvasChangeColor', {
                     roomId: uuid,
                     selectedColor: col,
+                  });
+
+                if (socket && isConnected)
+                  socket.emit('canvasErase', {
+                    roomId: uuid,
+                    handType: false,
                   });
               }}
             ></div>

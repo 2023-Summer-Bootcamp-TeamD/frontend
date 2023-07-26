@@ -11,5 +11,5 @@ export type SelectedColorType = {
 };
 
 export type HandType = {
-  handType: boolean;
+  eraseData: boolean;
 };
