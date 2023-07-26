@@ -8,10 +8,9 @@ type Props = {
   chat: string;
   setChat: React.Dispatch<React.SetStateAction<string>>;
   setChatList: React.Dispatch<React.SetStateAction<messageType[]>>;
-  nickname: string;
 };
 
-const ChatInputView = ({ nickname, setChat, chat, setChatList }: Props) => {
+const ChatInputView = ({ setChat, chat, setChatList }: Props) => {
   const textHandler = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     setChat(e.target.value);
   };

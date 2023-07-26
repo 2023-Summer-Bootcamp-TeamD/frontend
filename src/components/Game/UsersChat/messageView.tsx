@@ -3,13 +3,15 @@ import React, { useEffect, useRef } from 'react';
 import { styled } from 'styled-components';
 import MyMessage from './MyMessage';
 import OtherMessage from './OtherMessage';
+import { useRecoilValue } from 'recoil';
+import { nicknameState } from '@/atom/game';
 
 type Props = {
   chatList: messageType[];
-  nickname: string;
 };
-const MessageView = ({ chatList, nickname }: Props) => {
+const MessageView = ({ chatList }: Props) => {
   const chatBoxRef = useRef<HTMLDivElement>(null);
+  const nickname = useRecoilValue(nicknameState);
 
   const scrollToBottom = () => {
     chatBoxRef.current?.scrollTo({

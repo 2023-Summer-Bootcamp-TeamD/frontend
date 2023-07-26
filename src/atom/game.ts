@@ -4,7 +4,7 @@ export const playerCountState = atom({
   key: 'playerCount',
   default: 0,
 });
-export const nicknameState = atom({
+export const nicknameState = atom<string>({
   key: 'nicknameState',
   default: '',
 });
@@ -14,14 +14,14 @@ export const uuidState = atom<string>({
   default: '',
 });
 
-export const playerNumState = atom({
+export const playerNumState = atom<number>({
   key: 'playerNumState',
   default: 0,
 });
 
 export const categoryIdState = atom({
   key: 'categoryIdState',
-  default: '',
+  default: 0,
 });
 
 export const scoreState = atom({

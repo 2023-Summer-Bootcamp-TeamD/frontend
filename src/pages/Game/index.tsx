@@ -6,18 +6,25 @@ import { styled } from 'styled-components';
 import pencil from '@/assets/pencil.png';
 import { useLocation, useParams } from 'react-router-dom';
 import { useSocketContext } from '@/context/SocketContext';
-import { useRecoilState } from 'recoil';
-import { uuidState } from '@/atom/game';
+import { useRecoilState, useSetRecoilState } from 'recoil';
+import {
+  categoryIdState,
+  nicknameState,
+  playerCountState,
+  uuidState,
+} from '@/atom/game';
 
 const Game = () => {
-  const hostData = useLocation().state;
-  const { UUID } = useParams();
   const { socketState } = useSocketContext();
   const { socket, isConnected } = socketState;
-
+  const hostData = useLocation().state;
+  const { UUID } = useParams();
   const [xy, setXY] = useState({ x: 0, y: 0 });
   const [currentFocus, setCurrentFocus] = useState(pencil);
-  const [uuid, setUUID] = useRecoilState(uuidState);
+  const setUUID = useSetRecoilState(uuidState);
+  const setNickname = useSetRecoilState(nicknameState);
+  const [player_num, setPlayer_num] = useRecoilState(playerCountState);
+  const [category_id, setCategory_id] = useRecoilState(categoryIdState);
 
   const xyHandler = (e: React.MouseEvent<HTMLDivElement>) => {
     const mouseX = e.clientX;
@@ -42,6 +49,9 @@ const Game = () => {
 
   useEffect(() => {
     if (UUID) setUUID(UUID);
+    setNickname(hostData.nickname);
+    setPlayer_num(hostData.player_num);
+    setCategory_id(hostData.category_id);
   }, []);
 
   return (
