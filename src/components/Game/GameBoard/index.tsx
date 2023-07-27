@@ -2,12 +2,14 @@ import React, { useState } from 'react';
 import { styled } from 'styled-components';
 import StartButton from '../StartButton';
 import GameContent from '../GameContent';
+import { useRecoilState } from 'recoil';
+import { startState } from '@/atom/game';
 
 type Props = {
   setCurrentFocus: React.Dispatch<React.SetStateAction<string>>;
 };
 const GameBoard = ({ setCurrentFocus }: Props) => {
-  const [start, setStart] = useState(false);
+  const [start, setStart] = useRecoilState(startState);
 
   return (
     <Board>

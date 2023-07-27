@@ -14,7 +14,6 @@ const StartButton = ({ setStart }: Props) => {
   //제한인원은 state로 가져오고 현재인원은 recoil로 관리
   const maxPlayerNum = useRecoilValue(playerMaxCountState);
   const [playerCount, setplayerCount] = useRecoilState(playerNumState);
-
   const gameStartHandler = () => {
     console.log('hi');
     if (playerCount === maxPlayerNum) {
@@ -46,7 +45,7 @@ export default StartButton;
 
 const Content = styled(motion.div)``;
 
-const StartGame = styled.div<{ playercount: number; maxplayernum: number }>`
+const StartGame = styled.button<{ playercount: number; maxplayernum: number }>`
   position: absolute;
   left: calc(50% - 10rem);
   top: calc(50% - 4.5rem);
@@ -58,10 +57,12 @@ const StartGame = styled.div<{ playercount: number; maxplayernum: number }>`
   border: 1px solid #ffffff;
   border-radius: 10px;
   font-size: 4rem;
-  cursor: pointer;
+  box-shadow: 5px 7px 12px -9px #000000;
+
+  cursor: ${(props) =>
+    props.playercount === props.maxplayernum ? 'pointer' : 'not-allowed'};
   background-color: ${(props) =>
-    props.playercount === props.maxplayernum ? 'red' : 'blue'};
-  &:hover {
-    background-color: rgb(255, 255, 255, 0.3);
-  }
+    props.playercount === props.maxplayernum ? '#007bff' : '#ccc'};
+  color: ${(props) =>
+    props.playercount === props.maxplayernum ? '#fff' : 'black'};
 `;

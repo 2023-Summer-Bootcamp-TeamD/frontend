@@ -11,9 +11,12 @@ import {
   categoryIdState,
   nicknameState,
   playerMaxCountState,
+  startState,
   timeState,
   uuidState,
 } from '@/atom/game';
+import { restFetcher } from '@/queryClient';
+import { getRoundInfoAPI } from '@/apis/game';
 
 const Game = () => {
   const { socketState } = useSocketContext();
@@ -28,6 +31,7 @@ const Game = () => {
     useRecoilState(playerMaxCountState);
   const [category_id, setCategory_id] = useRecoilState(categoryIdState);
   const [time, setTime] = useRecoilState(timeState);
+  const [start, setStart] = useRecoilState(startState);
 
   const xyHandler = (e: React.MouseEvent<HTMLDivElement>) => {
     const mouseX = e.clientX;
@@ -56,6 +60,17 @@ const Game = () => {
     setMax_Player_num(hostData.player_num);
     setCategory_id(hostData.category_id);
     setTime(hostData.time);
+  }, []);
+
+  useEffect(() => {
+    //start가 true일때만
+    console.log(start);
+    if (start) {
+      (async () => {
+        const result = await getRoundInfoAPI(UUID);
+        console.log(result);
+      })();
+    }
   }, []);
 
   return (
