@@ -1,6 +1,7 @@
 import React from 'react';
 import { styled } from 'styled-components';
 import user from '@/assets/blue.png';
+import { IMAGES } from '@/constants/profile';
 
 type Props = {
   flag: number;
@@ -15,7 +16,7 @@ const OtherMessage = ({ flag, nickname, message, date }: Props) => {
       <Profile>
         {!flag && (
           <div>
-            <img src={user} alt="상대방 프로필" />
+            <img src={IMAGES[4]} alt="상대방 프로필" />
             <p>{nickname}</p>
           </div>
         )}
@@ -30,7 +31,7 @@ const OtherMessage = ({ flag, nickname, message, date }: Props) => {
   );
 };
 
-export default OtherMessage;
+export default React.memo(OtherMessage);
 
 const OtherChat = styled.div`
   display: flex;
@@ -50,7 +51,7 @@ const OtherChat = styled.div`
 const Profile = styled.div`
   position: relative;
   width: 6rem;
-  height: 5.2rem;
+  height: 5.5rem;
   border-radius: 50%;
   overflow: hidden;
   margin-right: 1rem;
