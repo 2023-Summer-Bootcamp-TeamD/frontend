@@ -1,7 +1,7 @@
 import { atom } from 'recoil';
 
-export const playerCountState = atom({
-  key: 'playerCount',
+export const playerMaxCountState = atom({
+  key: 'playerMaxCount',
   default: 0,
 });
 export const nicknameState = atom<string>({

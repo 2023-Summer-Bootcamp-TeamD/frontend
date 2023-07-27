@@ -1,13 +1,17 @@
+import { timeState } from '@/atom/game';
 import { userType, users } from '@/constants/users';
 import React from 'react';
+import { useRecoilValue } from 'recoil';
 import { styled } from 'styled-components';
 
 const GameNav = () => {
+  const time = useRecoilValue(timeState);
+
   return (
     <Nav>
       <Clock>
         <span>남은 시간</span>
-        <span>01:00</span>
+        <span>{time}</span>
       </Clock>
       <Users>
         {users.map((user: userType, index) => {

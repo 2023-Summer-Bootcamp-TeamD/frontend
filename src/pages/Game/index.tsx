@@ -10,7 +10,8 @@ import { useRecoilState, useSetRecoilState } from 'recoil';
 import {
   categoryIdState,
   nicknameState,
-  playerCountState,
+  playerMaxCountState,
+  timeState,
   uuidState,
 } from '@/atom/game';
 
@@ -23,8 +24,10 @@ const Game = () => {
   const [currentFocus, setCurrentFocus] = useState(pencil);
   const setUUID = useSetRecoilState(uuidState);
   const setNickname = useSetRecoilState(nicknameState);
-  const [player_num, setPlayer_num] = useRecoilState(playerCountState);
+  const [max_Player_num, setMax_Player_num] =
+    useRecoilState(playerMaxCountState);
   const [category_id, setCategory_id] = useRecoilState(categoryIdState);
+  const [time, setTime] = useRecoilState(timeState);
 
   const xyHandler = (e: React.MouseEvent<HTMLDivElement>) => {
     const mouseX = e.clientX;
@@ -50,8 +53,9 @@ const Game = () => {
   useEffect(() => {
     if (UUID) setUUID(UUID);
     setNickname(hostData.nickname);
-    setPlayer_num(hostData.player_num);
+    setMax_Player_num(hostData.player_num);
     setCategory_id(hostData.category_id);
+    setTime(hostData.time);
   }, []);
 
   return (
@@ -115,24 +119,3 @@ const Cursor = styled.img<{ xy: { x: number; y: number } }>`
   z-index: 2;
   pointer-events: none;
 `;
-
-/**
- * 
- * 
- * 유저
- category_id
-: 
-1
-nickname
-: 
-"10000"
-player_num
-: 
-2
-score
-: 
-0
-time
-: 
-10
- */
