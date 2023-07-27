@@ -13,10 +13,11 @@ import {
   playerMaxCountState,
   startState,
   timeState,
+  userListState,
   uuidState,
 } from '@/atom/game';
-import { restFetcher } from '@/queryClient';
 import { getRoundInfoAPI } from '@/apis/game';
+import { UserListType } from '@/types/gameInfo';
 
 const Game = () => {
   const { socketState } = useSocketContext();
@@ -32,7 +33,7 @@ const Game = () => {
   const [category_id, setCategory_id] = useRecoilState(categoryIdState);
   const [time, setTime] = useRecoilState(timeState);
   const [start, setStart] = useRecoilState(startState);
-
+  const [userList, setUserList] = useRecoilState(userListState);
   const xyHandler = (e: React.MouseEvent<HTMLDivElement>) => {
     const mouseX = e.clientX;
     const mouseY = e.clientY;
@@ -46,11 +47,15 @@ const Game = () => {
         socket.emit('createRoom', UUID);
       }
       socket.emit('createUser', { nickname: hostData.nickname, roomId: UUID });
+      socket.on('updateUserInfo', (data: UserListType) => {
+        setUserList((prevArray) => [...prevArray, data]);
+      });
     }
 
     return () => {
       socket?.off('createRoom');
       socket?.off('createUser');
+      socket?.off('updateUserInfo');
     };
   }, [socket, isConnected, hostData.nickname, UUID]);
 
@@ -63,15 +68,13 @@ const Game = () => {
   }, []);
 
   useEffect(() => {
-    //start가 true일때만
-    console.log(start);
     if (start) {
       (async () => {
         const result = await getRoundInfoAPI(UUID);
         console.log(result);
       })();
     }
-  }, []);
+  }, [start]);
 
   return (
     <GamePage onMouseMove={xyHandler}>

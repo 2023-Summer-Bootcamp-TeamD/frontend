@@ -1,12 +1,12 @@
-import { timeState } from '@/atom/game';
-import { userType, users } from '@/constants/users';
+import { timeState, userListState } from '@/atom/game';
+import { UserListType } from '@/types/gameInfo';
 import React from 'react';
 import { useRecoilValue } from 'recoil';
 import { styled } from 'styled-components';
 
 const GameNav = () => {
   const time = useRecoilValue(timeState);
-
+  const userList = useRecoilValue(userListState);
   return (
     <Nav>
       <Clock>
@@ -14,10 +14,10 @@ const GameNav = () => {
         <span>{time}</span>
       </Clock>
       <Users>
-        {users.map((user: userType, index) => {
+        {userList.map((user: UserListType, index) => {
           return (
             <User key={index}>
-              <div>{user.name}</div>
+              <div>{user.nickname}</div>
               <div>{user.score}</div>
             </User>
           );
@@ -70,6 +70,7 @@ const Users = styled.div`
   height: 10rem;
   box-shadow: 5px 7px 12px -9px #000000;
   border-radius: 10px;
+  min-width: 475px;
 `;
 
 const User = styled.div`
@@ -77,6 +78,7 @@ const User = styled.div`
   flex-direction: column;
   align-items: center;
   padding: 1rem;
+  min-width: 60px;
 
   & > div:nth-child(1) {
     font-size: 2rem;

@@ -4,3 +4,8 @@ export type GameRoundInfoType = {
   word: string;
   nickname: string;
 };
+
+export type UserListType = {
+  nickname: string;
+  score: number;
+};

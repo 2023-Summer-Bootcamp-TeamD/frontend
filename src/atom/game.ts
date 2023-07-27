@@ -1,4 +1,4 @@
-import { GameRoundInfoType } from '@/types/gameInfo';
+import { GameRoundInfoType, UserListType } from '@/types/gameInfo';
 import { atom } from 'recoil';
 
 export const playerMaxCountState = atom<number>({
@@ -40,6 +40,11 @@ export const startState = atom<boolean>({
   default: false,
 });
 
+export const userListState = atom<UserListType[]>({
+  key: 'userList',
+  default: [],
+});
+
 export const gameRoundInfo = atom<GameRoundInfoType>({
   key: 'roundInfo',
   default: {
@@ -49,4 +54,3 @@ export const gameRoundInfo = atom<GameRoundInfoType>({
     nickname: 'hello',
   },
 });
-//nickname은 그림을 그리는 사람
