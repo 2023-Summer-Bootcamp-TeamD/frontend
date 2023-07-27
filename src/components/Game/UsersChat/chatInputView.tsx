@@ -25,6 +25,7 @@ const ChatInputView = ({ setChat, chat, setChatList }: Props) => {
         setChatList((prevChatList) => [
           ...prevChatList,
           {
+            type: data.type,
             nickname: data.nickname,
             message: data.message,
             date: dayjs().format('HH:mm'),

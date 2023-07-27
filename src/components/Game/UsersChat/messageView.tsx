@@ -5,6 +5,7 @@ import MyMessage from './MyMessage';
 import OtherMessage from './OtherMessage';
 import { useRecoilValue } from 'recoil';
 import { nicknameState } from '@/atom/game';
+import UserNotice from './UserNotice';
 
 type Props = {
   chatList: messageType[];
@@ -27,9 +28,11 @@ const MessageView = ({ chatList }: Props) => {
   return (
     <MessageBox ref={chatBoxRef}>
       {chatList.map((chat, index) => {
-        if (chat.nickname === nickname) {
+        if (chat.type === 'INFO') {
+          return <UserNotice key={index} message={chat.message} />;
+        } else if (chat.nickname === nickname) {
           return (
-            <MyMessage key={index} message={chat.message} date={chat.date} />
+            <MyMessage key={index} date={chat.date} message={chat.message} />
           );
         } else {
           let flag = 0;
