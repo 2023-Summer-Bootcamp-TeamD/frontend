@@ -1,6 +1,6 @@
 import React, { ChangeEvent, useState } from 'react';
 import { styled } from 'styled-components';
-import chattingImg from '@/assets/Chatter.png';
+import chattingImg from '@/assets/chatter.png';
 import CompassImg from '@/assets/DoodleCompass.png';
 import FunctionMathImg from '@/assets/DoodleFunctionMath.png';
 import FireExtinguisherImg from '@/assets/FireExtinguisher.png';
