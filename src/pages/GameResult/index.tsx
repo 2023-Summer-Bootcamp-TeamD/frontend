@@ -73,7 +73,7 @@ const GameResult = () => {
       <div className="right-items">
         <Buttons onClick={goToMain}></Buttons>
         <Ranking>
-          {rankScored !== undefined &&
+          {rankScored &&
             rankScored.map((i) => (
               <RankWrap key={i.nickname}>
                 <RankText rank={i.rank}>{i.rank}등급</RankText>
