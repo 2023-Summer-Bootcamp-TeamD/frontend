@@ -13,7 +13,7 @@ import { GameInfoProps, MakeRoomType } from '@/types/creatingSpecificRooms';
 import { makeRoomAPI } from '@/apis/creatingSpecificRooms';
 import { useMutation } from '@tanstack/react-query';
 import { AxiosError } from 'axios';
-
+import CreatingResponse from '@/constants/CreatingResponsive';
 const CreatingRooms = () => {
   const navigate = useNavigate();
 
@@ -86,6 +86,7 @@ const CreatingRooms = () => {
             alt="함수낙서"
           />
           <img className="CompassImg" src={DoodleCompass} alt="컴퍼스낙서" />
+          <img className="Chatter" src={Chatter} alt="떠든 사람" />
         </DoodleContainer>
         <CategoryContainer>
           {roomElement.map((item, index) => (
@@ -143,7 +144,6 @@ const CreatingRooms = () => {
         <button className="CreatingRoomButton" onClick={onClickHandler}>
           방 만들기
         </button>
-        <ChatterImg src={Chatter} alt="떠든사람" />
       </Blackboard>
     </Admissions>
   );
@@ -161,9 +161,55 @@ const Admissions = styled.div`
   width: 100vw;
   position: relative;
 `;
+
+const Blackboard = styled.div`
+  box-sizing: border-box;
+  width: 70vw;
+  height: 65vh;
+  background: #1c3b3e;
+  border: 15px solid #8e5501;
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+  border-radius: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+
+  .CreatingRoomButton {
+    width: 13rem;
+    height: 5rem;
+    margin-top: 2rem;
+    margin-bottom: 5rem;
+    border-radius: 20rem;
+    border: 0.05rem solid #fff;
+    background-color: transparent;
+    color: #fff;
+    font-size: 3rem;
+    &::placeholder {
+      color: #fff;
+    }
+
+    &:hover {
+      background-color: rgba(255, 255, 255, 0.18);
+      cursor: pointer;
+      transform: scale(1.1);
+    }
+    @media ${CreatingResponse.CreatingRoomTheme.SM} {
+      width: 11rem;
+      height: 4.5rem;
+    }
+    @media ${CreatingResponse.CreatingRoomTheme.TabletS} {
+      width: 9.8rem;
+      height: 4rem;
+      font-size: 2.5rem;
+    }
+  }
+`;
 const DoodleContainer = styled.div`
   z-index: 2;
   top: 10em;
+  margin-bottom: 4rem;
   > img {
     position: absolute;
   }
@@ -176,6 +222,44 @@ const DoodleContainer = styled.div`
     left: 12rem;
     top: 2rem;
     width: 6rem;
+  }
+  > .Chatter {
+    right: 2rem;
+    bottom: 3rem;
+    width: 10rem;
+  }
+  @media ${CreatingResponse.CreatingRoomTheme.SEMIML} {
+    > .FunctionMathImg {
+      width: 9rem;
+    }
+    > .CompassImg {
+      width: 5rem;
+    }
+    > .Chatter {
+      width: 9rem;
+    }
+  }
+  @media ${CreatingResponse.CreatingRoomTheme.SSEMIM} {
+    > .FunctionMathImg {
+      width: 8rem;
+    }
+    > .CompassImg {
+      width: 4.5rem;
+    }
+    > .Chatter {
+      width: 8rem;
+    }
+  }
+  @media ${CreatingResponse.CreatingRoomTheme.TabletS} {
+    > .FunctionMathImg {
+      width: 7.5rem;
+    }
+    > .CompassImg {
+      width: 4.2rem;
+    }
+    > .Chatter {
+      width: 7.5rem;
+    }
   }
 `;
 const CategoryContainer = styled.div`
@@ -200,16 +284,56 @@ const CategoryContainer = styled.div`
       background-color: rgba(255, 255, 255, 0.18);
       transform: scale(1.1);
     }
+    @media ${CreatingResponse.CreatingRoomTheme.SEMIML} {
+      width: 10rem;
+      height: 10rem;
+    }
+    @media ${CreatingResponse.CreatingRoomTheme.SSEMIM} {
+      width: 9rem;
+      height: 9rem;
+      margin: 1.5rem;
+    }
+    @media ${CreatingResponse.CreatingRoomTheme.SEMISS} {
+      width: 8.4rem;
+      height: 8.4rem;
+      margin: 1.1rem;
+    }
+    @media ${CreatingResponse.CreatingRoomTheme.TabletSEMIS} {
+      width: 7.5rem;
+      height: 7.5rem;
+      margin: 1.1rem;
+    }
   }
   > div > img {
     height: 12rem;
     width: 12rem;
+    @media ${CreatingResponse.CreatingRoomTheme.SEMIML} {
+      width: 10rem;
+      height: 10rem;
+    }
+    @media ${CreatingResponse.CreatingRoomTheme.SSEMIM} {
+      width: 9rem;
+      height: 9rem;
+    }
+    @media ${CreatingResponse.CreatingRoomTheme.TabletS} {
+      width: 8.8rem;
+      height: 8.8rem;
+    }
   }
   > div > label {
     font-size: 2.5rem;
     color: #fff;
     position: absolute;
     bottom: 2rem;
+    @media ${CreatingResponse.CreatingRoomTheme.SSEMIM} {
+      bottom: 1.2rem;
+    }
+    @media ${CreatingResponse.CreatingRoomTheme.SEMISS} {
+      bottom: 1rem;
+    }
+    @media ${CreatingResponse.CreatingRoomTheme.TabletSEMIS} {
+      bottom: 0.5rem;
+    }
   }
   > div:hover {
     background-color: rgba(255, 255, 255, 0.2);
@@ -236,6 +360,18 @@ const UIContainer = styled.div`
       position: relative;
       top: -0.4em;
     }
+    @media screen and (min-width: 1060px) and (max-width: 1250px) {
+      width: 21rem;
+    }
+    @media screen and (min-width: 940px) and (max-width: 1060px) {
+      width: 18rem;
+    }
+    @media screen and (min-width: 850px) and (max-width: 940px) {
+      width: 15rem;
+    }
+    @media ${CreatingResponse.CreatingRoomTheme.TabletTiny} {
+      width: 13rem;
+    }
   }
   > div:nth-child(1) {
     position: relative;
@@ -260,7 +396,18 @@ const UIContainer = styled.div`
       padding: 0.3em;
       margin-right: 2rem;
       margin-left: 2rem;
+      @media ${CreatingResponse.CreatingRoomTheme.SM} {
+        height: 1.3em;
+        margin-right: 1rem;
+        margin-left: 1rem;
+      }
+      @media ${CreatingResponse.CreatingRoomTheme.TabletS} {
+        height: 1.3em;
+        margin-right: 1rem;
+        margin-left: 1rem;
+      }
     }
+
     > .Personnels {
       width: 4vw;
       font-size: 5rem;
@@ -269,6 +416,14 @@ const UIContainer = styled.div`
       bottom: 0.1em;
       color: white;
       text-align: center;
+      @media ${CreatingResponse.CreatingRoomTheme.SM} {
+        font-size: 4rem;
+        top: 0.2rem;
+      }
+      @media ${CreatingResponse.CreatingRoomTheme.TabletS} {
+        font-size: 3.3rem;
+        top: 0.7rem;
+      }
     }
   }
   > div:nth-child(2) > .NickName {
@@ -322,8 +477,23 @@ const UIContainer = styled.div`
         background-color: transparent;
         border-radius: 50%;
         padding: 0.3em;
-        margin-right: 1rem;
-        margin-left: 1rem;
+        margin-right: 2rem;
+        margin-left: 2rem;
+        @media ${CreatingResponse.CreatingRoomTheme.SM} {
+          height: 1.3em;
+          margin-right: 1rem;
+          margin-left: 1rem;
+        }
+        @media ${CreatingResponse.CreatingRoomTheme.SEMISS} {
+          height: 1.3em;
+          margin-right: 1rem;
+          margin-left: 1rem;
+        }
+        @media ${CreatingResponse.CreatingRoomTheme.TabletSEMIS} {
+          height: 1.3em;
+          margin-right: 0.7rem;
+          margin-left: 0.7rem;
+        }
       }
       .Seconds {
         width: 4vw;
@@ -333,41 +503,19 @@ const UIContainer = styled.div`
         bottom: 0.7rem;
         color: white;
         text-align: center;
+        @media ${CreatingResponse.CreatingRoomTheme.SM} {
+          font-size: 4rem;
+          top: 0.2rem;
+        }
+        @media ${CreatingResponse.CreatingRoomTheme.TinyS} {
+          font-size: 3.6rem;
+          top: 0.7rem;
+        }
+        @media ${CreatingResponse.CreatingRoomTheme.TabletTiny} {
+          font-size: 3rem;
+          top: 1rem;
+        }
       }
-    }
-  }
-`;
-const Blackboard = styled.div`
-  box-sizing: border-box;
-  width: 70vw;
-  height: 65vh;
-  background: #1c3b3e;
-  border: 15px solid #8e5501;
-  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
-  border-radius: 20px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  position: relative;
-
-  .CreatingRoomButton {
-    width: 13rem;
-    height: 5rem;
-    margin-top: 5rem;
-    border-radius: 20rem;
-    border: 0.05rem solid #fff;
-    background-color: transparent;
-    color: #fff;
-    font-size: 3rem;
-    &::placeholder {
-      color: #fff;
-    }
-
-    &:hover {
-      background-color: rgba(255, 255, 255, 0.18);
-      cursor: pointer;
-      transform: scale(1.1);
     }
   }
 `;
@@ -388,18 +536,20 @@ const NickNameInput = styled.input`
   &::placeholder {
     color: rgba(255, 255, 255, 0.8);
   }
+  @media ${CreatingResponse.CreatingRoomTheme.SM} {
+    width: 20rem;
+    font-size: 2.1rem;
+  }
+  @media ${CreatingResponse.CreatingRoomTheme.TabletS} {
+    width: 18rem;
+    font-size: 1.7rem;
+  }
 `;
 
-const ChatterImg = styled.img`
-  position: absolute;
-  right: 2rem;
-  bottom: 3rem;
-  width: 10rem;
-`;
 const TeachingImg = styled.img`
   position: absolute;
   bottom: 0;
-  width: 45rem;
+  width: 35rem;
   z-index: 1;
 `;
 const FireExtinguisherImg = styled.img`

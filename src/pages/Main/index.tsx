@@ -26,7 +26,7 @@ const Main = () => {
     <Mains>
       <Header />
       <Blackboard>
-        <BlackboardGrid
+        <BlackboardGridImg
           className="Container"
           initial="hidden"
           animate="visible"
@@ -53,7 +53,7 @@ const Main = () => {
             src={BlackBoadrdBottomRightImg}
             alt="칠판 오른쪽 하단이미지"
           />
-        </BlackboardGrid>
+        </BlackboardGridImg>
         <div className="itemInBlackBoard">
           <AppName
             transition={{ duration: 1, times: [0.1] }}
@@ -112,7 +112,7 @@ const AppName = styled(motion.span)`
     font-size: 7rem;
   }
 `;
-const BlackboardGrid = styled(motion.div)`
+const BlackboardGridImg = styled(motion.div)`
   width: 100%;
   height: 100%;
   position: absolute;
@@ -123,27 +123,7 @@ const BlackboardGrid = styled(motion.div)`
   @media screen and (min-width: 768px) and (max-width: 1530px) {
     row-gap: calc(2rem + ((100vw - 768px) / 170) * 10);
   }
-  /* @media screen and (min-width: 1300px) and (max-width: 1400px) {
-    row-gap: 7rem;
-  }
-  @media screen and (min-width: 1200px) and (max-width: 1300px) {
-    row-gap: 10rem;
-  }
-  @media screen and (min-width: 1100px) and (max-width: 1200px) {
-    row-gap: 13rem;
-  }
-  @media screen and (min-width: 1000px) and (max-width: 1100px) {
-    row-gap: 16rem;
-  }
-  @media screen and (min-width: 900px) and (max-width: 1000px) {
-    row-gap: 19rem;
-  }
-  @media screen and (min-width: 800px) and (max-width: 900px) {
-    row-gap: 22rem;
-  }
-  @media screen and (min-width: 768px) and (max-width: 800px) {
-    row-gap: 25rem;
-  } */
+
   > .LeftTop {
     width: 20%;
   }
