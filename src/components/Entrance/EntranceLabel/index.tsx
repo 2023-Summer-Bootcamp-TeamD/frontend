@@ -3,10 +3,11 @@ import { styled } from 'styled-components';
 
 type MyComponentProps = {
   name: string;
+  htmlFor: string;
 };
 
-const Label = ({ name }: MyComponentProps) => {
-  return <LabelName>{name}</LabelName>;
+const Label = ({ name, htmlFor }: MyComponentProps) => {
+  return <LabelName htmlFor={htmlFor}>{name}</LabelName>;
 };
 
 export default Label;

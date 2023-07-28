@@ -13,6 +13,7 @@ export const USERRANK = [
   '8등급 최현정',
 ];
 
+export const InitialResult = { nickname: '', score: 0 };
 export const bestPlayerName = '서 근 재';
 
 export const crapeTalk =

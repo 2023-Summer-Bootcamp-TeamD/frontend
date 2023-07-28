@@ -29,7 +29,7 @@ export const getClient = (() => {
   };
 })();
 
-const { VITE_BASE_URL } = import.meta.env;
+//const { VITE_BASE_URL } = import.meta.env;
 
 const BASE_URL = 'http://localhost:8080/api/v1';
 
@@ -65,4 +65,4 @@ export const restFetcher = async ({
   }
 };
 
-export const QueryKeys = {};
+export const QueryKeys = { result: 'result' };

@@ -1,6 +1,6 @@
 import React, { ChangeEvent, useState } from 'react';
 import { styled } from 'styled-components';
-import chattingImg from '@/assets/Chatter.png';
+import chattingImg from '@/assets/chatter.png';
 import CompassImg from '@/assets/DoodleCompass.png';
 import FunctionMathImg from '@/assets/DoodleFunctionMath.png';
 import FireExtinguisherImg from '@/assets/FireExtinguisher.png';
@@ -69,10 +69,11 @@ const EntryRoom = () => {
         <DoodleMath />
         <DoodleChatting />
         <EntryForm onSubmit={onSubmitHandler}>
-          <Label name="입장코드" />
+          <Label name="입장코드" htmlFor="codeInput" />
           <CodeWrap>
             {Object.values(circleInput).map((value, index) => (
               <CodeInput
+                id="codeInput"
                 key={index}
                 name={`input${index + 1}`}
                 onChange={onCodehandler}
@@ -82,12 +83,13 @@ const EntryRoom = () => {
               />
             ))}
           </CodeWrap>
-          <Label name="닉네임" />
+          <Label name="닉네임" htmlFor="nickNameInput" />
           <NickNameInput
             placeholder="닉네임을 입력해주세요"
             required
             onChange={onNickNamehandler}
             maxLength={5}
+            id="nickNameInput"
             value={nickName}
           />
           <Button title="입장하기" />
