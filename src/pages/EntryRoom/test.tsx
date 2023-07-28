@@ -39,10 +39,12 @@ describe('입장 컴포넌트 테스트', () => {
     const nickNameInput = screen.getByLabelText('닉네임');
     fireEvent.change(nickNameInput, { target: { value: 'hihi' } });
 
-    fireEvent.submit(screen.getByRole('button', { name: '입장하기' }));
+    fireEvent.submit(screen.getByRole('button', { name: '입장하기' }), {});
 
     await waitFor(() =>
-      expect(mockNavigate).toHaveBeenCalledWith('/game/12345'),
+      expect(mockNavigate).toHaveBeenCalledWith('/game/', {
+        state: { nickname: 'hihi' },
+      }),
     );
   });
 });
