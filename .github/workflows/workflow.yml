@@ -1,18 +1,17 @@
 name: Frontend CI
 
-on: 
+on:
   pull_request:
     branches:
       - develop
     types: [opened, assigned, synchronize, labeled]
-
 
 jobs:
   lint-format:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        node: [16 ,14]
+        node: [16, 14]
     steps:
       - name: Checkout Commit
         uses: actions/checkout@v2
@@ -21,9 +20,9 @@ jobs:
         with:
           node-version: ${{ matrix.node }}
       - name: Install Dependencies
-        run: npm install     
+        run: npm install
       - name: Install Prettier
-        run: npm install --save-dev prettier   
+        run: npm install --save-dev prettier
       - name: Run lint
         run: |
           npm run lint
@@ -35,7 +34,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        node: [16 ,14]
+        node: [16, 14]
     steps:
       - name: Checkout Commit
         uses: actions/checkout@v2
@@ -44,11 +43,11 @@ jobs:
         with:
           node-version: ${{ matrix.node }}
       - name: Install Dependencies
-        run: npm install  
+        run: npm install
       - name: Run lint-staged
         run: |
           npm run lint-staged
-  
+
   build:
     runs-on: ubuntu-latest
     strategy:
@@ -62,9 +61,7 @@ jobs:
         with:
           node-version: ${{ matrix.node }}
       - name: Install Dependencies
-        run: npm install    
+        run: npm install
       - name: Run Build
         run: |
           npm run build
-
-   
