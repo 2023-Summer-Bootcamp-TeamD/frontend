@@ -1,6 +1,8 @@
 import React from 'react';
 import { styled } from 'styled-components';
 import { motion } from 'framer-motion';
+import Theme from '@/constants/entryRoomResponsive';
+
 type MyComponentProps = {
   title: string;
 };
@@ -28,5 +30,17 @@ const EntryButton = styled(motion.button)`
     background-color: rgba(255, 255, 255, 0.18);
     cursor: pointer;
     transform: scale(1.1);
+  }
+
+  @media ${Theme.EntryRoomPageTheme.SemiSmallSmall} {
+    width: 13rem;
+    height: 4rem;
+    font-size: 3rem;
+    margin-bottom: 8rem;
+  }
+  @media ${Theme.EntryRoomPageTheme.TabletSemiSmall} {
+    width: 10rem;
+    height: 3rem;
+    font-size: 2.8rem;
   }
 `;
