@@ -27,7 +27,7 @@ const StartButton = ({ setStart }: Props) => {
 
   useEffect(() => {
     const handleStart = ({ pressButton }: { pressButton: boolean }) => {
-      setStart(pressButton);
+      setStart(() => pressButton);
     };
     socket?.on('pressGameStartButton', handleStart);
     return () => {

@@ -1,17 +1,53 @@
-import { timeState, userListState } from '@/atom/game';
+import {
+  currentRoundState,
+  remainTimeState,
+  timeState,
+  userListState,
+} from '@/atom/game';
+import { useSocketContext } from '@/context/SocketContext';
 import { UserListType } from '@/types/gameInfo';
-import React from 'react';
-import { useRecoilValue } from 'recoil';
+import React, { useEffect, useState } from 'react';
+import { useRecoilState, useRecoilValue } from 'recoil';
 import { styled } from 'styled-components';
 
-const GameNav = () => {
+type Props = {
+  start: boolean;
+};
+
+const GameNav = ({ start }: Props) => {
+  const { socketState } = useSocketContext();
+  const { socket, isConnected } = socketState;
   const time = useRecoilValue(timeState);
   const userList = useRecoilValue(userListState);
+  const [remainTime, setRemainTime] = useRecoilState(remainTimeState);
+  const [currentRound, setCurrentRound] = useRecoilState(currentRoundState);
+
+  useEffect(() => {
+    let intervalId: NodeJS.Timeout;
+    if (start) {
+      intervalId = setInterval(() => {
+        if (remainTime > 0) {
+          setRemainTime((prevTime) => prevTime - 1);
+        }
+      }, 1000);
+    }
+
+    if (remainTime === 0 && socket && isConnected) {
+      socket.on('announceResult', (data) => {
+        console.log(data);
+      });
+    }
+
+    return () => {
+      clearInterval(intervalId);
+    };
+  }, [start, remainTime]);
+
   return (
     <Nav>
       <Clock>
         <span>남은 시간</span>
-        <span>{time}</span>
+        <span>{remainTime}</span>
       </Clock>
       <Users>
         {userList.map((user: UserListType, index) => {

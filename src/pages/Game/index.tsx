@@ -9,14 +9,14 @@ import { useSocketContext } from '@/context/SocketContext';
 import { useRecoilState, useSetRecoilState } from 'recoil';
 import {
   categoryIdState,
+  currentRoundState,
   nicknameState,
   playerMaxCountState,
-  startState,
+  remainTimeState,
   timeState,
   userListState,
   uuidState,
 } from '@/atom/game';
-import { getRoundInfoAPI } from '@/apis/game';
 import { UserListType } from '@/types/gameInfo';
 
 const Game = () => {
@@ -26,14 +26,17 @@ const Game = () => {
   const { UUID } = useParams();
   const [xy, setXY] = useState({ x: 0, y: 0 });
   const [currentFocus, setCurrentFocus] = useState(pencil);
+  const [start, setStart] = useState(false);
   const setUUID = useSetRecoilState(uuidState);
   const setNickname = useSetRecoilState(nicknameState);
   const [max_Player_num, setMax_Player_num] =
     useRecoilState(playerMaxCountState);
   const [category_id, setCategory_id] = useRecoilState(categoryIdState);
   const [time, setTime] = useRecoilState(timeState);
-  const [start, setStart] = useRecoilState(startState);
   const [userList, setUserList] = useRecoilState(userListState);
+  const [currentRound, setCurrentRound] = useRecoilState(currentRoundState);
+  const [remainTime, setRemainTime] = useRecoilState(remainTimeState);
+
   const xyHandler = (e: React.MouseEvent<HTMLDivElement>) => {
     const mouseX = e.clientX;
     const mouseY = e.clientY;
@@ -65,25 +68,72 @@ const Game = () => {
     setMax_Player_num(hostData.player_num);
     setCategory_id(hostData.category_id);
     setTime(hostData.time);
+    setRemainTime(hostData.time);
   }, []);
 
   useEffect(() => {
     if (start) {
-      (async () => {
-        const result = await getRoundInfoAPI(UUID);
-        console.log(result);
-      })();
+      console.log('startRound');
+      socket?.emit('startRound', { roomId: UUID, limitedTime: time });
     }
-  }, [start]);
+  }, [socket, isConnected, start, currentRound]);
+
+  // useEffect(() => {
+  //   if (start) {
+  //     (async () => {
+  //       const result = await getRoundInfoAPI(UUID);
+  //       console.log(result);
+  //     })();
+  //   }
+  // }, [start]);
+
+  useEffect(() => {
+    console.log('sockethi');
+    if (socket && isConnected) {
+      console.log('sadkkfk4k4');
+      socket.on('startRoundTimer', ({ data }) => {
+        console.log(data);
+      });
+      socket.on('updateScores', ({ data }) => {
+        console.log(data);
+      });
+      socket.on('announceRoundInfo', ({ data }) => {
+        console.log(data);
+      });
+      socket.on('announceResult', ({ data }) => {
+        console.log(data);
+      });
+      return () => {
+        if (socket && isConnected) {
+          socket.off('startRoundTimer');
+          socket.off('updateScores');
+          socket.off('announceRoundInfo');
+          socket.off('announceResult');
+        }
+      };
+    }
+  }, [socket, isConnected]);
+
+  useEffect(() => {
+    if (currentRound > max_Player_num) {
+      socket?.on('endGame', (data) => {
+        console.log(data);
+      });
+    }
+  }, [socket, isConnected]);
 
   return (
     <GamePage onMouseMove={xyHandler}>
       <Nav>
-        <GameNav />
+        <GameNav start={start} />
       </Nav>
       <Section>
         <div>
-          <GameBoard setCurrentFocus={setCurrentFocus} />
+          <GameBoard
+            start={start}
+            setStart={setStart}
+            setCurrentFocus={setCurrentFocus}
+          />
           <UsersChat {...hostData} />
         </div>
       </Section>

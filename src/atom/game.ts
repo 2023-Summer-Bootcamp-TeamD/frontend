@@ -35,22 +35,17 @@ export const timeState = atom<number>({
   default: 0,
 });
 
-export const startState = atom<boolean>({
-  key: 'start',
-  default: false,
-});
-
 export const userListState = atom<UserListType[]>({
   key: 'userList',
   default: [],
 });
 
-export const gameRoundInfo = atom<GameRoundInfoType>({
-  key: 'roundInfo',
-  default: {
-    room_id: '1',
-    time: 60,
-    word: '케이크',
-    nickname: 'hello',
-  },
+export const currentRoundState = atom({
+  key: 'currentRound',
+  default: 1,
+});
+
+export const remainTimeState = atom<number>({
+  key: 'remainTime',
+  default: 0,
 });
