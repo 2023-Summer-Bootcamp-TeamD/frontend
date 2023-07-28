@@ -4,7 +4,7 @@ import { styled } from 'styled-components';
 import { useSocketContext } from '@/context/SocketContext';
 import { DrawData, HandType, SelectedColorType } from '@/types/canvas';
 import { useRecoilValue } from 'recoil';
-import { uuidState } from '@/atom/game';
+import { playerMaxCountState, uuidState } from '@/atom/game';
 
 type Props = {
   setCurrentFocus: React.Dispatch<React.SetStateAction<string>>;
@@ -22,6 +22,7 @@ const CanvasDrawingApp = ({ setCurrentFocus }: Props) => {
   const [isErasing, setIsErasing] = useState<boolean>(false);
   const [lineColor, setLineColor] = useState<string>('#ffffff');
   const [lineWidth, setLineWidth] = useState<number>(4);
+  const playerMaxCount = useRecoilValue(playerMaxCountState);
   const [isImageClicked, setIsImageClicked] = useState<boolean>(false);
   const uuid = useRecoilValue(uuidState);
 
@@ -162,7 +163,7 @@ const CanvasDrawingApp = ({ setCurrentFocus }: Props) => {
 
   return (
     <Board ref={screenShotRef}>
-      <Stage>1/5 Round</Stage>
+      <Stage>1/{playerMaxCount} Round</Stage>
       <canvas
         ref={canvasRef}
         width={675}
