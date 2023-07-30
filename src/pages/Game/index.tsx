@@ -43,7 +43,6 @@ const Game = () => {
     const mouseY = e.clientY;
     setXY({ x: mouseX, y: mouseY });
   };
-  console.log(hostData);
 
   useEffect(() => {
     if (socket && isConnected && hostData.entry_code) {
@@ -111,7 +110,7 @@ const Game = () => {
         }
       };
     }
-  }, [socket, isConnected, start]);
+  }, [start, currentRound]);
 
   //게임이 끝났을 떄
   useEffect(() => {
