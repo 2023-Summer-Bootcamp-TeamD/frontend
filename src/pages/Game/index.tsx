@@ -4,7 +4,7 @@ import GameNav from '@/components/Game/GameNav';
 import UsersChat from '@/components/Game/UsersChat';
 import { styled } from 'styled-components';
 import pencil from '@/assets/pencil.png';
-import { useLocation, useParams } from 'react-router-dom';
+import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import { useSocketContext } from '@/context/SocketContext';
 import { useRecoilState, useSetRecoilState } from 'recoil';
 import {
@@ -24,6 +24,7 @@ const Game = () => {
   const { socketState } = useSocketContext();
   const { socket, isConnected } = socketState;
   const hostData = useLocation().state;
+  const naviate = useNavigate();
   const { UUID } = useParams();
   const [xy, setXY] = useState({ x: 0, y: 0 });
   const [currentFocus, setCurrentFocus] = useState(pencil);
@@ -39,6 +40,7 @@ const Game = () => {
   const [remainTime, setRemainTime] = useRecoilState(remainTimeState);
   const [socketInitialized, setSocketInitialized] = useState(false);
   const [roundGame, setRoundGame] = useState({});
+
   const xyHandler = (e: React.MouseEvent<HTMLDivElement>) => {
     const mouseX = e.clientX;
     const mouseY = e.clientY;
@@ -102,10 +104,10 @@ const Game = () => {
         setRoundGame(data);
         console.log(data);
       });
-      socket.on('announceResult', (data) => {
-        console.log('result');
-        console.log(data);
-      });
+      // socket.on('announceResult', (data) => {
+      //   console.log('result');
+      //   console.log(data);
+      // });
       return () => {
         if (socket && isConnected) {
           socket.off('startRound');
@@ -120,12 +122,11 @@ const Game = () => {
 
   //게임이 끝났을 떄
   useEffect(() => {
-    if (currentRound > max_Player_num) {
-      socket?.on('endGame', (data) => {
-        console.log(data);
-      });
+    if (currentRound > max_Player_num && max_Player_num !== 0) {
+      alert('게임이 종료되었습니다 !');
+      naviate('/result');
     }
-  }, [socket, isConnected]);
+  }, [currentRound]);
 
   return (
     <GamePage onMouseMove={xyHandler}>

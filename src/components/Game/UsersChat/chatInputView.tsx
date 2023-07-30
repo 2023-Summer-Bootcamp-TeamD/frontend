@@ -4,6 +4,8 @@ import { styled } from 'styled-components';
 import dayjs from 'dayjs';
 import sendImg from '@/assets/sendIcon.png';
 import { useSocketContext } from '@/context/SocketContext';
+import { useSetRecoilState } from 'recoil';
+import { currentRoundState } from '@/atom/game';
 type Props = {
   chat: string;
   setChat: React.Dispatch<React.SetStateAction<string>>;
@@ -17,7 +19,7 @@ const ChatInputView = ({ setChat, chat, setChatList }: Props) => {
 
   const { socketState } = useSocketContext();
   const { socket, isConnected } = socketState;
-
+  const setCurrentRound = useSetRecoilState(currentRoundState);
   useEffect(() => {
     if (socket && isConnected) {
       // 서버로부터 메시지를 받았을 때의 처리
@@ -31,6 +33,11 @@ const ChatInputView = ({ setChat, chat, setChatList }: Props) => {
             date: dayjs().format('HH:mm'),
           },
         ]);
+      });
+      socket.on('announceResult', (data) => {
+        alert('정답');
+        console.log('정답');
+        setCurrentRound((pre) => pre + 1);
       });
     }
     return () => {
