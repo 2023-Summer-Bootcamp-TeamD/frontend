@@ -12,13 +12,11 @@ import { RecoilRoot } from 'recoil';
 // }
 const socketUrl = 'http://localhost:8080';
 ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
-  <React.StrictMode>
-    <RecoilRoot>
-      <BrowserRouter>
-        <SocketProvider url={socketUrl}>
-          <App />
-        </SocketProvider>
-      </BrowserRouter>
-    </RecoilRoot>
-  </React.StrictMode>,
+  <RecoilRoot>
+    <BrowserRouter>
+      <SocketProvider url={socketUrl}>
+        <App />
+      </SocketProvider>
+    </BrowserRouter>
+  </RecoilRoot>,
 );

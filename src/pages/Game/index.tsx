@@ -36,7 +36,7 @@ const Game = () => {
   const [userList, setUserList] = useRecoilState(userListState);
   const [currentRound, setCurrentRound] = useRecoilState(currentRoundState);
   const [remainTime, setRemainTime] = useRecoilState(remainTimeState);
-
+  const [socketInitialized, setSocketInitialized] = useState(false);
   const xyHandler = (e: React.MouseEvent<HTMLDivElement>) => {
     const mouseX = e.clientX;
     const mouseY = e.clientY;
@@ -44,24 +44,29 @@ const Game = () => {
   };
 
   useEffect(() => {
-    if (socket && isConnected) {
+    if (socket && isConnected && hostData.entry_code) {
+      socket.emit('createRoom', UUID);
+    }
+  }, []);
+
+  //방 생성하기
+  useEffect(() => {
+    if (socket && isConnected && !socketInitialized) {
       //방장만 호출
-      if (hostData.entry_code) {
-        socket.emit('createRoom', UUID);
-      }
       socket.emit('createUser', { nickname: hostData.nickname, roomId: UUID });
       socket.on('updateUserInfo', (data: UserListType) => {
         setUserList((prevArray) => [...prevArray, data]);
       });
     }
-
+    setSocketInitialized(true);
     return () => {
       socket?.off('createRoom');
       socket?.off('createUser');
       socket?.off('updateUserInfo');
     };
-  }, [socket, isConnected, hostData.nickname, UUID]);
+  }, []);
 
+  //game 정보 가져오기
   useEffect(() => {
     if (UUID) setUUID(UUID);
     setNickname(hostData.nickname);
@@ -71,40 +76,27 @@ const Game = () => {
     setRemainTime(hostData.time);
   }, []);
 
+  //라운드 시작 시
   useEffect(() => {
-    if (start) {
-      console.log('startRound');
+    if (socket && isConnected && start) {
       socket?.emit('startRound', { roomId: UUID, limitedTime: time });
-    }
-  }, [socket, isConnected, start, currentRound]);
-
-  // useEffect(() => {
-  //   if (start) {
-  //     (async () => {
-  //       const result = await getRoundInfoAPI(UUID);
-  //       console.log(result);
-  //     })();
-  //   }
-  // }, [start]);
-
-  useEffect(() => {
-    console.log('sockethi');
-    if (socket && isConnected) {
-      console.log('sadkkfk4k4');
-      socket.on('startRoundTimer', ({ data }) => {
+      socket.on('startRoundTimer', (data) => {
         console.log(data);
       });
-      socket.on('updateScores', ({ data }) => {
+      socket.on('updateScores', (data) => {
         console.log(data);
       });
-      socket.on('announceRoundInfo', ({ data }) => {
+      socket.on('announceRoundInfo', (data) => {
+        console.log('x');
         console.log(data);
       });
-      socket.on('announceResult', ({ data }) => {
+      socket.on('announceResult', (data) => {
+        console.log('result');
         console.log(data);
       });
       return () => {
         if (socket && isConnected) {
+          socket.off('startRound');
           socket.off('startRoundTimer');
           socket.off('updateScores');
           socket.off('announceRoundInfo');
@@ -112,8 +104,9 @@ const Game = () => {
         }
       };
     }
-  }, [socket, isConnected]);
+  }, [socket, isConnected, start]);
 
+  //게임이 끝났을 떄
   useEffect(() => {
     if (currentRound > max_Player_num) {
       socket?.on('endGame', (data) => {
