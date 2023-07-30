@@ -1,4 +1,8 @@
-import { GameRoundInfoType, UserListType } from '@/types/gameInfo';
+import {
+  GameRoundInfoType,
+  RoundGameType,
+  UserListType,
+} from '@/types/gameInfo';
 import { atom } from 'recoil';
 
 export const playerMaxCountState = atom<number>({
@@ -47,5 +51,14 @@ export const currentRoundState = atom({
 
 export const remainTimeState = atom<number>({
   key: 'remainTime',
-  default: 0,
+  default: 99,
+});
+
+export const roundGameState = atom<RoundGameType>({
+  key: 'roundGameAtom',
+  default: {
+    drawer: '',
+    round: 0,
+    word: '',
+  },
 });

@@ -4,7 +4,7 @@ import { styled } from 'styled-components';
 import { useSocketContext } from '@/context/SocketContext';
 import { DrawData, HandType, SelectedColorType } from '@/types/canvas';
 import { useRecoilValue } from 'recoil';
-import { playerMaxCountState, uuidState } from '@/atom/game';
+import { currentRoundState, playerMaxCountState, uuidState } from '@/atom/game';
 
 type Props = {
   setCurrentFocus: React.Dispatch<React.SetStateAction<string>>;
@@ -25,6 +25,7 @@ const CanvasDrawingApp = ({ setCurrentFocus }: Props) => {
   const playerMaxCount = useRecoilValue(playerMaxCountState);
   const [isImageClicked, setIsImageClicked] = useState<boolean>(false);
   const uuid = useRecoilValue(uuidState);
+  const currentRound = useRecoilValue(currentRoundState);
 
   //그리기 시작
   const startDrawing = (event: React.MouseEvent<HTMLCanvasElement>) => {
@@ -163,7 +164,9 @@ const CanvasDrawingApp = ({ setCurrentFocus }: Props) => {
 
   return (
     <Board ref={screenShotRef}>
-      <Stage>1/{playerMaxCount} Round</Stage>
+      <Stage>
+        {currentRound}/{playerMaxCount} Round
+      </Stage>
       <canvas
         ref={canvasRef}
         width={675}

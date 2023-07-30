@@ -38,6 +38,7 @@ const Game = () => {
   const [currentRound, setCurrentRound] = useRecoilState(currentRoundState);
   const [remainTime, setRemainTime] = useRecoilState(remainTimeState);
   const [socketInitialized, setSocketInitialized] = useState(false);
+  const [roundGame, setRoundGame] = useState({});
   const xyHandler = (e: React.MouseEvent<HTMLDivElement>) => {
     const mouseX = e.clientX;
     const mouseY = e.clientY;
@@ -74,32 +75,37 @@ const Game = () => {
     setMax_Player_num(hostData.player_num);
     setCategory_id(hostData.category_id);
     setTime(hostData.time);
-    setRemainTime(hostData.time);
   }, []);
 
-  //라운드 시작 시
+  //방장만 startRound 실행하게
   useDidMountEffect(() => {
-    if (socket && isConnected && start) {
+    if (socket && isConnected && start && hostData.entry_code) {
       socket?.emit('startRound', {
         roomId: UUID,
         limitedTime: time,
         category_id: hostData.category_id,
       });
+    }
+  }, [start, currentRound]);
+
+  //라운드 시작 시
+  useDidMountEffect(() => {
+    if (socket && isConnected && start) {
       socket.on('startRoundTimer', (data) => {
-        console.log(data);
+        setRemainTime(Math.floor((data.endTime - data.startTime) / 1000));
       });
+
       socket.on('updateScores', (data) => {
         console.log(data);
       });
       socket.on('announceRoundInfo', (data) => {
-        console.log('x');
+        setRoundGame(data);
         console.log(data);
       });
       socket.on('announceResult', (data) => {
         console.log('result');
         console.log(data);
       });
-      console.log('실행');
       return () => {
         if (socket && isConnected) {
           socket.off('startRound');

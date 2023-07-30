@@ -33,7 +33,7 @@ const GameNav = ({ start }: Props) => {
     }
 
     if (remainTime === 0 && socket && isConnected) {
-      socket.on('announceResult', (data) => {
+      socket.on('endGame1', (data) => {
         console.log(data);
       });
     }
@@ -41,13 +41,13 @@ const GameNav = ({ start }: Props) => {
     return () => {
       clearInterval(intervalId);
     };
-  }, [start, remainTime]);
+  }, [socket, isConnected, start, remainTime]);
 
   return (
     <Nav>
       <Clock>
         <span>남은 시간</span>
-        <span>{remainTime}</span>
+        <span>{remainTime > 60 ? '' : remainTime}</span>
       </Clock>
       <Users>
         {userList.map((user: UserListType, index) => {
