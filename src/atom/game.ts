@@ -62,3 +62,8 @@ export const roundGameState = atom<RoundGameType>({
     word: '',
   },
 });
+
+export const runStopTimerState = atom<boolean>({
+  key: 'runStop',
+  default: true,
+});

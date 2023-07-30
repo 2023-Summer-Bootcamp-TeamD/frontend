@@ -1,12 +1,12 @@
 import {
   currentRoundState,
   remainTimeState,
-  timeState,
   userListState,
+  runStopTimerState,
 } from '@/atom/game';
 import { useSocketContext } from '@/context/SocketContext';
 import { UserListType } from '@/types/gameInfo';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { useRecoilState, useRecoilValue } from 'recoil';
 import { styled } from 'styled-components';
 
@@ -17,14 +17,14 @@ type Props = {
 const GameNav = ({ start }: Props) => {
   const { socketState } = useSocketContext();
   const { socket, isConnected } = socketState;
-  const time = useRecoilValue(timeState);
   const userList = useRecoilValue(userListState);
   const [remainTime, setRemainTime] = useRecoilState(remainTimeState);
   const [currentRound, setCurrentRound] = useRecoilState(currentRoundState);
+  const [stop, setStop] = useRecoilState(runStopTimerState);
 
   useEffect(() => {
     let intervalId: NodeJS.Timeout;
-    if (start) {
+    if (start && stop) {
       intervalId = setInterval(() => {
         if (remainTime > 0) {
           setRemainTime((prevTime) => prevTime - 1);
@@ -33,9 +33,9 @@ const GameNav = ({ start }: Props) => {
     }
 
     if (remainTime === 0 && socket && isConnected) {
-      socket.on('endGame1', (data) => {
-        console.log(data);
-      });
+      setStop(false);
+      alert('시간 초과되었습니다 !');
+      setCurrentRound((pre) => pre + 1);
     }
 
     return () => {

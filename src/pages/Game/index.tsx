@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import GameBoard from '@/components/Game/GameBoard';
 import GameNav from '@/components/Game/GameNav';
 import UsersChat from '@/components/Game/UsersChat';
-import { styled } from 'styled-components';
+import { keyframes, styled } from 'styled-components';
 import pencil from '@/assets/pencil.png';
 import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import { useSocketContext } from '@/context/SocketContext';
@@ -19,6 +19,7 @@ import {
 } from '@/atom/game';
 import { UserListType } from '@/types/gameInfo';
 import useDidMountEffect from '@/hooks/useDidMountEffect';
+import { WAVETEXT } from '@/constants/roundInfo';
 
 const Game = () => {
   const { socketState } = useSocketContext();
@@ -135,11 +136,24 @@ const Game = () => {
       </Nav>
       <Section>
         <div>
-          <GameBoard
-            start={start}
-            setStart={setStart}
-            setCurrentFocus={setCurrentFocus}
-          />
+          <div>
+            <GameBoard
+              start={start}
+              setStart={setStart}
+              setCurrentFocus={setCurrentFocus}
+            />
+            <DrawingUser>
+              {WAVETEXT.split('').map((char, index) => (
+                <WaveText
+                  key={index}
+                  style={{ animationDelay: `${index * 0.1}s` }}
+                >
+                  {char}
+                </WaveText>
+              ))}
+            </DrawingUser>
+          </div>
+
           <UsersChat {...hostData} />
         </div>
       </Section>
@@ -158,7 +172,7 @@ export default Game;
 
 const GamePage = styled.div`
   width: 100vw;
-  height: 100vh;
+  height: 100%;
   background-image: linear-gradient(to bottom, #faf1e5 60vh, #c9cb81 40vh);
 `;
 
@@ -182,6 +196,28 @@ const Section = styled.section`
     padding-top: 3rem;
     z-index: 2;
   }
+`;
+
+const waveAnimation = keyframes`
+  0%,40%,100% {
+    transform: translateY(0)
+  }
+  20% {
+    transform: translateY(-10px)
+  }
+`;
+
+const DrawingUser = styled.div`
+  text-align: center;
+  margin-top: 1rem;
+`;
+
+const WaveText = styled.span`
+  font-size: 4.5rem;
+  display: inline-block;
+  margin-right: 0.8rem;
+  margin-top: 1rem;
+  animation: ${waveAnimation} 1.5s cubic-bezier(0.36, 0.45, 0.63, 0.53) infinite;
 `;
 
 const Cursor = styled.img<{ xy: { x: number; y: number } }>`
