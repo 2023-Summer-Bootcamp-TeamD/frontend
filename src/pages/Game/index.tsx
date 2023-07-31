@@ -57,6 +57,10 @@ const Game = () => {
     if (socket && isConnected && hostData.entry_code) {
       socket.emit('createRoom', UUID);
     }
+
+    return () => {
+      socket?.off('createRoom');
+    };
   }, []);
 
   //방 생성하기
@@ -93,6 +97,9 @@ const Game = () => {
         category_id: hostData.category_id,
       });
     }
+    return () => {
+      socket?.off('startRound');
+    };
   }, [start, currentRound]);
 
   //라운드 시작 시
@@ -103,9 +110,13 @@ const Game = () => {
       });
 
       socket.on('updateScores', (data) => {
-        console.log(data.scores);
         console.log(userList);
-        // setUserList(data);
+
+        const result = Object.entries(data.scores).map(([key, score]) => ({
+          nickname: key,
+          score: score,
+        }));
+        console.log(result);
       });
 
       socket.on('announceRoundInfo', (data) => {
