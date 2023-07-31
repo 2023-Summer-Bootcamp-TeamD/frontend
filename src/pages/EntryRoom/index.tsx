@@ -26,6 +26,8 @@ const EntryRoom = () => {
   });
   const [nickname, setNickName] = useState<string>('');
   const [uuid, setUUID] = useState('');
+  const [apiRestrict, setApiRestrict] = useState(false);
+
   const onCodehandler = (e: ChangeEvent<HTMLInputElement>) => {
     setCircleInput({
       ...circleInput,
@@ -46,7 +48,10 @@ const EntryRoom = () => {
   const postNickName = async (nickNameData: NickNameType) => {
     const uuid: string = Object.values(circleInput).join('');
     setUUID(uuid);
-    return await entryAPI(uuid, nickNameData);
+    if (!apiRestrict) {
+      setApiRestrict(true);
+      return await entryAPI(uuid, nickNameData);
+    }
   };
 
   const { mutate } = useMutation(postNickName, {
