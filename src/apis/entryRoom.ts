@@ -7,9 +7,9 @@ export const entryAPI = async (uuid: string, nickNameData: NickNameType) => {
       path: `/rooms/users/${uuid}`,
       body: nickNameData,
     });
-
     return response;
   } catch (e) {
+    console.log(e);
     alert('연동 에러');
   }
 };

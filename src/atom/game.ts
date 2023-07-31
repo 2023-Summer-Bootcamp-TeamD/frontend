@@ -1,8 +1,4 @@
-import {
-  GameRoundInfoType,
-  RoundGameType,
-  UserListType,
-} from '@/types/gameInfo';
+import { RoundGameType, UserListType } from '@/types/gameInfo';
 import { atom } from 'recoil';
 
 export const playerMaxCountState = atom<number>({

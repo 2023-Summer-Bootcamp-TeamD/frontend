@@ -4,7 +4,14 @@ import { styled } from 'styled-components';
 import { useSocketContext } from '@/context/SocketContext';
 import { DrawData, HandType, SelectedColorType } from '@/types/canvas';
 import { useRecoilValue } from 'recoil';
-import { currentRoundState, playerMaxCountState, uuidState } from '@/atom/game';
+import {
+  currentRoundState,
+  nicknameState,
+  playerMaxCountState,
+  roundGameState,
+  userListState,
+  uuidState,
+} from '@/atom/game';
 
 type Props = {
   setCurrentFocus: React.Dispatch<React.SetStateAction<string>>;
@@ -26,6 +33,9 @@ const CanvasDrawingApp = ({ setCurrentFocus }: Props) => {
   const [isImageClicked, setIsImageClicked] = useState<boolean>(false);
   const uuid = useRecoilValue(uuidState);
   const currentRound = useRecoilValue(currentRoundState);
+  const userList = useRecoilValue(userListState);
+  const roundGameInfo = useRecoilValue(roundGameState);
+  const nickname = useRecoilValue(nicknameState);
 
   //그리기 시작
   const startDrawing = (event: React.MouseEvent<HTMLCanvasElement>) => {
@@ -38,6 +48,10 @@ const CanvasDrawingApp = ({ setCurrentFocus }: Props) => {
   //그리기 기능
   const draw = (event: React.MouseEvent<HTMLCanvasElement>) => {
     if (!isDrawing || !context) return;
+
+    //그리는 사람이 아니라면 그리기 제한하기
+    if (roundGameInfo.drawer !== nickname) return;
+
     const { offsetX, offsetY } = event.nativeEvent;
     context.lineJoin = 'round';
     context.lineCap = 'round';
@@ -74,6 +88,8 @@ const CanvasDrawingApp = ({ setCurrentFocus }: Props) => {
 
   //전체 지우기
   const clearCanvas = () => {
+    if (roundGameInfo.drawer !== nickname) return;
+
     if (context) {
       context.clearRect(0, 0, context.canvas.width, context.canvas.height);
       socket?.emit('canvasEraseAll', uuid);
@@ -97,7 +113,7 @@ const CanvasDrawingApp = ({ setCurrentFocus }: Props) => {
     return () => {
       socket?.off('canvasEraseAll', handleCanvasEraseAll);
     };
-  }, [socket]);
+  }, [socket, currentRound]);
 
   //서버에서 그리기 가져오기
   useEffect(() => {
@@ -167,6 +183,7 @@ const CanvasDrawingApp = ({ setCurrentFocus }: Props) => {
       <Stage>
         {currentRound}/{playerMaxCount} Round
       </Stage>
+      <Result>{roundGameInfo.word && `정답 : ${roundGameInfo.word}`}</Result>
       <canvas
         ref={canvasRef}
         width={675}
@@ -198,4 +215,13 @@ const Stage = styled.div`
   position: absolute;
   right: 2rem;
   font-size: 3rem;
+`;
+
+const Result = styled.div`
+  position: absolute;
+  top: 2rem;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 3rem;
+  color: white;
 `;

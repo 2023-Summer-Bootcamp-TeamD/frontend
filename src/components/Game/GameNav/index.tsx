@@ -3,6 +3,9 @@ import {
   remainTimeState,
   userListState,
   runStopTimerState,
+  roundGameState,
+  nicknameState,
+  uuidState,
 } from '@/atom/game';
 import { useSocketContext } from '@/context/SocketContext';
 import { UserListType } from '@/types/gameInfo';
@@ -20,21 +23,26 @@ const GameNav = ({ start }: Props) => {
   const userList = useRecoilValue(userListState);
   const [remainTime, setRemainTime] = useRecoilState(remainTimeState);
   const [currentRound, setCurrentRound] = useRecoilState(currentRoundState);
-  const [stop, setStop] = useRecoilState(runStopTimerState);
+  const roundGameInfo = useRecoilValue(roundGameState);
+  const nickname = useRecoilValue(nicknameState);
+  const uuid = useRecoilValue(uuidState);
+
+  useEffect(() => {
+    console.log(userList);
+  }, [start, currentRound]);
 
   useEffect(() => {
     let intervalId: NodeJS.Timeout;
-    if (start && stop) {
+    if (start) {
       intervalId = setInterval(() => {
-        if (remainTime > 0) {
+        if (remainTime >= 0) {
           setRemainTime((prevTime) => prevTime - 1);
         }
       }, 1000);
     }
 
-    if (remainTime === 0 && socket && isConnected) {
-      setStop(false);
-      alert('시간 초과되었습니다 !');
+    if (remainTime === -1 && socket && isConnected) {
+      socket?.emit('canvasEraseAll', uuid);
       setCurrentRound((pre) => pre + 1);
     }
 
@@ -50,14 +58,19 @@ const GameNav = ({ start }: Props) => {
         <span>{remainTime > 60 ? '' : remainTime}</span>
       </Clock>
       <Users>
-        {userList.map((user: UserListType, index) => {
-          return (
-            <User key={index}>
-              <div>{user.nickname}</div>
-              <div>{user.score}</div>
-            </User>
-          );
-        })}
+        {start &&
+          userList?.map((user: UserListType, index) => {
+            return (
+              <User
+                nickname={nickname}
+                drawer={roundGameInfo.drawer}
+                key={index}
+              >
+                <div>{user.nickname}</div>
+                <div>{user.score}</div>
+              </User>
+            );
+          })}
       </Users>
     </Nav>
   );
@@ -109,7 +122,7 @@ const Users = styled.div`
   min-width: 475px;
 `;
 
-const User = styled.div`
+const User = styled.div<{ nickname: string; drawer: string }>`
   display: flex;
   flex-direction: column;
   align-items: center;

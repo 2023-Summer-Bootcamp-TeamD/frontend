@@ -6,8 +6,7 @@ export type GameRoundInfoType = {
 };
 
 export type UserListType = {
-  nickname: string;
-  score: number;
+  [key: string]: number;
 };
 
 export type RoundGameType = {

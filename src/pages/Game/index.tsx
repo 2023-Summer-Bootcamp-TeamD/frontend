@@ -13,13 +13,13 @@ import {
   nicknameState,
   playerMaxCountState,
   remainTimeState,
+  roundGameState,
   timeState,
   userListState,
   uuidState,
 } from '@/atom/game';
 import { UserListType } from '@/types/gameInfo';
 import useDidMountEffect from '@/hooks/useDidMountEffect';
-import { WAVETEXT } from '@/constants/roundInfo';
 
 const Game = () => {
   const { socketState } = useSocketContext();
@@ -31,7 +31,7 @@ const Game = () => {
   const [currentFocus, setCurrentFocus] = useState(pencil);
   const [start, setStart] = useState(false);
   const setUUID = useSetRecoilState(uuidState);
-  const setNickname = useSetRecoilState(nicknameState);
+  const [nickname, setNickname] = useRecoilState(nicknameState);
   const [max_Player_num, setMax_Player_num] =
     useRecoilState(playerMaxCountState);
   const [category_id, setCategory_id] = useRecoilState(categoryIdState);
@@ -40,7 +40,9 @@ const Game = () => {
   const [currentRound, setCurrentRound] = useRecoilState(currentRoundState);
   const [remainTime, setRemainTime] = useRecoilState(remainTimeState);
   const [socketInitialized, setSocketInitialized] = useState(false);
-  const [roundGame, setRoundGame] = useState({});
+  const [roundGame, setRoundGame] = useRecoilState(roundGameState);
+
+  const WAVETEXT = `${nickname}님이 그림을 그리고 있어요 ~!`;
 
   const xyHandler = (e: React.MouseEvent<HTMLDivElement>) => {
     const mouseX = e.clientX;
@@ -65,7 +67,6 @@ const Game = () => {
     }
     setSocketInitialized(true);
     return () => {
-      socket?.off('createRoom');
       socket?.off('createUser');
       socket?.off('updateUserInfo');
     };
@@ -98,24 +99,20 @@ const Game = () => {
         setRemainTime(Math.floor((data.endTime - data.startTime) / 1000));
       });
 
-      socket.on('updateScores', (data) => {
-        console.log(data);
+      socket.on('updateScores', ({ data }) => {
+        console.log('updateScore' + data);
+        // setUserList(data);
       });
+
       socket.on('announceRoundInfo', (data) => {
         setRoundGame(data);
-        console.log(data);
       });
-      // socket.on('announceResult', (data) => {
-      //   console.log('result');
-      //   console.log(data);
-      // });
+
       return () => {
         if (socket && isConnected) {
-          socket.off('startRound');
           socket.off('startRoundTimer');
           socket.off('updateScores');
           socket.off('announceRoundInfo');
-          socket.off('announceResult');
         }
       };
     }
@@ -143,14 +140,15 @@ const Game = () => {
               setCurrentFocus={setCurrentFocus}
             />
             <DrawingUser>
-              {WAVETEXT.split('').map((char, index) => (
-                <WaveText
-                  key={index}
-                  style={{ animationDelay: `${index * 0.1}s` }}
-                >
-                  {char}
-                </WaveText>
-              ))}
+              {start &&
+                WAVETEXT.split('').map((char, index) => (
+                  <WaveText
+                    key={index}
+                    style={{ animationDelay: `${index * 0.1}s` }}
+                  >
+                    {char}
+                  </WaveText>
+                ))}
             </DrawingUser>
           </div>
 
