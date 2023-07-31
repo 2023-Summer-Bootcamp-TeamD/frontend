@@ -13,9 +13,14 @@ import { AxiosError } from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { CircleInputType, NickNameType } from '@/types/entryRoom';
 import { entryAPI } from '@/apis/entryRoom';
+import Theme from '@/constants/entryRoomResponsive';
+import { motion } from 'framer-motion';
+import Loading_entry from '@/assets/Loading_entry.png';
 
 const EntryRoom = () => {
   const navigate = useNavigate();
+
+  const [isLoading, setIsLoading] = useState(false);
 
   const [circleInput, setCircleInput] = useState<CircleInputType>({
     input1: '',
@@ -46,12 +51,12 @@ const EntryRoom = () => {
     });
   };
   const postNickName = async (nickNameData: NickNameType) => {
+    setIsLoading(true);
     const uuid: string = Object.values(circleInput).join('');
     setUUID(uuid);
-    if (!apiRestrict) {
-      setApiRestrict(true);
-      return await entryAPI(uuid, nickNameData);
-    }
+    const res = await entryAPI(uuid, nickNameData);
+    setIsLoading(false);
+    return res;
   };
 
   const { mutate } = useMutation(postNickName, {
@@ -71,6 +76,22 @@ const EntryRoom = () => {
       <FireExtinguisher />
       <Teaching />
       <Blackboard>
+        {isLoading && (
+          <motion.img
+            key={Loading_entry}
+            src={Loading_entry}
+            transition={{ duration: 3, times: [0.5] }}
+            animate={{ scale: [1, 1.3, 1.1, 1.2, 1.1] }}
+            style={{
+              position: 'absolute',
+              zIndex: 3,
+              width: '40rem',
+              marginLeft: 'auto',
+              marginTop: 'auto',
+            }}
+            alt="로딩 이미지"
+          />
+        )}
         <DoodleCompass />
         <DoodleMath />
         <DoodleChatting />
@@ -120,6 +141,12 @@ const FireExtinguisher = styled.img.attrs({
   right: 2rem;
   bottom: 0;
   width: 30rem;
+  @media ${Theme.EntryRoomPageTheme.SemiSmallSemiMedium} {
+    width: 23rem;
+  }
+  @media ${Theme.EntryRoomPageTheme.TabletSemiSmall} {
+    width: 20rem;
+  }
 `;
 const Teaching = styled.img.attrs({
   src: `${TeachingImg}`,
@@ -128,6 +155,13 @@ const Teaching = styled.img.attrs({
   bottom: 0;
   width: 45rem;
   z-index: 1;
+
+  @media ${Theme.EntryRoomPageTheme.SemiSmallSemiMedium} {
+    display: none;
+  }
+  @media ${Theme.EntryRoomPageTheme.TabletSemiSmall} {
+    display: none;
+  }
 `;
 
 const Blackboard = styled.div`
@@ -151,6 +185,14 @@ const DoodleCompass = styled.img.attrs({
   left: 12rem;
   top: 2rem;
   width: 6rem;
+  @media ${Theme.EntryRoomPageTheme.SemiSmallSemiMedium} {
+    left: 10rem;
+    width: 5rem;
+  }
+  @media ${Theme.EntryRoomPageTheme.TabletSemiSmall} {
+    left: 7rem;
+    width: 4rem;
+  }
 `;
 
 const DoodleMath = styled.img.attrs({
@@ -160,6 +202,12 @@ const DoodleMath = styled.img.attrs({
   left: 1rem;
   top: 0.7rem;
   width: 10rem;
+  @media ${Theme.EntryRoomPageTheme.SemiSmallSemiMedium} {
+    width: 9rem;
+  }
+  @media ${Theme.EntryRoomPageTheme.TabletSemiSmall} {
+    width: 8rem;
+  }
 `;
 
 const DoodleChatting = styled.img.attrs({
@@ -169,6 +217,12 @@ const DoodleChatting = styled.img.attrs({
   right: 2rem;
   bottom: 3rem;
   width: 10rem;
+  @media ${Theme.EntryRoomPageTheme.SemiSmallSemiMedium} {
+    width: 8rem;
+  }
+  @media ${Theme.EntryRoomPageTheme.TabletSemiSmall} {
+    width: 6rem;
+  }
 `;
 
 const EntryForm = styled.form`
@@ -183,6 +237,12 @@ const CodeWrap = styled.div`
   display: flex;
   justify-content: space-evenly;
   margin-right: 2.5rem;
+  @media ${Theme.EntryRoomPageTheme.SemiSmallSemiMedium} {
+    height: 6.5rem;
+  }
+  @media ${Theme.EntryRoomPageTheme.TabletSemiSmall} {
+    height: 6rem;
+  }
 `;
 const CodeInput = styled.input`
   margin-left: 2.5rem;
@@ -197,6 +257,17 @@ const CodeInput = styled.input`
   &:focus {
     outline: none;
     box-shadow: 0px 0px 6px 2px #fff;
+  }
+
+  @media ${Theme.EntryRoomPageTheme.SemiSmallSemiMedium} {
+    width: 6.5rem;
+    margin-left: 2rem;
+    font-size: 4.5;
+  }
+  @media ${Theme.EntryRoomPageTheme.TabletSemiSmall} {
+    width: 6rem;
+    margin-left: 1.5rem;
+    font-size: 4rem;
   }
 `;
 
@@ -215,5 +286,16 @@ const NickNameInput = styled.input`
   }
   &::placeholder {
     color: rgba(255, 255, 255, 0.8);
+  }
+
+  @media ${Theme.EntryRoomPageTheme.SemiSmallSemiMedium} {
+    width: 21rem;
+    height: 3.5rem;
+    font-size: 2.3rem;
+  }
+  @media ${Theme.EntryRoomPageTheme.TabletSemiSmall} {
+    width: 18rem;
+    height: 3rem;
+    font-size: 2rem;
   }
 `;

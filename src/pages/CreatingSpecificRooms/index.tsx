@@ -13,10 +13,13 @@ import { MakeRoomType } from '@/types/creatingSpecificRooms';
 import { makeRoomAPI } from '@/apis/creatingSpecificRooms';
 import { useMutation } from '@tanstack/react-query';
 import { AxiosError } from 'axios';
+import { motion } from 'framer-motion';
+import Loading_creating from '@/assets/Loading_creating.png';
 
 const CreatingRooms = () => {
   const navigate = useNavigate();
 
+  const [isLoading, setIsLoading] = useState(false);
   const [category_id, setCategory_id] = useState(1);
   const [nickname, setNickname] = useState('');
   const [personnel, setPersonnel] = useState(2);
@@ -63,10 +66,10 @@ const CreatingRooms = () => {
   };
 
   const postGameInfo = async (data: MakeRoomType) => {
-    if (!apiRestrict) {
-      setApiRestrict(true);
-      return await makeRoomAPI(data);
-    }
+    setIsLoading(true);
+    const res = await makeRoomAPI(data);
+    setIsLoading(false);
+    return res;
   };
 
   const { mutate } = useMutation(postGameInfo, {
@@ -86,6 +89,22 @@ const CreatingRooms = () => {
       <TeachingImg src={Teaching} alt="교탁" />
       <FireExtinguisherImg src={FireExtinguisher} alt="소화기" />
       <Blackboard>
+        {isLoading && (
+          <motion.img
+            key={Loading_creating}
+            src={Loading_creating}
+            transition={{ duration: 3, times: [0.5] }}
+            animate={{ scale: [1, 1.3, 1.1, 1.2, 1.1] }}
+            style={{
+              position: 'absolute',
+              zIndex: 3,
+              width: '40rem',
+              marginLeft: 'auto',
+              marginTop: 'auto',
+            }}
+            alt="로딩 이미지"
+          />
+        )}
         <DoodleContainer>
           <img
             className="FunctionMathImg"
