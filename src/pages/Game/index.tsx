@@ -41,14 +41,17 @@ const Game = () => {
   const [remainTime, setRemainTime] = useRecoilState(remainTimeState);
   const [socketInitialized, setSocketInitialized] = useState(false);
   const [roundGame, setRoundGame] = useRecoilState(roundGameState);
-
-  const WAVETEXT = `${nickname}님이 그림을 그리고 있어요 ~!`;
+  const [waveText, setWaveText] = useState('');
 
   const xyHandler = (e: React.MouseEvent<HTMLDivElement>) => {
     const mouseX = e.clientX;
     const mouseY = e.clientY;
     setXY({ x: mouseX, y: mouseY });
   };
+
+  useEffect(() => {
+    setWaveText(`${roundGame.drawer}님이 그림을 그리고 있어요 ~!`);
+  }, [roundGame, currentRound]);
 
   useEffect(() => {
     if (socket && isConnected && hostData.entry_code) {
@@ -99,8 +102,9 @@ const Game = () => {
         setRemainTime(Math.floor((data.endTime - data.startTime) / 1000));
       });
 
-      socket.on('updateScores', ({ data }) => {
-        console.log('updateScore' + data);
+      socket.on('updateScores', (data) => {
+        console.log(data.scores);
+        console.log(userList);
         // setUserList(data);
       });
 
@@ -121,7 +125,6 @@ const Game = () => {
   //게임이 끝났을 떄
   useEffect(() => {
     if (currentRound > max_Player_num && max_Player_num !== 0) {
-      alert('게임이 종료되었습니다 !');
       naviate('/result');
     }
   }, [currentRound]);
@@ -141,7 +144,8 @@ const Game = () => {
             />
             <DrawingUser>
               {start &&
-                WAVETEXT.split('').map((char, index) => (
+                nickname &&
+                waveText.split('').map((char, index) => (
                   <WaveText
                     key={index}
                     style={{ animationDelay: `${index * 0.1}s` }}
