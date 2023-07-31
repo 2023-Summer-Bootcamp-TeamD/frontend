@@ -14,9 +14,13 @@ import { useNavigate } from 'react-router-dom';
 import { CircleInputType, NickNameType } from '@/types/entryRoom';
 import { entryAPI } from '@/apis/entryRoom';
 import Theme from '@/constants/entryRoomResponsive';
+import { motion } from 'framer-motion';
+import Loading_entry from '@/assets/Loading_entry.png';
 
 const EntryRoom = () => {
   const navigate = useNavigate();
+
+  const [isLoading, setIsLoading] = useState(false);
 
   const [circleInput, setCircleInput] = useState<CircleInputType>({
     input1: '',
@@ -46,9 +50,12 @@ const EntryRoom = () => {
   };
 
   const postNickName = async (nickNameData: NickNameType) => {
+    setIsLoading(true);
     const uuid: string = Object.values(circleInput).join('');
     setUUID(uuid);
-    return await entryAPI(uuid, nickNameData);
+    const res = await entryAPI(uuid, nickNameData);
+    setIsLoading(false);
+    return res;
   };
 
   const { mutate } = useMutation(postNickName, {
@@ -66,6 +73,22 @@ const EntryRoom = () => {
       <FireExtinguisher />
       <Teaching />
       <Blackboard>
+        {isLoading && (
+          <motion.img
+            key={Loading_entry}
+            src={Loading_entry}
+            transition={{ duration: 3, times: [0.5] }}
+            animate={{ scale: [1, 1.3, 1.1, 1.2, 1.1] }}
+            style={{
+              position: 'absolute',
+              zIndex: 3,
+              width: '40rem',
+              marginLeft: 'auto',
+              marginTop: 'auto',
+            }}
+            alt="로딩 이미지"
+          />
+        )}
         <DoodleCompass />
         <DoodleMath />
         <DoodleChatting />

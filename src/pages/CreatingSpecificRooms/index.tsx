@@ -67,15 +67,12 @@ const CreatingRooms = () => {
   const postGameInfo = async (data: MakeRoomType) => {
     setIsLoading(true);
     const res = await makeRoomAPI(data);
-    setIsLoading(false); // Hide the loading image
+    setIsLoading(false);
     return res;
   };
 
   const { mutate } = useMutation(postGameInfo, {
     onSuccess: (data) => {
-      // if(!isLoading){
-      //   navigate(`/game/${data?.entry_code}`, { state: data });
-      // }
       navigate(`/game/${data?.entry_code}`, { state: data });
     },
     onError: (error: AxiosError) => {
