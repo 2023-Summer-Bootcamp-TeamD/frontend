@@ -13,8 +13,7 @@ import { MakeRoomType } from '@/types/creatingSpecificRooms';
 import { makeRoomAPI } from '@/apis/creatingSpecificRooms';
 import { useMutation } from '@tanstack/react-query';
 import { AxiosError } from 'axios';
-import { motion } from 'framer-motion';
-import Loading_creating from '@/assets/Loading_creating.png';
+import SpinnerBox from '@/components/SkeletonSpinner';
 
 const CreatingRooms = () => {
   const navigate = useNavigate();
@@ -89,22 +88,7 @@ const CreatingRooms = () => {
       <TeachingImg src={Teaching} alt="교탁" />
       <FireExtinguisherImg src={FireExtinguisher} alt="소화기" />
       <Blackboard>
-        {isLoading && (
-          <motion.img
-            key={Loading_creating}
-            src={Loading_creating}
-            transition={{ duration: 3, times: [0.5] }}
-            animate={{ scale: [1, 1.3, 1.1, 1.2, 1.1] }}
-            style={{
-              position: 'absolute',
-              zIndex: 3,
-              width: '40rem',
-              marginLeft: 'auto',
-              marginTop: 'auto',
-            }}
-            alt="로딩 이미지"
-          />
-        )}
+        {isLoading && <SpinnerBox />}
         <DoodleContainer>
           <img
             className="FunctionMathImg"
