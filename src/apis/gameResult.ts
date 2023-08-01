@@ -11,6 +11,7 @@ export const gameResultAPI = async (uuid: string) => {
     const response = await axios.get(`/results/${uuid}`);
     return response;
   } catch (e) {
+    console.log(e);
     alert('연동 에러');
   }
 };

@@ -1,8 +1,8 @@
 import React from 'react';
 import { styled } from 'styled-components';
 import Header from '@/common/Header';
-import BlackboardDecoInMainPage from '@/assets/BlackboardDecoInMainPage.png';
-import FireExtinguisher from '@/assets/FireExtinguisher.png';
+import BlackboardDecoInMainPage from '@/assets/blackboardDecoInMainPage.png';
+import FireExtinguisher from '@/assets/fireExtinguisher.png';
 import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
 const Main = () => {

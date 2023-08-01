@@ -1,25 +1,27 @@
 import { styled } from 'styled-components';
-import Award from '@/assets/Award.png';
-import RankingMemo from '@/assets/RankingMemo.png';
-import DrawingRoom from '@/assets/DrawingRoomIcon.png';
-import { useNavigate } from 'react-router-dom';
+import Award from '@/assets/award.png';
+import RankingMemo from '@/assets/rankingMemo.png';
+import DrawingRoom from '@/assets/drawingRoomIcon.png';
+import { useLocation, useNavigate } from 'react-router-dom';
 import wrong from '@/assets/wrong.png';
-import { DAY, USERRANK, bestPlayerName, crapeTalk } from '@/constants/rank';
+import { DAY, crapeTalk } from '@/constants/rank';
 import { useEffect, useState } from 'react';
 import { gameResultAPI } from '@/apis/gameResult';
-import GoldMedal from '@/assets/GoldMedal.png';
-import SilverMedal from '@/assets/SilverMedal.png';
-import BronzeMedal from '@/assets/BronzeMedal.png';
+import GoldMedal from '@/assets/goldMedal.png';
+import SilverMedal from '@/assets/silverMedal.png';
+import BronzeMedal from '@/assets/bronzeMedal.png';
 import { UserRankType } from '@/types/userRank';
-
-import axios from 'axios';
 
 const GameResult = () => {
   const naviagte = useNavigate();
+  const { uuid } = useLocation().state;
 
   const [bestPlayers, setBestPlayers] = useState<string>('');
   const [userRank, setUserRank] = useState<UserRankType[]>([]);
 
+  useEffect(() => {
+    console.log(uuid);
+  }, []);
   let currentRanking = 1;
   let isTiedCount = 0; // 둉졈자 수
 
@@ -47,8 +49,9 @@ const GameResult = () => {
       setBestPlayers(nameOfBestPlayers);
     }
   };
+
   useEffect(() => {
-    getGameResults('34516');
+    getGameResults(uuid);
   }, []);
 
   return (
@@ -65,7 +68,7 @@ const GameResult = () => {
       <div className="right-items">
         <Buttons onClick={goToMain}></Buttons>
         <Ranking>
-          {userRank.map((user, index) => {
+          {userRank?.map((user, index) => {
             if (index !== 0) {
               if (userRank[index - 1].score === user.score) {
                 isTiedCount++;

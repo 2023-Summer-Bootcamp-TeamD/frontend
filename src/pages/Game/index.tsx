@@ -25,7 +25,7 @@ const Game = () => {
   const { socketState } = useSocketContext();
   const { socket, isConnected } = socketState;
   const hostData = useLocation().state;
-  const naviate = useNavigate();
+  const navigate = useNavigate();
   const { UUID } = useParams();
   const [xy, setXY] = useState({ x: 0, y: 0 });
   const [currentFocus, setCurrentFocus] = useState(pencil);
@@ -134,7 +134,7 @@ const Game = () => {
   //게임이 끝났을 떄
   useEffect(() => {
     if (currentRound > max_Player_num && max_Player_num !== 0) {
-      naviate('/result');
+      navigate('/result', { state: UUID });
     }
   }, [currentRound]);
 

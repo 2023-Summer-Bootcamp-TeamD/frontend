@@ -1,6 +1,5 @@
 import React from 'react';
 import { styled } from 'styled-components';
-import user from '@/assets/blue.png';
 import { IMAGES } from '@/constants/profile';
 
 type Props = {

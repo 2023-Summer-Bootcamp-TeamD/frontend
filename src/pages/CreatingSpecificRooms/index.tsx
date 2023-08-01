@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
 import { styled } from 'styled-components';
 import { useNavigate } from 'react-router-dom';
-import Teaching from '@/assets/Teaching.png';
-import FireExtinguisher from '@/assets/FireExtinguisher.png';
-import DoodleFunctionMath from '@/assets/DoodleFunctionMath.png';
-import DoodleCompass from '@/assets/DoodleCompass.png';
-import Chatter from '@/assets/Chatter.png';
+import Teaching from '@/assets/teaching.png';
+import FireExtinguisher from '@/assets/fireExtinguisher.png';
+import DoodleFunctionMath from '@/assets/doodleFunctionMath.png';
+import DoodleCompass from '@/assets/doodleCompass.png';
+import Chatter from '@/assets/chatter.png';
 import { roomElement } from '@/constants/roomElement';
 import Header from '@/common/Header';
 import Label from '@/components/Entrance/EntranceLabel';

@@ -1,10 +1,10 @@
 import React, { ChangeEvent, useState } from 'react';
 import { styled } from 'styled-components';
-import chattingImg from '@/assets/Chatter.png';
-import CompassImg from '@/assets/DoodleCompass.png';
-import FunctionMathImg from '@/assets/DoodleFunctionMath.png';
-import FireExtinguisherImg from '@/assets/FireExtinguisher.png';
-import TeachingImg from '@/assets/Teaching.png';
+import chattingImg from '@/assets/chatter.png';
+import CompassImg from '@/assets/doodleCompass.png';
+import FunctionMathImg from '@/assets/doodleFunctionMath.png';
+import FireExtinguisherImg from '@/assets/fireExtinguisher.png';
+import TeachingImg from '@/assets/teaching.png';
 import Label from '@/components/Entrance/EntranceLabel';
 import Button from '@/components/Entrance/ EntranceButton';
 import Header from '@/common/Header';
@@ -13,7 +13,6 @@ import { AxiosError } from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { CircleInputType, NickNameType } from '@/types/entryRoom';
 import { entryAPI } from '@/apis/entryRoom';
-import Theme from '@/constants/entryRoomResponsive';
 import SpinnerBox from '@/components/SkeletonSpinner';
 
 const EntryRoom = () => {
@@ -30,7 +29,6 @@ const EntryRoom = () => {
   });
   const [nickname, setNickName] = useState<string>('');
   const [uuid, setUUID] = useState('');
-  const [apiRestrict, setApiRestrict] = useState(false);
 
   const onCodehandler = (e: ChangeEvent<HTMLInputElement>) => {
     setCircleInput({
@@ -125,12 +123,6 @@ const FireExtinguisher = styled.img.attrs({
   right: 2rem;
   bottom: 0;
   width: 30rem;
-  @media ${Theme.EntryRoomPageTheme.SemiSmallSemiMedium} {
-    width: 23rem;
-  }
-  @media ${Theme.EntryRoomPageTheme.TabletSemiSmall} {
-    width: 20rem;
-  }
 `;
 const Teaching = styled.img.attrs({
   src: `${TeachingImg}`,
@@ -139,13 +131,6 @@ const Teaching = styled.img.attrs({
   bottom: 0;
   width: 45rem;
   z-index: 1;
-
-  @media ${Theme.EntryRoomPageTheme.SemiSmallSemiMedium} {
-    display: none;
-  }
-  @media ${Theme.EntryRoomPageTheme.TabletSemiSmall} {
-    display: none;
-  }
 `;
 
 const Blackboard = styled.div`
@@ -169,14 +154,6 @@ const DoodleCompass = styled.img.attrs({
   left: 12rem;
   top: 2rem;
   width: 6rem;
-  @media ${Theme.EntryRoomPageTheme.SemiSmallSemiMedium} {
-    left: 10rem;
-    width: 5rem;
-  }
-  @media ${Theme.EntryRoomPageTheme.TabletSemiSmall} {
-    left: 7rem;
-    width: 4rem;
-  }
 `;
 
 const DoodleMath = styled.img.attrs({
@@ -186,12 +163,6 @@ const DoodleMath = styled.img.attrs({
   left: 1rem;
   top: 0.7rem;
   width: 10rem;
-  @media ${Theme.EntryRoomPageTheme.SemiSmallSemiMedium} {
-    width: 9rem;
-  }
-  @media ${Theme.EntryRoomPageTheme.TabletSemiSmall} {
-    width: 8rem;
-  }
 `;
 
 const DoodleChatting = styled.img.attrs({
@@ -201,12 +172,6 @@ const DoodleChatting = styled.img.attrs({
   right: 2rem;
   bottom: 3rem;
   width: 10rem;
-  @media ${Theme.EntryRoomPageTheme.SemiSmallSemiMedium} {
-    width: 8rem;
-  }
-  @media ${Theme.EntryRoomPageTheme.TabletSemiSmall} {
-    width: 6rem;
-  }
 `;
 
 const EntryForm = styled.form`
@@ -221,12 +186,6 @@ const CodeWrap = styled.div`
   display: flex;
   justify-content: space-evenly;
   margin-right: 2.5rem;
-  @media ${Theme.EntryRoomPageTheme.SemiSmallSemiMedium} {
-    height: 6.5rem;
-  }
-  @media ${Theme.EntryRoomPageTheme.TabletSemiSmall} {
-    height: 6rem;
-  }
 `;
 const CodeInput = styled.input`
   margin-left: 2.5rem;
@@ -241,17 +200,6 @@ const CodeInput = styled.input`
   &:focus {
     outline: none;
     box-shadow: 0px 0px 6px 2px #fff;
-  }
-
-  @media ${Theme.EntryRoomPageTheme.SemiSmallSemiMedium} {
-    width: 6.5rem;
-    margin-left: 2rem;
-    font-size: 4.5;
-  }
-  @media ${Theme.EntryRoomPageTheme.TabletSemiSmall} {
-    width: 6rem;
-    margin-left: 1.5rem;
-    font-size: 4rem;
   }
 `;
 
@@ -270,16 +218,5 @@ const NickNameInput = styled.input`
   }
   &::placeholder {
     color: rgba(255, 255, 255, 0.8);
-  }
-
-  @media ${Theme.EntryRoomPageTheme.SemiSmallSemiMedium} {
-    width: 21rem;
-    height: 3.5rem;
-    font-size: 2.3rem;
-  }
-  @media ${Theme.EntryRoomPageTheme.TabletSemiSmall} {
-    width: 18rem;
-    height: 3rem;
-    font-size: 2rem;
   }
 `;

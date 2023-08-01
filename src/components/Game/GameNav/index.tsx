@@ -2,7 +2,6 @@ import {
   currentRoundState,
   remainTimeState,
   userListState,
-  runStopTimerState,
   roundGameState,
   nicknameState,
   uuidState,

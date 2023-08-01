@@ -1,7 +1,7 @@
 import { copyAndPaste } from '@/apis/game';
 import { playerMaxCountState, playerNumState, uuidState } from '@/atom/game';
 import { useSocketContext } from '@/context/SocketContext';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { useRecoilValue, useRecoilState } from 'recoil';
 import { styled } from 'styled-components';
 
