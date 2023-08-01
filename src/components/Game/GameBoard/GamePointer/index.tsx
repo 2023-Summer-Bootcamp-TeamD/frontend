@@ -5,6 +5,9 @@ import eraser from '@/assets/eraser.png';
 import pencil from '@/assets/pencil.png';
 import chatter from '@/assets/chatter.png';
 import { COLOR } from '@/constants/color';
+import { useSocketContext } from '@/context/SocketContext';
+import { useRecoilValue } from 'recoil';
+import { uuidState } from '@/atom/game';
 type Props = {
   clearCanvas: () => void;
   setIsErasing: React.Dispatch<React.SetStateAction<boolean>>;
@@ -20,6 +23,10 @@ const GamePointer = ({
   handleImageClick,
   setCurrentFocus,
 }: Props) => {
+  const { socketState } = useSocketContext();
+  const { socket, isConnected } = socketState;
+  const uuid = useRecoilValue(uuidState);
+
   return (
     <PointerBox>
       <img src={Trash} onClick={clearCanvas} />
@@ -29,6 +36,12 @@ const GamePointer = ({
           setIsErasing(true);
           handleImageClick();
           setCurrentFocus(eraser);
+
+          if (socket && isConnected)
+            socket.emit('canvasErase', {
+              roomId: uuid,
+              eraseData: true,
+            });
         }}
       />
       <img
@@ -37,6 +50,11 @@ const GamePointer = ({
           setIsErasing(false);
           handleImageClick();
           setCurrentFocus(pencil);
+          if (socket && isConnected)
+            socket.emit('canvasErase', {
+              roomId: uuid,
+              eraseData: false,
+            });
         }}
       />
       <img src={chatter} />
@@ -50,6 +68,17 @@ const GamePointer = ({
                 setIsErasing(false);
                 handleImageClick();
                 setCurrentFocus(pencil);
+                if (socket && isConnected)
+                  socket.emit('canvasChangeColor', {
+                    roomId: uuid,
+                    selectedColor: col,
+                  });
+
+                if (socket && isConnected)
+                  socket.emit('canvasErase', {
+                    roomId: uuid,
+                    handType: false,
+                  });
               }}
             ></div>
           );
@@ -116,24 +145,27 @@ const Colors = styled.div`
     cursor: pointer;
   }
   & > div:nth-child(1) {
-    background-color: #ff0000;
+    background-color: #ffffff;
   }
   & > div:nth-child(2) {
-    background-color: #ff8c00;
+    background-color: #ff0000;
   }
   & > div:nth-child(3) {
-    background-color: #ffff00;
+    background-color: #ff8c00;
   }
   & > div:nth-child(4) {
-    background-color: #008000;
+    background-color: #ffff00;
   }
   & > div:nth-child(5) {
-    background-color: #0000ff;
+    background-color: #008000;
   }
   & > div:nth-child(6) {
-    background-color: #4b0082;
+    background-color: #0000ff;
   }
   & > div:nth-child(7) {
+    background-color: #4b0082;
+  }
+  & > div:nth-child(8) {
     background-color: #800080;
   }
 `;

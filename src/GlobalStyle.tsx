@@ -27,21 +27,21 @@ time, mark, audio, video,input {
 	
 
 }
-    html {
-        font-size: 62.5%; // 10px
-        @media (max-width: 768px) {
-          // 태블릿
-          font-size: 50%; // 8px
-        }
-        @media (max-width: 480px) {
-          // 모바일
-          font-size: 25%; // 4px
-        }
-      }
-      body {
-        line-height: 1;
-        font-size: 1.6rem;
-      }
+  html {
+    font-size: 62.5%; // 10px
+    @media (max-width: 768px) {
+      // 태블릿
+      font-size: 50%; // 8px
+    }
+    @media (max-width: 480px) {
+      // 모바일
+      font-size: 25%; // 4px
+    }
+  }
+  body {
+    line-height: 1;
+    font-size: 1.6rem;
+    }
 /* HTML5 display-role reset for older browsers */
 article, aside, details, figcaption, figure, 
 footer, header, hgroup, menu, nav, section {

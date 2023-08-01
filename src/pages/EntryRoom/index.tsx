@@ -1,10 +1,10 @@
 import React, { ChangeEvent, useState } from 'react';
 import { styled } from 'styled-components';
-import chattingImg from '@/assets/Chatter.png';
-import CompassImg from '@/assets/DoodleCompass.png';
-import FunctionMathImg from '@/assets/DoodleFunctionMath.png';
-import FireExtinguisherImg from '@/assets/FireExtinguisher.png';
-import TeachingImg from '@/assets/Teaching.png';
+import chattingImg from '@/assets/chatter.png';
+import CompassImg from '@/assets/doodleCompass.png';
+import FunctionMathImg from '@/assets/doodleFunctionMath.png';
+import FireExtinguisherImg from '@/assets/fireExtinguisher.png';
+import TeachingImg from '@/assets/teaching.png';
 import Label from '@/components/Entrance/EntranceLabel';
 import Button from '@/components/Entrance/ EntranceButton';
 import Header from '@/common/Header';
@@ -13,9 +13,12 @@ import { AxiosError } from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { CircleInputType, NickNameType } from '@/types/entryRoom';
 import { entryAPI } from '@/apis/entryRoom';
+import SpinnerBox from '@/components/SkeletonSpinner';
 
 const EntryRoom = () => {
   const navigate = useNavigate();
+
+  const [isLoading, setIsLoading] = useState(false);
 
   const [circleInput, setCircleInput] = useState<CircleInputType>({
     input1: '',
@@ -24,8 +27,9 @@ const EntryRoom = () => {
     input4: '',
     input5: '',
   });
-  const [nickName, setNickName] = useState<string>('');
+  const [nickname, setNickName] = useState<string>('');
   const [uuid, setUUID] = useState('');
+
   const onCodehandler = (e: ChangeEvent<HTMLInputElement>) => {
     setCircleInput({
       ...circleInput,
@@ -40,19 +44,23 @@ const EntryRoom = () => {
   const onSubmitHandler = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     mutate({
-      nickname: nickName,
-    }); //  postNickName 함수를 mutation으로 실행시키는 메서드
+      nickname: nickname,
+    });
   };
-
   const postNickName = async (nickNameData: NickNameType) => {
+    setIsLoading(true);
     const uuid: string = Object.values(circleInput).join('');
     setUUID(uuid);
-    return await entryAPI(uuid, nickNameData);
+    const res = await entryAPI(uuid, nickNameData);
+    setIsLoading(false);
+    return res;
   };
 
   const { mutate } = useMutation(postNickName, {
-    onSuccess: () => {
-      navigate(`/game/${uuid}`, { state: { nickname: nickName } });
+    onSuccess: (data) => {
+      navigate(`/game/${uuid}`, {
+        state: { ...data, nickname },
+      });
     },
     onError: (error: AxiosError) => {
       console.log(error.response?.data);
@@ -65,6 +73,7 @@ const EntryRoom = () => {
       <FireExtinguisher />
       <Teaching />
       <Blackboard>
+        {isLoading && <SpinnerBox />}
         <DoodleCompass />
         <DoodleMath />
         <DoodleChatting />
@@ -87,8 +96,7 @@ const EntryRoom = () => {
             placeholder="닉네임을 입력해주세요"
             required
             onChange={onNickNamehandler}
-            maxLength={5}
-            value={nickName}
+            value={nickname}
           />
           <Button title="입장하기" />
         </EntryForm>

@@ -1,6 +1,7 @@
 import React from 'react';
 import { styled } from 'styled-components';
-import user from '@/assets/blue.png';
+import { IMAGES } from '@/constants/profile';
+
 type Props = {
   flag: number;
   nickname: string;
@@ -8,14 +9,13 @@ type Props = {
   date: string;
 };
 
-// eslint-disable-next-line react/prop-types
 const OtherMessage = ({ flag, nickname, message, date }: Props) => {
   return (
     <OtherChat>
       <Profile>
-        {flag && (
+        {!flag && (
           <div>
-            <img src={user} alt="상대방 프로필" />
+            <img src={IMAGES[4]} alt="상대방 프로필" />
             <p>{nickname}</p>
           </div>
         )}
@@ -23,20 +23,19 @@ const OtherMessage = ({ flag, nickname, message, date }: Props) => {
       <Content>
         <div>
           <ChatBox>{message}</ChatBox>
+          <span>{date}</span>
         </div>
-        <span>{date}</span>
       </Content>
     </OtherChat>
   );
 };
 
-export default OtherMessage;
+export default React.memo(OtherMessage);
 
 const OtherChat = styled.div`
   display: flex;
   justify-content: flex-start;
   margin-left: 2rem;
-  margin-bottom: 1.5rem;
   & > div > p {
     font-size: 1.5rem;
     margin-bottom: 1rem;
@@ -51,7 +50,7 @@ const OtherChat = styled.div`
 const Profile = styled.div`
   position: relative;
   width: 6rem;
-  height: 5.2rem;
+  height: 5.5rem;
   border-radius: 50%;
   overflow: hidden;
   margin-right: 1rem;
@@ -89,11 +88,15 @@ const ChatBox = styled.div`
 
 const Content = styled.div`
   display: flex;
-  flex-direction: column;
 
-  & > span {
+  & > div {
+    display: flex;
+    align-items: end;
+  }
+  & > div > span {
     text-align: end;
-    font-size: 1.8rem;
+    font-size: 1.5rem;
     opacity: 0.8;
+    margin-left: 0.5rem;
   }
 `;

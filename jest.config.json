@@ -1,0 +1,17 @@
+{
+  "testEnvironment": "jsdom",
+  "moduleNameMapper": {
+    "\\.(png|pdf|svg|jpg|jpeg)$": "<rootDir>/src/mocks/fileMock.ts",
+    "\\.(css|styl|less|sass|scss|svg)$": "identity-obj-proxy",
+    "^@/components/(.*)$": "<rootDir>/src/components/$1",
+    "^@/common/(.*)$": "<rootDir>/src/common/$1",
+    "^@/apis/(.*)$": "<rootDir>/src/apis/$1",
+    "^@/queryClient$": "<rootDir>/src/queryClient.ts",
+    "^@/constants/(.*)$": "<rootDir>/src/constants/$1"
+  },
+  "setupFilesAfterEnv": ["<rootDir>/jest-setup.ts/"],
+
+  "transform": {
+    "^.+\\.tsx?$": "ts-jest"
+  }
+}

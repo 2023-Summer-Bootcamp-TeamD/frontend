@@ -5,10 +5,13 @@ import MessageView from './messageView';
 import ChatInputView from './chatInputView';
 import { messageType } from '@/types/chatRoom';
 import { messages } from '@/constants/chatList';
+import { useRecoilValue } from 'recoil';
+import { nicknameState } from '@/atom/game';
 
 const UsersChat = () => {
   const [chat, setChat] = useState<string>('');
   const [chatList, setChatList] = useState<messageType[]>(messages);
+  const nickname = useRecoilValue(nicknameState);
 
   return (
     <ChatRoom>

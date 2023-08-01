@@ -3,12 +3,16 @@ import React, { useEffect, useRef } from 'react';
 import { styled } from 'styled-components';
 import MyMessage from './MyMessage';
 import OtherMessage from './OtherMessage';
+import { useRecoilValue } from 'recoil';
+import { nicknameState } from '@/atom/game';
+import UserNotice from './UserNotice';
 
 type Props = {
   chatList: messageType[];
 };
 const MessageView = ({ chatList }: Props) => {
   const chatBoxRef = useRef<HTMLDivElement>(null);
+  const nickname = useRecoilValue(nicknameState);
 
   const scrollToBottom = () => {
     chatBoxRef.current?.scrollTo({
@@ -24,16 +28,17 @@ const MessageView = ({ chatList }: Props) => {
   return (
     <MessageBox ref={chatBoxRef}>
       {chatList.map((chat, index) => {
-        if (chat.nickname === '나무') {
+        if (chat.type === 'INFO') {
+          return <UserNotice key={index} message={chat.message} />;
+        } else if (chat.nickname === nickname) {
           return (
-            <MyMessage key={index} message={chat.message} date={chat.date} />
+            <MyMessage key={index} date={chat.date} message={chat.message} />
           );
         } else {
           let flag = 0;
-          //전과 같은 사람이 채팅을 쳤다면
           if (
-            chatList[index - 1]?.nickname === chatList[index].nickname &&
-            index !== 0
+            index !== 0 &&
+            chatList[index - 1].nickname === chatList[index].nickname
           ) {
             flag = 1;
           }

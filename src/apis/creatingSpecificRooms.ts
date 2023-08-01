@@ -3,7 +3,7 @@ import { restFetcher } from '@/queryClient';
 
 export const makeRoomAPI = async ({
   nickname,
-  selectedCategory,
+  category_id,
   seconds,
   personnel,
 }: MakeRoomType) => {
@@ -13,7 +13,7 @@ export const makeRoomAPI = async ({
       path: '/rooms',
       body: {
         nickname: nickname,
-        category_id: selectedCategory,
+        category_id: category_id,
         time: seconds,
         player_num: personnel,
       },
@@ -21,10 +21,13 @@ export const makeRoomAPI = async ({
 
     const gameInfo = {
       nickname,
+      category_id,
       time: seconds,
       player_num: personnel,
       entry_code: response.uuid,
+      score: 0,
     };
+
     return gameInfo;
   } catch (e) {
     console.error(e);

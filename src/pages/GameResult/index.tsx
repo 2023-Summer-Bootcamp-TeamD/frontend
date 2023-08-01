@@ -1,15 +1,58 @@
 import { styled } from 'styled-components';
-import Award from '@/assets/Award.png';
-import RankingMemo from '@/assets/RankingMemo.png';
-import DrawingRoom from '@/assets/DrawingRoomIcon.png';
-import { useNavigate } from 'react-router-dom';
+import Award from '@/assets/award.png';
+import RankingMemo from '@/assets/rankingMemo.png';
+import DrawingRoom from '@/assets/drawingRoomIcon.png';
+import { useLocation, useNavigate } from 'react-router-dom';
 import wrong from '@/assets/wrong.png';
-import { DAY, USERRANK, bestPlayerName, crapeTalk } from '@/constants/rank';
+import { DAY, crapeTalk } from '@/constants/rank';
+import { useEffect, useState } from 'react';
+import { gameResultAPI } from '@/apis/gameResult';
+import GoldMedal from '@/assets/goldMedal.png';
+import SilverMedal from '@/assets/silverMedal.png';
+import BronzeMedal from '@/assets/bronzeMedal.png';
+import { UserRankType } from '@/types/userRank';
+
 const GameResult = () => {
   const naviagte = useNavigate();
+  const { uuid } = useLocation().state;
+
+  const [bestPlayers, setBestPlayers] = useState<string>('');
+  const [userRank, setUserRank] = useState<UserRankType[]>([]);
+
+  useEffect(() => {
+    console.log(uuid);
+  }, []);
+  let currentRanking = 1;
+  let isTiedCount = 0; // 둉졈자 수
 
   const goToMain = () => naviagte('/');
   const goToDrwaingRoom = () => naviagte('/drawingroom');
+
+  const getGameResults = async (uuid: string) => {
+    const res = await gameResultAPI(uuid);
+    const ranking: UserRankType[] = res?.data.석차;
+    setUserRank(ranking);
+
+    if (ranking.length !== 0) {
+      const maxScore = ranking[0].score;
+      const bestPlayerArray: UserRankType[] = ranking.filter(
+        (user) => user.score === maxScore,
+      );
+      let nameOfBestPlayers = '';
+      bestPlayerArray.map((user, index) => {
+        if (index === 0) {
+          nameOfBestPlayers += user.nickname;
+        } else {
+          nameOfBestPlayers += ', ' + user.nickname;
+        }
+      });
+      setBestPlayers(nameOfBestPlayers);
+    }
+  };
+
+  useEffect(() => {
+    getGameResults(uuid);
+  }, []);
 
   return (
     <GameResultContainer>
@@ -17,7 +60,7 @@ const GameResult = () => {
         <span className="right-items">발급번호: Techeer-600000호</span>
         <span className="center-items">상장</span>
         <span className="center-items">The Best Player of Game</span>
-        <span className="right-items">성명 {bestPlayerName}</span>
+        <span className="right-items">성 명 {bestPlayers}</span>
         <span className="center-items">{crapeTalk}</span>
         <span className="center-items">{DAY}</span>
         <span className="center-items">Team D 대표 최현정</span>
@@ -25,8 +68,22 @@ const GameResult = () => {
       <div className="right-items">
         <Buttons onClick={goToMain}></Buttons>
         <Ranking>
-          {USERRANK.map((user, index) => {
-            return <span key={index}>{user}</span>;
+          {userRank?.map((user, index) => {
+            if (index !== 0) {
+              if (userRank[index - 1].score === user.score) {
+                isTiedCount++;
+              } else {
+                currentRanking++;
+                currentRanking += isTiedCount;
+                isTiedCount = 0;
+              }
+            }
+            return (
+              <UserInRanking key={index} rank={currentRanking}>
+                <Medal rank={currentRanking} />
+                {currentRanking}등급 {user.nickname}
+              </UserInRanking>
+            );
           })}
         </Ranking>
         <Buttons onClick={goToDrwaingRoom}>
@@ -144,23 +201,31 @@ const Ranking = styled.div`
   & > img {
     height: 53vh;
   }
-  & > span {
-    font-size: 4.2rem;
-    font-weight: 700;
-  }
+`;
 
-  & > span:nth-child(1) {
-    color: #e94600;
-    opacity: 0.9;
-    font-weight: 700;
-  }
-  & > span:nth-child(2) {
-    color: #5282ff;
-    font-weight: 700;
-  }
-  & > span:nth-child(3) {
-    color: #bc00fe;
-    opacity: 0.7;
-    font-weight: 700;
-  }
+const Medal = styled.img<{ rank: number }>`
+  width: 4rem;
+  ${(props) => {
+    if (props.rank === 1) {
+      return `content: url(${GoldMedal});`;
+    } else if (props.rank === 2) {
+      return `content: url(${SilverMedal});`;
+    } else if (props.rank === 3) {
+      return `content: url(${BronzeMedal});`;
+    }
+  }}
+`;
+
+const UserInRanking = styled.span<{ rank: number }>`
+  font-size: 4.4rem;
+  font-weight: 700;
+  color: ${(props) => {
+    if (props.rank === 1) {
+      return '#e94600';
+    } else if (props.rank === 2) {
+      return '#5282ff';
+    } else if (props.rank === 3) {
+      return '#bc00fe';
+    }
+  }};
 `;

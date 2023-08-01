@@ -1,23 +1,25 @@
 import React, { useState } from 'react';
 import { styled } from 'styled-components';
 import { useNavigate } from 'react-router-dom';
-import Teaching from '@/assets/Teaching.png';
-import FireExtinguisher from '@/assets/FireExtinguisher.png';
-import DoodleFunctionMath from '@/assets/DoodleFunctionMath.png';
-import DoodleCompass from '@/assets/DoodleCompass.png';
-import Chatter from '@/assets/Chatter.png';
+import Teaching from '@/assets/teaching.png';
+import FireExtinguisher from '@/assets/fireExtinguisher.png';
+import DoodleFunctionMath from '@/assets/doodleFunctionMath.png';
+import DoodleCompass from '@/assets/doodleCompass.png';
+import Chatter from '@/assets/chatter.png';
 import { roomElement } from '@/constants/roomElement';
 import Header from '@/common/Header';
 import Label from '@/components/Entrance/EntranceLabel';
-import { GameInfoProps, MakeRoomType } from '@/types/creatingSpecificRooms';
+import { MakeRoomType } from '@/types/creatingSpecificRooms';
 import { makeRoomAPI } from '@/apis/creatingSpecificRooms';
 import { useMutation } from '@tanstack/react-query';
 import { AxiosError } from 'axios';
+import SpinnerBox from '@/components/SkeletonSpinner';
 
 const CreatingRooms = () => {
   const navigate = useNavigate();
 
-  const [selectedCategory, setSelectedCategory] = useState(1);
+  const [isLoading, setIsLoading] = useState(false);
+  const [category_id, setCategory_id] = useState(1);
   const [nickname, setNickname] = useState('');
   const [personnel, setPersonnel] = useState(2);
   const [seconds, setSeconds] = useState(10);
@@ -48,25 +50,31 @@ const CreatingRooms = () => {
   };
 
   const clickCategory = (categoryId: number) => {
-    setSelectedCategory(categoryId);
+    setCategory_id(() => categoryId);
   };
 
   const onClickHandler = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
     mutate({
       nickname,
-      selectedCategory,
+      category_id,
       seconds,
       personnel,
     });
   };
+
   const postGameInfo = async (data: MakeRoomType) => {
-    return await makeRoomAPI(data);
+    setIsLoading(true);
+    const res = await makeRoomAPI(data);
+    setIsLoading(false);
+    return res;
   };
 
   const { mutate } = useMutation(postGameInfo, {
     onSuccess: (data) => {
-      navigate(`/game/${data?.entry_code}`, { state: data });
+      navigate(`/game/${data?.entry_code}`, {
+        state: { ...data },
+      });
     },
     onError: (error: AxiosError) => {
       console.log(error.response?.data);
@@ -79,6 +87,7 @@ const CreatingRooms = () => {
       <TeachingImg src={Teaching} alt="교탁" />
       <FireExtinguisherImg src={FireExtinguisher} alt="소화기" />
       <Blackboard>
+        {isLoading && <SpinnerBox />}
         <DoodleContainer>
           <img
             className="FunctionMathImg"
@@ -94,9 +103,7 @@ const CreatingRooms = () => {
               onClick={() => clickCategory(index + 1)}
               style={{
                 backgroundColor:
-                  index + 1 === selectedCategory
-                    ? 'rgba(255, 255, 255, 0.18)'
-                    : '',
+                  index + 1 === category_id ? 'rgba(255, 255, 255, 0.18)' : '',
               }}
             >
               <img src={item.image} alt={item.id} />
@@ -124,7 +131,6 @@ const CreatingRooms = () => {
               value={nickname}
               onChange={handleNicknameChange}
               required
-              maxLength={5}
             />
           </div>
           <div>

@@ -1,9 +1,9 @@
 import { styled } from 'styled-components';
-import FireExtinguisherImg from '@/assets/FireExtinguisher.png';
-import DrawingHeader from '@/common/DrawingHeader ';
-import chattingImg from '@/assets/Chatter.png';
-import CompassImg from '@/assets/DoodleCompass.png';
-import FunctionMathImg from '@/assets/DoodleFunctionMath.png';
+import FireExtinguisherImg from '@/assets/fireExtinguisher.png';
+import DrawingHeader from '@/common/DrawingHeader';
+import chattingImg from '@/assets/chatter.png';
+import CompassImg from '@/assets/doodleCompass.png';
+import FunctionMathImg from '@/assets/doodleFunctionMath.png';
 import { ResultCategory, ResultCategoryType } from '@/constants/resultCategory';
 import { motion } from 'framer-motion';
 const CategoryItemList = ({ img, title }: ResultCategoryType) => (
