@@ -63,7 +63,7 @@ const GameResult = () => {
         <Buttons onClick={goToMain}></Buttons>
         <Ranking>
           {userList
-            ?.sort((a, b) => a.score - b.score)
+            ?.sort((a, b) => b.score - a.score)
             ?.map((user, index) => {
               if (index !== 0) {
                 if (userRank[index - 1]?.score === user?.score) {
