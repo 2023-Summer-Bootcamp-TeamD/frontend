@@ -44,7 +44,7 @@ const ChatInputView = ({ setChat, chat, setChatList }: Props) => {
       });
       socket.on('announceResult', (data) => {
         setStop(false);
-        setRemainTime(-1);
+        setRemainTime(0);
       });
     }
     return () => {
