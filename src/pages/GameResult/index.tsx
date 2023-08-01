@@ -6,33 +6,27 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import wrong from '@/assets/wrong.png';
 import { DAY, crapeTalk } from '@/constants/rank';
 import { useEffect, useState } from 'react';
-import { gameResultAPI } from '@/apis/gameResult';
 import GoldMedal from '@/assets/goldMedal.png';
 import SilverMedal from '@/assets/silverMedal.png';
 import BronzeMedal from '@/assets/bronzeMedal.png';
 import { UserRankType } from '@/types/userRank';
 
 const GameResult = () => {
+  const userList: UserRankType[] = useLocation().state;
   const naviagte = useNavigate();
-  const { uuid } = useLocation().state;
-
   const [bestPlayers, setBestPlayers] = useState<string>('');
   const [userRank, setUserRank] = useState<UserRankType[]>([]);
-
-  useEffect(() => {
-    console.log(uuid);
-  }, []);
   let currentRanking = 1;
   let isTiedCount = 0; // 둉졈자 수
 
   const goToMain = () => naviagte('/');
   const goToDrwaingRoom = () => naviagte('/drawingroom');
-
-  const getGameResults = async (uuid: string) => {
-    const res = await gameResultAPI(uuid);
-    const ranking: UserRankType[] = res?.data.석차;
+  console.log(userList);
+  console.log(userList[0]);
+  const getGameResults = async () => {
+    console.log(userList);
+    const ranking: UserRankType[] = userList.sort((a, b) => a.score - b.score);
     setUserRank(ranking);
-
     if (ranking.length !== 0) {
       const maxScore = ranking[0].score;
       const bestPlayerArray: UserRankType[] = ranking.filter(
@@ -51,7 +45,7 @@ const GameResult = () => {
   };
 
   useEffect(() => {
-    getGameResults(uuid);
+    getGameResults();
   }, []);
 
   return (
@@ -68,23 +62,25 @@ const GameResult = () => {
       <div className="right-items">
         <Buttons onClick={goToMain}></Buttons>
         <Ranking>
-          {userRank?.map((user, index) => {
-            if (index !== 0) {
-              if (userRank[index - 1].score === user.score) {
-                isTiedCount++;
-              } else {
-                currentRanking++;
-                currentRanking += isTiedCount;
-                isTiedCount = 0;
+          {userList
+            ?.sort((a, b) => a.score - b.score)
+            ?.map((user, index) => {
+              if (index !== 0) {
+                if (userRank[index - 1]?.score === user?.score) {
+                  isTiedCount++;
+                } else {
+                  currentRanking++;
+                  currentRanking += isTiedCount;
+                  isTiedCount = 0;
+                }
               }
-            }
-            return (
-              <UserInRanking key={index} rank={currentRanking}>
-                <Medal rank={currentRanking} />
-                {currentRanking}등급 {user.nickname}
-              </UserInRanking>
-            );
-          })}
+              return (
+                <UserInRanking key={index} rank={currentRanking}>
+                  <Medal rank={currentRanking} />
+                  {currentRanking}등급 {user.nickname}
+                </UserInRanking>
+              );
+            })}
         </Ranking>
         <Buttons onClick={goToDrwaingRoom}>
           <img src={DrawingRoom} className="drawingRoom-icon" />
