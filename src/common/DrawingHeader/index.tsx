@@ -1,5 +1,5 @@
 import { styled } from 'styled-components';
-import Exit from '@/assets/Exit.png';
+import Exit from '@/assets/exit.png';
 import { CircleText } from '@/constants/circleText';
 import { motion } from 'framer-motion';
 const DrawingHeader = () => {
