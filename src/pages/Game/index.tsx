@@ -133,8 +133,9 @@ const Game = () => {
 
   //게임이 끝났을 떄
   useEffect(() => {
+    console.log(userList);
     if (currentRound > max_Player_num && max_Player_num !== 0) {
-      navigate('/result', { state: UUID });
+      navigate('/result', { state: userList });
     }
   }, [currentRound]);
 
