@@ -44,7 +44,11 @@ const GameNav = ({ start }: Props) => {
 
     if (remainTime === 0 && socket && isConnected) {
       socket?.emit('canvasEraseAll', uuid);
+
       setWaveText(`${currentRound + 1} 라운드 대기중 ∙ ∙ ∙`);
+      if (userList.length === currentRound) {
+        setWaveText('게임 결과 로딩중');
+      }
       setTimeout(() => {
         setCurrentRound((pre) => pre + 1);
       }, 10000);
