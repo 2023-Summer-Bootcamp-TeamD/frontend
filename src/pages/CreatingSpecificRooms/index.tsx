@@ -23,7 +23,6 @@ const CreatingRooms = () => {
   const [nickname, setNickname] = useState('');
   const [personnel, setPersonnel] = useState(2);
   const [seconds, setSeconds] = useState(10);
-  const [apiRestrict, setApiRestrict] = useState(false);
 
   const increasePersonnel = () => {
     if (personnel < 8) {

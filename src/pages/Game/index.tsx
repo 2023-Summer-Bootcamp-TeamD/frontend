@@ -110,13 +110,11 @@ const Game = () => {
       });
 
       socket.on('updateScores', (data) => {
-        console.log(userList);
-
         const result = Object.entries(data.scores).map(([key, score]) => ({
           nickname: key,
           score: score,
         }));
-        console.log(result);
+        setUserList(result);
       });
 
       socket.on('announceRoundInfo', (data) => {
