@@ -1,6 +1,6 @@
-import FoodImg from '@/assets/Food.png';
-import PersonImg from '@/assets/Person.png';
-import AnimalImg from '@/assets/Animal.png';
+import FoodImg from '@/assets/food.png';
+import PersonImg from '@/assets/person.png';
+import AnimalImg from '@/assets/animal.png';
 
 export type ResultCategoryType = { img: string; title: string };
 export const ResultCategory: ResultCategoryType[] = [
