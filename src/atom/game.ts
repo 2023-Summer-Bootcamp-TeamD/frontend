@@ -63,3 +63,8 @@ export const runStopTimerState = atom<boolean>({
   key: 'runStop',
   default: true,
 });
+
+export const waveTextState = atom<string>({
+  key: 'waveText',
+  default: '',
+});

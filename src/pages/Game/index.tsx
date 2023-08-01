@@ -17,6 +17,7 @@ import {
   timeState,
   userListState,
   uuidState,
+  waveTextState,
 } from '@/atom/game';
 import { UserListType } from '@/types/gameInfo';
 import useDidMountEffect from '@/hooks/useDidMountEffect';
@@ -41,7 +42,7 @@ const Game = () => {
   const [remainTime, setRemainTime] = useRecoilState(remainTimeState);
   const [socketInitialized, setSocketInitialized] = useState(false);
   const [roundGame, setRoundGame] = useRecoilState(roundGameState);
-  const [waveText, setWaveText] = useState('');
+  const [waveText, setWaveText] = useRecoilState(waveTextState);
 
   const xyHandler = (e: React.MouseEvent<HTMLDivElement>) => {
     const mouseX = e.clientX;
@@ -106,6 +107,8 @@ const Game = () => {
   useDidMountEffect(() => {
     if (socket && isConnected && start) {
       socket.on('startRoundTimer', (data) => {
+        console.log('앤드타임', data.endTime);
+        console.log('시작타임', data.startTime);
         setRemainTime(Math.floor((data.endTime - data.startTime) / 1000));
       });
 

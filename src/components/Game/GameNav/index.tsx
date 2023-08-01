@@ -5,6 +5,7 @@ import {
   roundGameState,
   nicknameState,
   uuidState,
+  waveTextState,
 } from '@/atom/game';
 import { useSocketContext } from '@/context/SocketContext';
 import { UserListType } from '@/types/gameInfo';
@@ -25,7 +26,7 @@ const GameNav = ({ start }: Props) => {
   const roundGameInfo = useRecoilValue(roundGameState);
   const nickname = useRecoilValue(nicknameState);
   const uuid = useRecoilValue(uuidState);
-
+  const [waveText, setWaveText] = useRecoilState(waveTextState);
   useEffect(() => {
     console.log(userList);
   }, [start, currentRound]);
@@ -34,15 +35,22 @@ const GameNav = ({ start }: Props) => {
     let intervalId: NodeJS.Timeout;
     if (start) {
       intervalId = setInterval(() => {
-        if (remainTime >= 0) {
+        if (remainTime > 0) {
           setRemainTime((prevTime) => prevTime - 1);
         }
       }, 1000);
     }
 
-    if (remainTime === -1 && socket && isConnected) {
+    if (remainTime === 0 && socket && isConnected) {
       socket?.emit('canvasEraseAll', uuid);
-      setCurrentRound((pre) => pre + 1);
+
+      setWaveText(`${currentRound + 1} 라운드 대기중 ∙ ∙ ∙`);
+      if (userList.length === currentRound) {
+        setWaveText('게임 결과 로딩중');
+      }
+      setTimeout(() => {
+        setCurrentRound((pre) => pre + 1);
+      }, 10000);
     }
 
     return () => {
@@ -56,6 +64,7 @@ const GameNav = ({ start }: Props) => {
         <span>남은 시간</span>
         <span>{remainTime > 60 ? '' : remainTime}</span>
       </Clock>
+
       <Users>
         {start &&
           userList?.map((user: UserListType, index) => {
