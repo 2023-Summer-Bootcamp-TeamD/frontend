@@ -43,7 +43,10 @@ const GameNav = ({ start }: Props) => {
 
     if (remainTime === -1 && socket && isConnected) {
       socket?.emit('canvasEraseAll', uuid);
-      setCurrentRound((pre) => pre + 1);
+
+      setTimeout(() => {
+        setCurrentRound((pre) => pre + 1);
+      }, 10000);
     }
 
     return () => {
@@ -57,6 +60,7 @@ const GameNav = ({ start }: Props) => {
         <span>남은 시간</span>
         <span>{remainTime > 60 ? '' : remainTime}</span>
       </Clock>
+
       <Users>
         {start &&
           userList?.map((user: UserListType, index) => {

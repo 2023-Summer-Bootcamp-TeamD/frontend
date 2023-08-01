@@ -106,6 +106,8 @@ const Game = () => {
   useDidMountEffect(() => {
     if (socket && isConnected && start) {
       socket.on('startRoundTimer', (data) => {
+        console.log('앤드타임', data.endTime);
+        console.log('시작타임', data.startTime);
         setRemainTime(Math.floor((data.endTime - data.startTime) / 1000));
       });
 
