@@ -12,9 +12,6 @@ import {
   userListState,
   uuidState,
 } from '@/atom/game';
-import html2canvas from 'html2canvas';
-import useDidMountEffect from '@/hooks/useDidMountEffect';
-import { restFetcher } from '@/queryClient';
 type Props = {
   setCurrentFocus: React.Dispatch<React.SetStateAction<string>>;
 };
@@ -181,18 +178,18 @@ const CanvasDrawingApp = ({ setCurrentFocus }: Props) => {
   }, []);
 
   // 데이터 URL을 Blob으로 변환하는 함수
-  const dataURLtoBlob = (dataURL: string): Blob => {
-    const byteString = atob(dataURL.split(',')[1]);
-    const mimeString = dataURL.split(',')[0].split(':')[1].split(';')[0];
-    const ab = new ArrayBuffer(byteString.length);
-    const ia = new Uint8Array(ab);
+  // const dataURLtoBlob = (dataURL: string): Blob => {
+  //   const byteString = atob(dataURL.split(',')[1]);
+  //   const mimeString = dataURL.split(',')[0].split(':')[1].split(';')[0];
+  //   const ab = new ArrayBuffer(byteString.length);
+  //   const ia = new Uint8Array(ab);
 
-    for (let i = 0; i < byteString.length; i++) {
-      ia[i] = byteString.charCodeAt(i);
-    }
+  //   for (let i = 0; i < byteString.length; i++) {
+  //     ia[i] = byteString.charCodeAt(i);
+  //   }
 
-    return new Blob([ab], { type: mimeString });
-  };
+  //   return new Blob([ab], { type: mimeString });
+  // };
 
   // useDidMountEffect(() => {
   //   if (screenShotRef.current) {

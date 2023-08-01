@@ -27,9 +27,6 @@ const GameNav = ({ start }: Props) => {
   const nickname = useRecoilValue(nicknameState);
   const uuid = useRecoilValue(uuidState);
   const [waveText, setWaveText] = useRecoilState(waveTextState);
-  useEffect(() => {
-    console.log(userList);
-  }, [start, currentRound]);
 
   useEffect(() => {
     let intervalId: NodeJS.Timeout;
@@ -50,7 +47,7 @@ const GameNav = ({ start }: Props) => {
       }
       setTimeout(() => {
         setCurrentRound((pre) => pre + 1);
-      }, 10000);
+      }, 6000);
     }
 
     return () => {
