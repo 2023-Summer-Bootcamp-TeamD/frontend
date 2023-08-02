@@ -28,6 +28,7 @@ const GameResult = () => {
     const ranking: UserRankType[] = userList.sort((a, b) => a.score - b.score);
     setUserRank(ranking);
     if (ranking.length !== 0) {
+      ranking.sort((a, b) => b.score - a.score);
       const maxScore = ranking[0].score;
       const bestPlayerArray: UserRankType[] = ranking.filter(
         (user) => user.score === maxScore,
