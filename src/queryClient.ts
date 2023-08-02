@@ -38,19 +38,21 @@ export const restFetcher = async ({
   path,
   body,
   params,
+  headers,
 }: {
   method: 'GET' | 'POST' | 'PUT' | 'DELETE' | 'PATCH';
   path: string;
   body?: AnyOBJ;
   params?: AnyOBJ;
+  headers?: { [key: string]: string };
 }) => {
   try {
     let url = `${BASE_URL}${path}`;
     const axiosConfig: AxiosRequestConfig = {
       method,
       headers: {
-        'Content-Type': 'application/json',
         'Access-Control-Allow-Origin': BASE_URL,
+        ...headers,
       },
     };
     if (body) axiosConfig.data = body;
