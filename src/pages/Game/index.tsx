@@ -145,6 +145,7 @@ const Game = () => {
   useEffect(() => {
     if (currentRound > max_Player_num && max_Player_num !== 0) {
       socket?.emit('endGame', { roomId: UUID });
+      setCurrentRound(1);
       navigate('/result', { state: userList });
     }
   }, [currentRound]);
