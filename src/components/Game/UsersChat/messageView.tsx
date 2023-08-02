@@ -1,11 +1,13 @@
 import { messageType } from '@/types/chatRoom';
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import { styled } from 'styled-components';
 import MyMessage from './MyMessage';
 import OtherMessage from './OtherMessage';
 import { useRecoilValue } from 'recoil';
 import { nicknameState } from '@/atom/game';
 import UserNotice from './UserNotice';
+import { IMAGES } from '@/constants/profile';
+import { profileType } from '@/types/profile';
 
 type Props = {
   chatList: messageType[];
@@ -13,6 +15,7 @@ type Props = {
 const MessageView = ({ chatList }: Props) => {
   const chatBoxRef = useRef<HTMLDivElement>(null);
   const nickname = useRecoilValue(nicknameState);
+  const [profile, setProfile] = useState<profileType>({});
 
   const scrollToBottom = () => {
     chatBoxRef.current?.scrollTo({
@@ -23,6 +26,20 @@ const MessageView = ({ chatList }: Props) => {
 
   useEffect(() => {
     scrollToBottom();
+  }, [chatList]);
+
+  useEffect(() => {
+    chatList.forEach((chat) => {
+      if (!profile[chat.nickname]) {
+        if (chat.nickname) {
+          setProfile({
+            ...profile,
+            [chat.nickname]:
+              IMAGES[Object.keys(profile).length % IMAGES.length],
+          });
+        }
+      }
+    });
   }, [chatList]);
 
   return (
@@ -44,6 +61,7 @@ const MessageView = ({ chatList }: Props) => {
           }
           return (
             <OtherMessage
+              img={profile[chat.nickname]}
               flag={flag}
               key={index}
               nickname={chat.nickname}
