@@ -1,4 +1,10 @@
-import React, { useRef, useEffect, useState } from 'react';
+import React, {
+  useRef,
+  useEffect,
+  useState,
+  forwardRef,
+  useImperativeHandle,
+} from 'react';
 import GamePointer from '../GamePointer';
 import { styled } from 'styled-components';
 import { useSocketContext } from '@/context/SocketContext';
@@ -17,7 +23,16 @@ type Props = {
   setCurrentFocus: React.Dispatch<React.SetStateAction<string>>;
 };
 
-const CanvasDrawingApp = ({ setCurrentFocus }: Props) => {
+export type ClearCanvasHandle = {
+  clearCanvas: () => void;
+};
+
+const CanvasDrawingApp = forwardRef<ClearCanvasHandle, Props>((props, ref) => {
+  const { setCurrentFocus } = props;
+  useImperativeHandle(ref, () => ({
+    clearCanvas,
+  }));
+
   const { socketState } = useSocketContext();
   const { socket, isConnected } = socketState;
   const screenShotRef = useRef<HTMLDivElement>(null);
@@ -202,7 +217,9 @@ const CanvasDrawingApp = ({ setCurrentFocus }: Props) => {
       />
     </Board>
   );
-};
+});
+
+CanvasDrawingApp.displayName = 'CanvasDrawingApp';
 
 export default CanvasDrawingApp;
 

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import GameBoard from '@/components/Game/GameBoard';
 import GameNav from '@/components/Game/GameNav';
 import UsersChat from '@/components/Game/UsersChat';
@@ -20,8 +20,11 @@ import {
 } from '@/atom/game';
 import { UserListType } from '@/types/gameInfo';
 import useDidMountEffect from '@/hooks/useDidMountEffect';
+import { ClearCanvasHandle } from '@/components/Game/GameBoard/CanvasDrawingApp';
 
 const Game = () => {
+  const clearCanvasRef = useRef<ClearCanvasHandle>(null);
+
   const { socketState } = useSocketContext();
   const { socket, isConnected } = socketState;
   const hostData = useLocation().state;
@@ -105,6 +108,7 @@ const Game = () => {
   //라운드 시작 시
   useDidMountEffect(() => {
     if (socket && isConnected && start) {
+      clearCanvasRef.current?.clearCanvas();
       socket.on('startRoundTimer', (data) => {
         setRemainTime(Math.floor((data.endTime - data.startTime) / 1000));
       });
