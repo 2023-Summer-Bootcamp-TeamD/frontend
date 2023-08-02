@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { styled } from 'styled-components';
 import { useNavigate } from 'react-router-dom';
-import Teaching from '@/assets/teaching.png';
+//import Teaching from '@/assets/teaching.png';
 import FireExtinguisher from '@/assets/fireExtinguisher.png';
 import DoodleFunctionMath from '@/assets/doodleFunctionMath.png';
 import DoodleCompass from '@/assets/doodleCompass.png';
@@ -84,7 +84,7 @@ const CreatingRooms = () => {
   return (
     <Admissions>
       <Header />
-      <TeachingImg src={Teaching} alt="교탁" />
+      {/* <TeachingImg src={Teaching} alt="교탁" /> */}
       <FireExtinguisherImg src={FireExtinguisher} alt="소화기" />
       <Blackboard>
         {isLoading && <SpinnerBox />}

@@ -71,7 +71,7 @@ const EntryRoom = () => {
     <Wrap>
       <Header />
       <FireExtinguisher />
-      <Teaching />
+      {/* <Teaching /> */}
       <Blackboard>
         {isLoading && <SpinnerBox />}
         <DoodleCompass />
