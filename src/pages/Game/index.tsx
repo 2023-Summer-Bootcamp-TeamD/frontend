@@ -94,6 +94,9 @@ const Game = () => {
 
   //방장만 startRound 실행하게
   useDidMountEffect(() => {
+    if (currentRound > max_Player_num) {
+      return;
+    }
     if (socket && isConnected && start && hostData.entry_code) {
       socket?.emit('startRound', {
         roomId: UUID,
@@ -109,6 +112,9 @@ const Game = () => {
 
   //라운드 시작 시
   useDidMountEffect(() => {
+    if (currentRound > max_Player_num) {
+      return;
+    }
     if (socket && isConnected && start) {
       clearCanvasRef.current?.clearCanvas();
       socket.on('startRoundTimer', (data) => {
