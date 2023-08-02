@@ -28,8 +28,6 @@ const MessageView = ({ chatList }: Props) => {
     scrollToBottom();
   }, [chatList]);
 
-  console.log('프로필', profile, IMAGES.length);
-
   useEffect(() => {
     chatList.forEach((chat) => {
       if (!profile[chat.nickname]) {

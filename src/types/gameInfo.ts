@@ -14,4 +14,5 @@ export type RoundGameType = {
   drawer: string;
   round: number;
   word: string;
+  word_id: string;
 };

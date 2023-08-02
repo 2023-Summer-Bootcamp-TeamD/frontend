@@ -94,11 +94,15 @@ const Game = () => {
 
   //방장만 startRound 실행하게
   useDidMountEffect(() => {
+    if (currentRound > max_Player_num) {
+      return;
+    }
     if (socket && isConnected && start && hostData.entry_code) {
       socket?.emit('startRound', {
         roomId: UUID,
         limitedTime: time,
         category_id: hostData.category_id,
+        limitedPlayer: max_Player_num,
       });
     }
     return () => {
@@ -108,11 +112,12 @@ const Game = () => {
 
   //라운드 시작 시
   useDidMountEffect(() => {
+    if (currentRound > max_Player_num) {
+      return;
+    }
     if (socket && isConnected && start) {
       clearCanvasRef.current?.clearCanvas();
       socket.on('startRoundTimer', (data) => {
-        console.log('앤드타임', data.endTime);
-        console.log('시작타임', data.startTime);
         setRemainTime(Math.floor((data.endTime - data.startTime) / 1000));
       });
 
@@ -125,6 +130,7 @@ const Game = () => {
       });
 
       socket.on('announceRoundInfo', (data) => {
+        console.log(data);
         setRoundGame(data);
       });
 

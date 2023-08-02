@@ -18,6 +18,9 @@ import {
   userListState,
   uuidState,
 } from '@/atom/game';
+import useDidMountEffect from '@/hooks/useDidMountEffect';
+import html2canvas from 'html2canvas';
+import { restFetcher } from '@/queryClient';
 type Props = {
   setCurrentFocus: React.Dispatch<React.SetStateAction<string>>;
 };
@@ -192,22 +195,51 @@ const CanvasDrawingApp = forwardRef<ClearCanvasHandle, Props>((props, ref) => {
     }
   }, []);
 
-  // 데이터 URL을 Blob으로 변환하는 함수
-  // const dataURLtoBlob = (dataURL: string): Blob => {
-  //   const byteString = atob(dataURL.split(',')[1]);
-  //   const mimeString = dataURL.split(',')[0].split(':')[1].split(';')[0];
-  //   const ab = new ArrayBuffer(byteString.length);
-  //   const ia = new Uint8Array(ab);
+  const canvasToBlob = (canvas: HTMLCanvasElement): Promise<Blob> => {
+    return new Promise((resolve) => {
+      canvas.toBlob((blob) => {
+        if (blob) {
+          resolve(blob);
+        } else {
+          throw new Error('Failed to convert canvas to Blob');
+        }
+      }, 'image/png');
+    });
+  };
 
-  //   for (let i = 0; i < byteString.length; i++) {
-  //     ia[i] = byteString.charCodeAt(i);
-  //   }
+  useDidMountEffect(() => {
+    if (screenShotRef.current && roundGameInfo.word_id) {
+      html2canvas(screenShotRef.current).then(async (canvas) => {
+        try {
+          // 캔버스 이미지를 Blob 객체로 변환
+          const blob = await canvasToBlob(canvas);
 
-  //   return new Blob([ab], { type: mimeString });
-  // };
+          // Blob 객체로 변환된 이미지 데이터를 서버로 전송합니다.
+          const formData = new FormData();
+          formData.append('image', blob);
+
+          // FormData 객체에 있는 데이터를 콘솔에 출력
+          for (const [key, value] of formData) {
+            console.log(`${key}: ${value}`);
+          }
+
+          // 서버로 이미지를 전송합니다.
+          const result = await restFetcher({
+            method: 'POST',
+            path: `/rooms/${uuid}/picture/${roundGameInfo.word_id}/rounds`,
+            body: formData,
+          });
+
+          console.log(result);
+        } catch (error) {
+          console.error(error);
+        }
+      });
+    }
+  }, [currentRound]);
 
   // useDidMountEffect(() => {
-  //   if (screenShotRef.current) {
+  //   if (screenShotRef.current && roundGameInfo.word_id) {
   //     html2canvas(screenShotRef.current).then((canvas) => {
   //       // 스크린샷 이미지를 base64 데이터 URL로 변환
   //       const imageData = canvas.toDataURL('image/png');
@@ -215,10 +247,14 @@ const CanvasDrawingApp = forwardRef<ClearCanvasHandle, Props>((props, ref) => {
   //       const formData = new FormData();
   //       formData.append('image', imageData);
 
+  //       for (const [key, value] of formData) {
+  //         console.log(`${key}: ${value}`);
+  //       }
+
   //       (async () => {
   //         const result = await restFetcher({
   //           method: 'POST',
-  //           path: `/rooms/${uuid}/1/picture/rounds`,
+  //           path: `/rooms/${uuid}/picture/${roundGameInfo.word_id}/rounds`,
   //           body: formData,
   //         });
   //         console.log(result);
