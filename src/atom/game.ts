@@ -56,6 +56,7 @@ export const roundGameState = atom<RoundGameType>({
     drawer: '',
     round: 0,
     word: '',
+    word_id: '',
   },
 });
 
