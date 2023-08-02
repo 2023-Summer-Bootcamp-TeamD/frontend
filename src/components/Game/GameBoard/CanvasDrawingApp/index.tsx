@@ -21,7 +21,6 @@ import {
 import useDidMountEffect from '@/hooks/useDidMountEffect';
 import html2canvas from 'html2canvas';
 import { restFetcher } from '@/queryClient';
-import axios from 'axios';
 
 type Props = {
   setCurrentFocus: React.Dispatch<React.SetStateAction<string>>;
