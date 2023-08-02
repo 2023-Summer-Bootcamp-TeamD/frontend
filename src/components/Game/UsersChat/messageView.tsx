@@ -28,13 +28,18 @@ const MessageView = ({ chatList }: Props) => {
     scrollToBottom();
   }, [chatList]);
 
+  console.log('프로필', profile, IMAGES.length);
+
   useEffect(() => {
     chatList.forEach((chat) => {
       if (!profile[chat.nickname]) {
-        setProfile({
-          ...profile,
-          [chat.nickname]: IMAGES[Object.keys(profile).length % IMAGES.length],
-        });
+        if (chat.nickname) {
+          setProfile({
+            ...profile,
+            [chat.nickname]:
+              IMAGES[Object.keys(profile).length % IMAGES.length],
+          });
+        }
       }
     });
   }, [chatList]);
