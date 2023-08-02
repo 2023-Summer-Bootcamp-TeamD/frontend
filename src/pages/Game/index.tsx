@@ -112,9 +112,6 @@ const Game = () => {
 
   //라운드 시작 시
   useDidMountEffect(() => {
-    if (currentRound > max_Player_num) {
-      return;
-    }
     if (socket && isConnected && start) {
       clearCanvasRef.current?.clearCanvas();
       socket.on('startRoundTimer', (data) => {
@@ -147,6 +144,7 @@ const Game = () => {
   //게임이 끝났을 떄
   useEffect(() => {
     if (currentRound > max_Player_num && max_Player_num !== 0) {
+      socket?.emit('endGame', { roomId: UUID });
       navigate('/result', { state: userList });
     }
   }, [currentRound]);
