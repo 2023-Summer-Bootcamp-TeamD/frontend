@@ -14,6 +14,8 @@ import { makeRoomAPI } from '@/apis/creatingSpecificRooms';
 import { useMutation } from '@tanstack/react-query';
 import { AxiosError } from 'axios';
 import SpinnerBox from '@/components/SkeletonSpinner';
+import { useRecoilState } from 'recoil';
+import { currentRoundState, timeState } from '@/atom/game';
 
 const CreatingRooms = () => {
   const navigate = useNavigate();
@@ -23,6 +25,7 @@ const CreatingRooms = () => {
   const [nickname, setNickname] = useState('');
   const [personnel, setPersonnel] = useState(2);
   const [seconds, setSeconds] = useState(10);
+  const [currentRound, setCurrentRound] = useRecoilState(currentRoundState);
 
   const increasePersonnel = () => {
     if (personnel < 8) {
@@ -66,7 +69,9 @@ const CreatingRooms = () => {
   const postGameInfo = async (data: MakeRoomType) => {
     setIsLoading(true);
     const res = await makeRoomAPI(data);
+    setCurrentRound(1);
     setIsLoading(false);
+
     return res;
   };
 

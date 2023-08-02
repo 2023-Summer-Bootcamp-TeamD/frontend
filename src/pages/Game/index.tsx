@@ -52,7 +52,6 @@ const Game = () => {
     const mouseY = e.clientY;
     setXY({ x: mouseX, y: mouseY });
   };
-
   useEffect(() => {
     setWaveText(`${roundGame.drawer}님이 그림을 그리고 있어요 ~!`);
   }, [roundGame, currentRound]);
@@ -89,12 +88,25 @@ const Game = () => {
     setNickname(hostData.nickname);
     setMax_Player_num(hostData.player_num);
     setCategory_id(hostData.category_id);
+    setRemainTime(hostData.time);
     setTime(hostData.time);
   }, []);
 
+  useEffect(() => {
+    setTime(hostData.time);
+    setRemainTime(hostData.time);
+  }, [currentRound]);
+
   //방장만 startRound 실행하게
   useDidMountEffect(() => {
-    if (currentRound > max_Player_num) {
+    console.log(currentRound);
+    console.log(max_Player_num);
+    console.log(roundGame.round);
+    if (
+      currentRound > max_Player_num ||
+      max_Player_num === roundGame.round ||
+      max_Player_num === 0
+    ) {
       return;
     }
     if (socket && isConnected && start && hostData.entry_code) {
@@ -145,7 +157,8 @@ const Game = () => {
   useEffect(() => {
     if (currentRound > max_Player_num && max_Player_num !== 0) {
       socket?.emit('endGame', { roomId: UUID });
-      setCurrentRound(1);
+      setStart(false);
+      setUserList([]);
       navigate('/result', { state: userList });
     }
   }, [currentRound]);

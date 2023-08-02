@@ -10,6 +10,7 @@ import {
   runStopTimerState,
   remainTimeState,
   uuidState,
+  timeState,
 } from '@/atom/game';
 type Props = {
   chat: string;
@@ -27,6 +28,7 @@ const ChatInputView = ({ setChat, chat, setChatList }: Props) => {
   const setCurrentRound = useSetRecoilState(currentRoundState);
   const setStop = useSetRecoilState(runStopTimerState);
   const uuid = useRecoilValue(uuidState);
+  const [time, setTime] = useRecoilState(timeState);
   const [remainTime, setRemainTime] = useRecoilState(remainTimeState);
   useEffect(() => {
     if (socket && isConnected) {
@@ -44,7 +46,8 @@ const ChatInputView = ({ setChat, chat, setChatList }: Props) => {
       });
       socket.on('announceResult', (data) => {
         setStop(false);
-        setRemainTime(0);
+        console.log(time);
+        setRemainTime(() => time);
       });
     }
     return () => {

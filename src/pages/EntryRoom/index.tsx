@@ -14,11 +14,14 @@ import { useNavigate } from 'react-router-dom';
 import { CircleInputType, NickNameType } from '@/types/entryRoom';
 import { entryAPI } from '@/apis/entryRoom';
 import SpinnerBox from '@/components/SkeletonSpinner';
+import { useRecoilState } from 'recoil';
+import { currentRoundState } from '@/atom/game';
 
 const EntryRoom = () => {
   const navigate = useNavigate();
 
   const [isLoading, setIsLoading] = useState(false);
+  const [currentRound, setCurrentRound] = useRecoilState(currentRoundState);
 
   const [circleInput, setCircleInput] = useState<CircleInputType>({
     input1: '',
@@ -51,6 +54,7 @@ const EntryRoom = () => {
     setIsLoading(true);
     const uuid: string = Object.values(circleInput).join('');
     setUUID(uuid);
+    setCurrentRound(1);
     const res = await entryAPI(uuid, nickNameData);
     setIsLoading(false);
     return res;

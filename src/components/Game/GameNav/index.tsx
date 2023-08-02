@@ -6,6 +6,7 @@ import {
   nicknameState,
   uuidState,
   waveTextState,
+  timeState,
 } from '@/atom/game';
 import { useSocketContext } from '@/context/SocketContext';
 import { UserListType } from '@/types/gameInfo';
@@ -25,6 +26,7 @@ const GameNav = ({ start }: Props) => {
   const [currentRound, setCurrentRound] = useRecoilState(currentRoundState);
   const roundGameInfo = useRecoilValue(roundGameState);
   const nickname = useRecoilValue(nicknameState);
+  const [time, setTime] = useRecoilState(timeState);
   const uuid = useRecoilValue(uuidState);
   const [waveText, setWaveText] = useRecoilState(waveTextState);
 
@@ -38,7 +40,7 @@ const GameNav = ({ start }: Props) => {
       }, 1000);
     }
 
-    if (remainTime === 0 && socket && isConnected) {
+    if (remainTime === 0 && socket && isConnected && start) {
       socket?.emit('canvasEraseAll', uuid);
 
       setWaveText(`${currentRound + 1} 라운드 대기중 ∙ ∙ ∙`);
