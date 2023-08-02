@@ -7,15 +7,16 @@ type Props = {
   nickname: string;
   message: string;
   date: string;
+  img: string;
 };
 
-const OtherMessage = ({ flag, nickname, message, date }: Props) => {
+const OtherMessage = ({ flag, nickname, message, date, img }: Props) => {
   return (
     <OtherChat>
       <Profile>
         {!flag && (
           <div>
-            <img src={IMAGES[4]} alt="상대방 프로필" />
+            <img src={img} alt="상대방 프로필" />
             <p>{nickname}</p>
           </div>
         )}
