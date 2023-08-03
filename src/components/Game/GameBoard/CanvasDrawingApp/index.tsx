@@ -21,6 +21,7 @@ import {
 import useDidMountEffect from '@/hooks/useDidMountEffect';
 import html2canvas from 'html2canvas';
 import { restFetcher } from '@/queryClient';
+
 type Props = {
   setCurrentFocus: React.Dispatch<React.SetStateAction<string>>;
 };
@@ -226,8 +227,11 @@ const CanvasDrawingApp = forwardRef<ClearCanvasHandle, Props>((props, ref) => {
           // 서버로 이미지를 전송합니다.
           const result = await restFetcher({
             method: 'POST',
-            path: `/rooms/${uuid}/picture/${roundGameInfo.word_id}/rounds`,
+            path: `/rooms/${uuid}/words/${roundGameInfo.word_id}/rounds`,
             body: formData,
+            headers: {
+              'Content-Type': 'multipart/form-data',
+            },
           });
 
           console.log(result);
@@ -237,31 +241,6 @@ const CanvasDrawingApp = forwardRef<ClearCanvasHandle, Props>((props, ref) => {
       });
     }
   }, [currentRound]);
-
-  // useDidMountEffect(() => {
-  //   if (screenShotRef.current && roundGameInfo.word_id) {
-  //     html2canvas(screenShotRef.current).then((canvas) => {
-  //       // 스크린샷 이미지를 base64 데이터 URL로 변환
-  //       const imageData = canvas.toDataURL('image/png');
-
-  //       const formData = new FormData();
-  //       formData.append('image', imageData);
-
-  //       for (const [key, value] of formData) {
-  //         console.log(`${key}: ${value}`);
-  //       }
-
-  //       (async () => {
-  //         const result = await restFetcher({
-  //           method: 'POST',
-  //           path: `/rooms/${uuid}/picture/${roundGameInfo.word_id}/rounds`,
-  //           body: formData,
-  //         });
-  //         console.log(result);
-  //       })();
-  //     });
-  //   }
-  // }, [currentRound]);
 
   return (
     <Board ref={screenShotRef}>
