@@ -95,7 +95,10 @@ const Nav = styled.div`
   color: black;
   font-size: 3rem;
   padding-top: 3rem;
-  margin-left: 5rem;
+
+  @media (max-width: 768px) {
+    justify-content: center;
+  }
 `;
 
 const Clock = styled.div`
@@ -109,6 +112,7 @@ const Clock = styled.div`
   justify-content: center;
   border-radius: 10px;
   box-shadow: 5px 7px 12px -9px #000000;
+  margin-right: 2.5rem;
 
   & > span:nth-child(1) {
     font-size: 3rem;
@@ -116,6 +120,17 @@ const Clock = styled.div`
 
   & > span:nth-child(2) {
     font-size: 3.8rem;
+  }
+
+  @media (max-width: 768px) {
+    min-width: 20rem;
+    height: 10rem;
+    & > span:nth-child(1) {
+      font-size: 3rem;
+    }
+    & > span:nth-child(2) {
+      font-size: 4rem;
+    }
   }
 `;
 
@@ -126,7 +141,23 @@ const Users = styled.div`
   height: 10rem;
   box-shadow: 5px 7px 12px -9px #000000;
   border-radius: 10px;
-  min-width: 475px;
+  min-width: 47.5rem;
+  overflow-x: scroll;
+  &::-webkit-scrollbar {
+    display: none;
+  }
+
+  @media (max-width: 768px) {
+    min-width: 35rem;
+    height: 10rem;
+    margin-left: 0;
+    & > span:nth-child(1) {
+      font-size: 0.1rem;
+    }
+    & > span:nth-child(2) {
+      font-size: 1.9rem;
+    }
+  }
 `;
 
 const User = styled.div<{ nickname: string; drawer: string }>`
@@ -142,4 +173,16 @@ const User = styled.div<{ nickname: string; drawer: string }>`
   & > div:nth-child(2) {
     font-size: 5rem;
   }
+
+  /* @media (max-width: 768px) {
+    min-width: 30rem;
+    height: 10rem;
+    margin-right: 5rem;
+    & > span:nth-child(1) {
+      font-size: 0.1rem;
+    }
+    & > span:nth-child(2) {
+      font-size: 1.9rem;
+    } */
+  /* } */
 `;

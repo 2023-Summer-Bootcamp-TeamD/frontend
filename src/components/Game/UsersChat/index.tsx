@@ -39,4 +39,11 @@ const ChatRoom = styled.div`
   background-color: white;
   border-radius: 10px;
   color: black;
+  margin-right: 5rem;
+
+  @media (max-width: 768px) {
+    margin: 0 auto;
+    width: 85%;
+    height: 35rem;
+  }
 `;

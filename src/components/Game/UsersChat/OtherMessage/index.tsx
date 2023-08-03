@@ -46,6 +46,16 @@ const OtherChat = styled.div`
     align-items: flex-end;
     margin-left: 0.5rem;
   }
+
+  @media (max-width: 768px) {
+    & > div > p {
+      font-size: 3rem;
+    }
+
+    & > span {
+      font-size: 3rem;
+    }
+  }
 `;
 
 const Profile = styled.div`
@@ -85,6 +95,12 @@ const ChatBox = styled.div`
   box-sizing: border-box;
   font-size: 1.6rem;
   padding: 0 1rem;
+
+  @media (max-width: 768px) {
+    font-size: 2.2rem;
+    max-width: 20rem;
+    height: 4.5rem;
+  }
 `;
 
 const Content = styled.div`
@@ -99,5 +115,11 @@ const Content = styled.div`
     font-size: 1.5rem;
     opacity: 0.8;
     margin-left: 0.5rem;
+  }
+
+  @media (max-width: 768px) {
+    & > div > span {
+      font-size: 1.8rem;
+    }
   }
 `;
