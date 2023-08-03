@@ -61,7 +61,7 @@ const GameResult = () => {
         <span className="center-items">Team D 대표 최현정</span>
       </TheFirstAward>
       <div className="right-items">
-        <Buttons onClick={goToMain}></Buttons>
+        <Buttons onClick={goToMain}> </Buttons>
         <Ranking>
           {userList
             ?.sort((a, b) => b.score - a.score)
@@ -152,7 +152,7 @@ const TheFirstAward = styled.div`
     margin-bottom: 0;
   }
   span:nth-child(7) {
-    font-size: 1%.5;
+    font-size: 1.5rem;
     margin-top: 1rem;
     margin-bottom: 0;
   }
@@ -162,6 +162,43 @@ const TheFirstAward = styled.div`
   .center-items {
     margin-left: auto;
     margin-right: auto;
+  }
+
+  @media (max-width: 768px) {
+    width: 42vw;
+    height: 50vh;
+    background-size: 42vw 50vh;
+    & > span {
+      margin: 3rem 0;
+    }
+    span {
+      font-size: 1rem;
+    }
+    span:nth-child(2) {
+      font-size: 2rem;
+      margin-top: 2rem;
+    }
+    span:nth-child(3) {
+      font-size: 1rem;
+    }
+    span:nth-child(4) {
+      font-size: 1rem;
+      margin-top: 0;
+      margin-bottom: 1rem;
+    }
+    span:nth-child(5) {
+      font-size: 1.7rem;
+      margin-left: 1rem;
+      margin-right: 1rem;
+    }
+    span:nth-child(6) {
+      font-size: 1rem;
+      margin-top: 5rem;
+    }
+    span:nth-child(7) {
+      font-size: 1.2rem;
+      margin-top: 0.5rem;
+    }
   }
 `;
 
@@ -173,16 +210,17 @@ const Buttons = styled.div`
   border-radius: 50%;
   margin-bottom: 3rem;
   font-size: 2.5rem;
+  background-size: contain;
   &:hover {
     cursor: pointer;
     opacity: 0.8;
   }
+  &:first-child {
+    background-image: url(${wrong});
+  }
   &:last-child {
     background-color: transparent;
-    margin-right: 5rem;
   }
-  background-image: url(${wrong});
-  background-size: contain;
 `;
 
 const Ranking = styled.div`
@@ -192,7 +230,6 @@ const Ranking = styled.div`
   background-size: 35vw 60vh;
   display: flex;
   flex-direction: column;
-  align-items: center;
   margin-left: 10rem;
   padding-top: 13rem;
   & > img {
