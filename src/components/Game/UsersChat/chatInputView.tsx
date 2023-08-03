@@ -16,9 +16,17 @@ type Props = {
   chat: string;
   setChat: React.Dispatch<React.SetStateAction<string>>;
   setChatList: React.Dispatch<React.SetStateAction<messageType[]>>;
+  drawer: string;
+  username: string;
 };
 
-const ChatInputView = ({ setChat, chat, setChatList }: Props) => {
+const ChatInputView = ({
+  setChat,
+  chat,
+  setChatList,
+  drawer,
+  username,
+}: Props) => {
   const textHandler = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     setChat(e.target.value);
   };
@@ -88,6 +96,7 @@ const ChatInputView = ({ setChat, chat, setChatList }: Props) => {
         placeholder="내용을 입력해 주세요."
         onChange={textHandler}
         value={chat}
+        readOnly={drawer === username ? true : false}
       ></textarea>
       <button onClick={sendMessage}>
         <img src={sendImg} />

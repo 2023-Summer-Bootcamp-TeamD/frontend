@@ -190,7 +190,7 @@ const Game = () => {
             </DrawingUser>
           </div>
 
-          <UsersChat {...hostData} />
+          <UsersChat {...hostData} drawer={roundGame.drawer} />
         </div>
       </Section>
       <Cursor

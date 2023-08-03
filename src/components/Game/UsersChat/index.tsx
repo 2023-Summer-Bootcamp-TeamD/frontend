@@ -8,7 +8,7 @@ import { messages } from '@/constants/chatList';
 import { useRecoilValue } from 'recoil';
 import { nicknameState } from '@/atom/game';
 
-const UsersChat = () => {
+const UsersChat = ({ drawer }: { drawer: string }) => {
   const [chat, setChat] = useState<string>('');
   const [chatList, setChatList] = useState<messageType[]>(messages);
   const nickname = useRecoilValue(nicknameState);
@@ -17,7 +17,13 @@ const UsersChat = () => {
     <ChatRoom>
       <Title />
       <MessageView chatList={chatList} />
-      <ChatInputView chat={chat} setChat={setChat} setChatList={setChatList} />
+      <ChatInputView
+        chat={chat}
+        setChat={setChat}
+        setChatList={setChatList}
+        drawer={drawer}
+        username={nickname}
+      />
     </ChatRoom>
   );
 };
