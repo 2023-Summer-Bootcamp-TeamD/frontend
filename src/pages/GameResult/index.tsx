@@ -246,6 +246,16 @@ const Ranking = styled.div`
   & > img {
     height: 53vh;
   }
+  @media (min-width: 769px) {
+    align-items: center;
+  }
+  @media (max-width: 768px) {
+    padding-top: 6.6rem;
+    width: 35vw;
+    height: 30vh;
+    margin-left: 3rem;
+    background-size: 35vw 30vh;
+  }
 `;
 
 const Medal = styled.img<{ rank: number }>`
@@ -259,6 +269,10 @@ const Medal = styled.img<{ rank: number }>`
       return `content: url(${BronzeMedal});`;
     }
   }}
+  @media (max-width: 768px) {
+    width: 2.3rem;
+    margin-left: 6rem;
+  }
 `;
 
 const UserInRanking = styled.span<{ rank: number }>`
@@ -273,4 +287,7 @@ const UserInRanking = styled.span<{ rank: number }>`
       return '#bc00fe';
     }
   }};
+  @media (max-width: 768px) {
+    font-size: 2.5rem;
+  }
 `;
