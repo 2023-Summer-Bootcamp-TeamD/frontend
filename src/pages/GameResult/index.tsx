@@ -221,6 +221,17 @@ const Buttons = styled.div`
   &:last-child {
     background-color: transparent;
   }
+  @media (max-width: 768px) {
+    width: 3rem;
+    height: 3rem;
+    margin-bottom: 6rem;
+    margin-left: 20.5rem;
+
+    & > img {
+      width: 5rem;
+      height: 5rem;
+    }
+  }
 `;
 
 const Ranking = styled.div`
