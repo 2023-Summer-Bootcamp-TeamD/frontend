@@ -37,6 +37,12 @@ const MyMessageBox = styled.div`
     align-items: end;
     margin-right: 0.5rem;
   }
+
+  @media (max-width: 768px) {
+    & > div > span {
+      font-size: 1.8rem;
+    }
+  }
 `;
 
 const ChatBox = styled.div`
@@ -51,4 +57,10 @@ const ChatBox = styled.div`
   box-sizing: border-box;
   font-size: 1.6rem;
   padding: 0 1rem;
+
+  @media (max-width: 768px) {
+    font-size: 2.2rem;
+    max-width: 20rem;
+    height: 4.5rem;
+  }
 `;

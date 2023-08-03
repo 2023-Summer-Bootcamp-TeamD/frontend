@@ -207,6 +207,7 @@ const Game = () => {
 export default Game;
 
 const GamePage = styled.div`
+  overflow-x: hidden;
   width: 100vw;
   height: 100%;
   background-image: linear-gradient(to bottom, #faf1e5 60vh, #c9cb81 40vh);
@@ -228,9 +229,16 @@ const Section = styled.section`
     height: calc(100vh - 120px);
     color: white;
     display: flex;
-    justify-content: space-around;
+    justify-content: space-between;
     padding-top: 3rem;
     z-index: 2;
+  }
+
+  @media (max-width: 768px) {
+    & > div {
+      flex-direction: column;
+      justify-content: flex-start;
+    }
   }
 `;
 
@@ -254,6 +262,11 @@ const WaveText = styled.span`
   margin-right: 0.8rem;
   margin-top: 1rem;
   animation: ${waveAnimation} 1.5s cubic-bezier(0.36, 0.45, 0.63, 0.53) infinite;
+  @media (max-width: 768px) {
+    font-size: 3rem;
+    color: black;
+    margin-bottom: 1rem;
+  }
 `;
 
 const Cursor = styled.img<{ xy: { x: number; y: number } }>`

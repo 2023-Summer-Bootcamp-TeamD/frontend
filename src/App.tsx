@@ -13,7 +13,6 @@ export default function App() {
     <QueryClientProvider client={queryClient}>
       <GlobalStyle />
       {elem}
-      <ReactQueryDevtools />
     </QueryClientProvider>
   );
 }

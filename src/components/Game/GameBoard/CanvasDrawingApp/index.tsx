@@ -21,6 +21,7 @@ import {
 import useDidMountEffect from '@/hooks/useDidMountEffect';
 import html2canvas from 'html2canvas';
 import { restFetcher } from '@/queryClient';
+import debounce from 'lodash.debounce';
 
 type Props = {
   setCurrentFocus: React.Dispatch<React.SetStateAction<string>>;
@@ -54,6 +55,23 @@ const CanvasDrawingApp = forwardRef<ClearCanvasHandle, Props>((props, ref) => {
   const userList = useRecoilValue(userListState);
   const roundGameInfo = useRecoilValue(roundGameState);
   const nickname = useRecoilValue(nicknameState);
+
+  const [windowSize, setWindowSize] = useState({ width: 0, height: 0 });
+
+  // 창 크기 변화 이벤트 핸들러
+  const handleWindowResize = () => {
+    setWindowSize({
+      width: window.innerWidth,
+      height: window.innerHeight,
+    });
+  };
+
+  useEffect(() => {
+    window.addEventListener('resize', handleWindowResize);
+    return () => {
+      window.removeEventListener('resize', handleWindowResize);
+    };
+  }, []);
 
   //그리기 시작
   const startDrawing = (event: React.MouseEvent<HTMLCanvasElement>) => {
@@ -250,8 +268,8 @@ const CanvasDrawingApp = forwardRef<ClearCanvasHandle, Props>((props, ref) => {
       <Result>{roundGameInfo.word && `정답 : ${roundGameInfo.word}`}</Result>
       <canvas
         ref={canvasRef}
-        width={675}
-        height={475}
+        width={500}
+        height={275}
         onMouseDown={startDrawing}
         onMouseMove={draw}
         onMouseUp={stopDrawing}
